@@ -233,12 +233,18 @@ insert into public.organizations (id, name, slug)
 values ('11111111-1111-1111-1111-111111111111', 'DOHOme', 'dohome')
 on conflict (slug) do nothing;
 
--- 7.2 Projekt (laufend, Flagship, auf der Website veröffentlicht)
+-- 7.2 Projekte – Flagship Rotkamp 1 + je ein Projekt pro Portfolio-Segment
 insert into public.projects
   (id, organization_id, name, slug, phase, is_flagship, street, postal_code, city, planned_units, published, sort_order)
 values
   ('22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111',
-   'Rotkamp 1', 'rotkamp-1', 'laufend', true, 'Rotkamp 1', '30900', 'Wedemark', 12, true, 0)
+   'Rotkamp 1', 'rotkamp-1', 'laufend', true, 'Rotkamp 1', '30900', 'Wedemark', 12, true, 0),
+  ('44444444-4444-4444-4444-444444444444', '11111111-1111-1111-1111-111111111111',
+   'Waldkante', 'waldkante-wedemark', 'laufend', false, 'Am Waldrand 4', '30900', 'Wedemark', 8, true, 1),
+  ('55555555-5555-5555-5555-555555555555', '11111111-1111-1111-1111-111111111111',
+   'Leinegärten', 'leinegaerten-schwarmstedt', 'zukuenftig', false, 'Leinestraße', '29690', 'Schwarmstedt', 14, true, 2),
+  ('66666666-6666-6666-6666-666666666666', '11111111-1111-1111-1111-111111111111',
+   'Heidehöfe', 'heidehoefe-lindwedel', 'abgeschlossen', false, 'Heideweg 9', '29690', 'Lindwedel', 6, true, 3)
 on conflict (organization_id, slug) do nothing;
 
 -- 7.3 Bauteile
@@ -300,6 +306,31 @@ values
   ('11111111-1111-1111-1111-111111111111','22222222-2222-2222-2222-222222222222','33333333-3333-3333-3333-333333333334',
    'WE-12','kauf','in_vorbereitung',125.00,4.5,'3. OG',3, 689000, null, 330,'2027-06-01',
    array['Dachterrasse','Aufzug'],'Penthouse – Vermarktung in Vorbereitung', false)
+on conflict (project_id, unit_number) do nothing;
+
+-- 7.5 Einheiten der übrigen Segment-Projekte (kompakt, fürs /projekte-Demo)
+--   Waldkante (laufend): 2 verfügbar + 1 verkauft · Heidehöfe (Referenz): ausverkauft
+--   Leinegärten (zukünftig) bewusst ohne Einheiten → erscheint als "in Planung".
+insert into public.units
+  (organization_id, project_id, building_id, unit_number, offer_type, status,
+   area_sqm, rooms, floor_label, floor_order,
+   sale_price, rent_price, service_charge, available_from, features, highlights, published)
+values
+  ('11111111-1111-1111-1111-111111111111','44444444-4444-4444-4444-444444444444', null,
+   'WK-01','kauf','verfuegbar',  78.00, 3.0,'EG',    0, 395000, null, 210,'2026-11-01',
+   array['Garten','Wärmepumpe'],'Doppelhaushälfte mit Garten', true),
+  ('11111111-1111-1111-1111-111111111111','44444444-4444-4444-4444-444444444444', null,
+   'WK-02','kauf','verfuegbar',  94.50, 3.5,'1. OG', 1, 479000, null, 250,'2026-11-01',
+   array['Balkon','Wärmepumpe','Photovoltaik'],'Energieeffizient mit PV-Anlage', true),
+  ('11111111-1111-1111-1111-111111111111','44444444-4444-4444-4444-444444444444', null,
+   'WK-03','kauf','verkauft',   110.00, 4.0,'1. OG', 1, 559000, null, 290,'2025-12-01',
+   array['Garten','Carport'],'Verkaufte Familieneinheit', true),
+  ('11111111-1111-1111-1111-111111111111','66666666-6666-6666-6666-666666666666', null,
+   'HH-01','kauf','verkauft',   120.00, 4.5,'EG',    0, 545000, null, 300,'2024-06-01',
+   array['Garten','Reihenhaus'],'Referenz – Reihenhaus', true),
+  ('11111111-1111-1111-1111-111111111111','66666666-6666-6666-6666-666666666666', null,
+   'HH-02','kauf','verkauft',   135.00, 5.0,'EG',    0, 599000, null, 320,'2024-06-01',
+   array['Garten','Reihenhaus'],'Referenz – Reihenhaus Endhaus', true)
 on conflict (project_id, unit_number) do nothing;
 
 -- Mitgliedschaft NICHT geseedet (benötigt echte auth.users-ID). Nach dem ersten
