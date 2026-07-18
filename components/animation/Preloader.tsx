@@ -13,11 +13,18 @@ export function Preloader() {
   useGSAP(
     () => {
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce) {
+      const isHome = window.location.pathname === "/";
+      const seen = sessionStorage.getItem("dohome:intro") === "1";
+
+      // Intro nur beim ersten Seitenaufruf der Session, nur auf der Startseite und
+      // nur bei erlaubter Bewegung. Sonst sofort aufdecken – kein Zwangsvorhang
+      // bei Direkteinstieg auf Unterseiten oder für Wiederkehrer.
+      if (reduce || !isHome || seen) {
         gsap.set(root.current, { display: "none" });
         setReady();
         return;
       }
+      sessionStorage.setItem("dohome:intro", "1");
 
       const paths = gsap.utils.toArray<SVGPathElement>(".monogram path");
 
@@ -46,9 +53,12 @@ export function Preloader() {
   return (
     <div
       ref={root}
-      className="preloader fixed inset-0 z-[100] grid place-items-center bg-green-700"
+      role="status"
+      aria-label="DOHOme wird geladen"
+      className="preloader fixed inset-0 z-preloader grid place-items-center bg-green-700 text-beige-100"
     >
-      <Monogram animated stroke="#F1EFE9" className="monogram h-24 w-24" />
+      {/* stroke = currentColor (text-beige-100) statt hartkodiertem Hex */}
+      <Monogram animated className="monogram h-24 w-24" />
     </div>
   );
 }

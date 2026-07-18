@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 
 import {
@@ -6,6 +5,7 @@ import {
   type ProjectSummary,
 } from "@/lib/supabase/public";
 import { ProjectFinder } from "@/components/projekte/ProjectFinder";
+import { Button } from "@/components/ui/Button";
 
 // Aggregate alle 5 Minuten neu (ISR).
 export const revalidate = 300;
@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   title: "Projekte",
   description:
     "Aktuelle, geplante und abgeschlossene Bauvorhaben von DOHOme in der Region Hannover – Eigentumswohnungen und Kapitalanlagen.",
+  alternates: { canonical: "/projekte" },
 };
 
 async function getAllProjects(): Promise<ProjectSummary[]> {
@@ -58,25 +59,19 @@ export default async function ProjekteOverviewPage() {
       <section className="border-t border-beige-100/10">
         <div className="mx-auto max-w-container px-6 py-20 text-center md:py-28">
           <h2 className="mx-auto max-w-2xl font-display text-3xl leading-tight md:text-4xl">
-            Sie besitzen ein Grundstück in der Region Hannover?
+            Noch nicht das Passende gefunden?
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-beige-100/70">
-            Wir entwickeln daraus Lebensräume mit Anspruch. Sprechen Sie mit uns
-            über Ihr Grundstück.
+          <p className="mx-auto mt-4 max-w-xl text-beige-100/75">
+            Lassen Sie sich vormerken – wir informieren Sie, sobald eine passende
+            Einheit verfügbar wird, und beraten Sie persönlich.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link
-              href="/grundstueck-anbieten"
-              className="rounded-full bg-beige-100 px-8 py-4 text-sm font-medium text-ink transition-colors hover:bg-beige-200"
-            >
-              Grundstück anbieten
-            </Link>
-            <Link
-              href="/kontakt"
-              className="rounded-full border border-beige-100/30 px-8 py-4 text-sm font-medium transition-colors hover:bg-beige-100/10"
-            >
-              Kontakt aufnehmen
-            </Link>
+            <Button href="/kontakt" variant="primary">
+              Beratung anfragen
+            </Button>
+            <Button href="/grundstueck-verkaufen" variant="secondary">
+              Grundstück verkaufen
+            </Button>
           </div>
         </div>
       </section>

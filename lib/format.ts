@@ -37,8 +37,7 @@ export function range(
 /** "Juli 2026" aus einem ISO-Datum. */
 export function formatMonthYear(iso: string | null | undefined): string {
   if (!iso) return "auf Anfrage";
-  return new Date(iso).toLocaleDateString("de-DE", {
-    month: "long",
-    year: "numeric",
-  });
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "auf Anfrage";
+  return d.toLocaleDateString("de-DE", { month: "long", year: "numeric" });
 }

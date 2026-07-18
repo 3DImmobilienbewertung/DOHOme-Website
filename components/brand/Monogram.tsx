@@ -11,7 +11,9 @@ type MonogramProps = {
   animated?: boolean;
 };
 
-const PATHS = [
+// Einzige Quelle der Monogramm-Geometrie – auch von der Wortmarke wiederverwendet,
+// damit die finale Vektor-Datei nur an einer Stelle nachgezogen werden muss.
+export const MONOGRAM_PATHS = [
   "M28 24 H88 V70 Q88 92 66 92 H28", // D-Rahmen: oben · rechte Strebe · Rundung u. r. · unten
   "M50 38 V86", // H – linker (kurzer) Stamm
   "M50 58 H88", // H – Querbalken (greift in die rechte D-Strebe)
@@ -34,7 +36,7 @@ export function Monogram({
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      {PATHS.map((d, i) => (
+      {MONOGRAM_PATHS.map((d, i) => (
         <path
           key={i}
           d={d}

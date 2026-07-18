@@ -2,18 +2,25 @@
 // "DOHO" = Versal/halbfett, "me" = gemein/leicht. currentColor erbt die Textfarbe.
 // Finale Vektor-Wortmarke wird später eingesetzt.
 
+import { MONOGRAM_PATHS } from "./Monogram";
+
 type WordmarkProps = {
   className?: string;
+  /** Wenn die umgebende Struktur die Marke bereits benennt (z. B. ein Link mit
+   *  aria-label), rein dekorativ rendern, um doppelte Screenreader-Ansagen zu
+   *  vermeiden. */
+  decorative?: boolean;
 };
 
-export function Wordmark({ className }: WordmarkProps) {
+export function Wordmark({ className, decorative = false }: WordmarkProps) {
   return (
     <svg
       className={className}
       viewBox="0 0 384 116"
       fill="none"
-      role="img"
-      aria-label="DOHOme"
+      {...(decorative
+        ? { "aria-hidden": true }
+        : { role: "img", "aria-label": "DOHOme" })}
     >
       {/* DH-Monogramm-Marke (echte Logo-Geometrie) */}
       <g
@@ -22,9 +29,9 @@ export function Wordmark({ className }: WordmarkProps) {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M28 24 H88 V70 Q88 92 66 92 H28" />
-        <path d="M50 38 V86" />
-        <path d="M50 58 H88" />
+        {MONOGRAM_PATHS.map((d, i) => (
+          <path key={i} d={d} />
+        ))}
       </g>
 
       {/* Schriftzug */}

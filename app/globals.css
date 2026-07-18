@@ -17,6 +17,14 @@
   ::selection {
     @apply bg-green-700 text-beige-100;
   }
+  /* Durchgängige, sektions-agnostische Fokus-Signatur (WCAG 2.4.7 / 1.4.11).
+     currentColor erbt die je Fläche bereits AA-sichere Textfarbe – sichtbar auf
+     dunklem Grün wie auf hellem Beige, ohne per-Sektion-Override. */
+  :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
 }
 
 @layer components {
@@ -29,6 +37,24 @@
   }
   .line-inner {
     @apply block will-change-transform;
+  }
+  /* Vertikaler Sektions-Rhythmus – drei Stufen statt streuender py-Werte. */
+  .section {
+    @apply py-20 md:py-28;
+  }
+  .section-sm {
+    @apply py-16 md:py-20;
+  }
+  .section-lg {
+    @apply py-28 md:py-40;
+  }
+  /* Gedämpfter Text auf dunklen Flächen: sage-300 statt beige-100/<60 (AA 5,5:1). */
+  .text-muted-dark {
+    @apply text-sage-300;
+  }
+  /* Tabellenziffern für Preise, Flächen und Kennzahlen. */
+  .nums {
+    font-variant-numeric: tabular-nums;
   }
 }
 
@@ -44,6 +70,20 @@
   mix-blend-mode: multiply;
 }
 
+/* Failsafe: sollte JS laden, aber vor dem Aufdecken abbrechen, blendet sich der
+   Preloader nach 4 s per CSS aus (bei funktionierendem JS längst weg). Für
+   komplett deaktiviertes JS greift zusätzlich das <noscript> im Layout. */
+.preloader {
+  animation: preloader-failsafe 0.3s ease 4s forwards;
+}
+@keyframes preloader-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -51,5 +91,9 @@
     animation: none !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  /* Reduced Motion: gar kein Vorhang – Inhalt ist ohnehin sofort sichtbar. */
+  .preloader {
+    display: none;
   }
 }

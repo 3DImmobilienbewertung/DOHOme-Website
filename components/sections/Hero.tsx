@@ -73,7 +73,7 @@ export function Hero() {
 
         <h1 className="hero-line mt-6 text-[clamp(2.8rem,7vw,5.5rem)] font-light leading-[1.02]">
           <span className="line-mask">
-            <span className="line-inner">wir schaffen</span>
+            <span className="line-inner">wir schaffen </span>
           </span>
           <span className="line-mask">
             <span className="line-inner">Lebensräume</span>
@@ -88,15 +88,15 @@ export function Hero() {
         <div className="mt-10 flex flex-wrap gap-4">
           <Link
             href="/projekte"
-            className="hero-cta rounded-full bg-beige-100 px-7 py-3.5 text-sm font-medium text-green-900 transition-transform duration-300 ease-out-expo hover:-translate-y-0.5"
+            className="hero-cta rounded-full bg-accent-500 px-7 py-3.5 text-sm font-medium text-green-950 transition-[transform,background-color] duration-300 ease-out-expo hover:-translate-y-0.5 hover:bg-accent-400"
           >
             Projekte entdecken
           </Link>
           <Link
-            href="/grundstueck-anbieten"
-            className="hero-cta rounded-full border border-beige-100/40 px-7 py-3.5 text-sm font-medium text-beige-100 transition-colors hover:bg-beige-100/10"
+            href="/grundstueck-verkaufen"
+            className="hero-cta rounded-full border border-beige-100/45 px-7 py-3.5 text-sm font-medium text-beige-100 transition-colors hover:bg-beige-100/10"
           >
-            Grundstück anbieten
+            Grundstück verkaufen
           </Link>
         </div>
       </div>

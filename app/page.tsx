@@ -1,28 +1,24 @@
+import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
+import { TrustBand } from "@/components/home/TrustBand";
+import { FunnelSplit } from "@/components/home/FunnelSplit";
+import { StoryTeaser } from "@/components/home/StoryTeaser";
+import { FlagshipSpotlight } from "@/components/home/FlagshipSpotlight";
+import { InvestorTeaser } from "@/components/home/InvestorTeaser";
+import { ClosingCta } from "@/components/home/ClosingCta";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default function Home() {
   return (
     <main>
       <Hero />
-
-      {/*
-        Platzhalter-Abschnitt: dient als Scroll-Ziel für die Lenis-Demo und zeigt
-        die 30 %-Beige-Fläche mit grünem Akzent. In der nächsten Phase folgen hier
-        Über-uns-Scrollytelling, Projektübersicht und der Doppel-Funnel.
-      */}
-      <section className="bg-beige-100 text-ink">
-        <div className="mx-auto max-w-container px-6 py-32 md:py-40">
-          <p className="eyebrow text-green-700">Donnarumma · Horstmann</p>
-          <h2 className="mt-6 max-w-3xl text-[clamp(2rem,4.5vw,3.5rem)] font-light leading-tight">
-            Zwei Familien, ein Anspruch: Häuser, die ein Leben lang halten.
-          </h2>
-          <p className="mt-6 max-w-xl text-lg text-ink/70">
-            Dieser Abschnitt ist vorerst ein Platzhalter und demonstriert das
-            sanfte Lenis-Scrolling. Die weiteren Sektionen (Vertrauen, Säulen,
-            Projekte, Doppel-Funnel) bauen wir im nächsten Schritt aus.
-          </p>
-        </div>
-      </section>
+      <TrustBand />
+      <FunnelSplit />
+      <StoryTeaser />
+      <FlagshipSpotlight />
+      <InvestorTeaser />
+      <ClosingCta />
     </main>
   );
 }
