@@ -17,6 +17,8 @@ import {
   formatMonthYear,
   range,
 } from "@/lib/format";
+import { PHASE_LABEL, PLAN_TYPE_LABEL } from "@/lib/content/labels";
+import { projectImage } from "@/lib/content/media";
 
 // Aggregate alle 5 Minuten neu (ISR) – kein Live-DB-Hit pro Besucher,
 // aber stets aktuelle Verfügbarkeiten ohne Re-Deploy.
@@ -78,20 +80,6 @@ export async function generateMetadata({
   };
 }
 
-const PHASE_LABEL: Record<ProjectSummary["phase"], string> = {
-  zukuenftig: "In Planung",
-  laufend: "Im Verkauf",
-  abgeschlossen: "Referenzprojekt",
-};
-
-const PLAN_TYPE_LABEL: Record<ProjectPlan["plan_type"], string> = {
-  grundriss: "Grundriss",
-  lageplan: "Lageplan",
-  baubeschreibung: "Baubeschreibung",
-  energieausweis: "Energieausweis",
-  sonstiges: "Dokument",
-};
-
 function formatFileSize(kb: number | null): string {
   if (kb == null) return "PDF";
   if (kb < 1024) return `${kb} KB`;
@@ -111,7 +99,7 @@ export default async function ProjektDetailPage({ params }: PageProps) {
   const isAvailable = summary.available_total > 0;
 
   // Hero-Bild kommt später aus einer project_media-Tabelle; Platzhalter via Seed.
-  const heroImage = `https://picsum.photos/seed/${summary.slug}/2400/1400`;
+  const heroImage = projectImage(summary.slug, 2400, 1400);
 
   return (
     <main className="bg-green-900 text-beige-100">

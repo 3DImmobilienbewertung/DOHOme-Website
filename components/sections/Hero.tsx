@@ -6,6 +6,7 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useAppReady } from "@/components/animation/AppReady";
+import { projectImage, HERO_SEED } from "@/lib/content/media";
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
@@ -52,7 +53,7 @@ export function Hero() {
       <div className="hero-bg absolute inset-0 -z-10">
         {/* Platzhalter-Bild – später durch /public/images/hero.jpg ersetzen */}
         <Image
-          src="https://picsum.photos/seed/dohome-hero/2400/1400"
+          src={projectImage(HERO_SEED, 2400, 1400)}
           alt=""
           fill
           priority

@@ -86,9 +86,11 @@ export async function submitLead(
   const hasPlot = Boolean(
     (lead.plot_size ?? "").length || (lead.plot_address ?? "").length,
   );
+  const hasPhone = Boolean((lead.phone ?? "").length);
 
-  // Nachricht ist Pflicht – außer es liegen Grundstücksangaben vor.
-  if (!hasPlot && message.length < 5) {
+  // Nachricht ist Pflicht – außer es liegen Grundstücksangaben ODER eine
+  // Telefonnummer (Rückruf) vor.
+  if (!hasPlot && !hasPhone && message.length < 5) {
     return {
       ok: false,
       error: "Bitte prüfen Sie die markierten Felder.",

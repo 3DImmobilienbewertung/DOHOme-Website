@@ -9,9 +9,8 @@
 export const site = {
   brand: "DOHOme",
   claim: "wir schaffen Lebensräume",
-  // Schreibweise aus dem finalen Logo-Design. TODO(Vito): exakte
-  // Handelsregister-Firmierung noch gegenprüfen.
-  legalName: "Donnarumma / Horstmann GmbH",
+  // Exakte Handelsregister-Firmierung (Amtsgericht Hannover, HRB 210402).
+  legalName: "Donnarumma/Horstmann GmbH",
   // Rein gestalterische Stilisierung – nur außerhalb rechtlicher Pflichtangaben.
   brandStylized: "Donnarumma · Horstmann",
   founded: 2012,
@@ -46,12 +45,14 @@ export const site = {
     "Lindwedel",
   ],
 
-  // Handelsregister-/Vertretungsangaben fürs Impressum – vom Kunden einzuholen.
+  // Handelsregister-/Vertretungsangaben fürs Impressum.
+  // Quelle: Handelsregister-Eintrag (Amtsgericht Hannover, HRB 210402,
+  // eingetragen 05.11.2013). TODO(Vito): vor Livegang gegenprüfen.
   legal: {
-    managingDirectors: null as string | null, // TODO(Vito): Geschäftsführer:innen
-    registerCourt: null as string | null, // TODO(Vito): Registergericht
-    registerNumber: null as string | null, // TODO(Vito): HRB-Nummer
-    vatId: null as string | null, // TODO(Vito): USt-IdNr. (§ 27a UStG)
+    managingDirectors: "Tasso Donnarumma, Jens Horstmann" as string | null,
+    registerCourt: "Amtsgericht Hannover" as string | null,
+    registerNumber: "HRB 210402" as string | null,
+    vatId: null as string | null, // TODO(Vito): USt-IdNr. (§ 27a UStG) fehlt noch
   },
 } as const;
 

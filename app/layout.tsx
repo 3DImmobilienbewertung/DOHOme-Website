@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import { fraunces, manrope, montserrat } from "@/lib/fonts";
 import { AppReadyProvider } from "@/components/animation/AppReady";
 import { SmoothScroll } from "@/components/animation/SmoothScroll";
-import { Preloader } from "@/components/animation/Preloader";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { OrganizationJsonLd } from "@/components/seo/OrganizationJsonLd";
 import "./globals.css";
 
@@ -43,12 +40,7 @@ export default function RootLayout({
           <style>{`.preloader{display:none !important}`}</style>
         </noscript>
         <AppReadyProvider>
-          <Preloader />
-          <SmoothScroll>
-            <Header />
-            {children}
-            <Footer />
-          </SmoothScroll>
+          <SmoothScroll>{children}</SmoothScroll>
         </AppReadyProvider>
       </body>
     </html>

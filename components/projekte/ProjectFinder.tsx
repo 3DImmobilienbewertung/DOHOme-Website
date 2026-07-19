@@ -6,18 +6,8 @@ import Image from "next/image";
 
 import type { ProjectSummary } from "@/lib/supabase/public";
 import { formatEuro, formatSqm, range } from "@/lib/format";
-
-const PHASE_LABEL: Record<ProjectSummary["phase"], string> = {
-  zukuenftig: "In Planung",
-  laufend: "Im Verkauf",
-  abgeschlossen: "Referenzprojekt",
-};
-
-const EMPTY_LABEL: Record<ProjectSummary["phase"], string> = {
-  zukuenftig: "Vermarktung startet in Kürze",
-  laufend: "Aktuell reserviert – Warteliste möglich",
-  abgeschlossen: "Ausverkauft · Referenzprojekt",
-};
+import { PHASE_LABEL, EMPTY_LABEL } from "@/lib/content/labels";
+import { projectImage } from "@/lib/content/media";
 
 const SEGMENTS: {
   phase: ProjectSummary["phase"];
@@ -88,6 +78,11 @@ function matchesFacets(
   maxPrice: number | null,
   minArea: number | null,
 ): boolean {
+  // Ausverkaufte/Referenzprojekte gehören nicht in ein Filterergebnis – sonst
+  // klickt sich der Interessent auf „Aktuell ausverkauft“. Die unfilterte
+  // Übersicht (segments) zeigt Referenzprojekte weiterhin.
+  if (p.available_total <= 0) return false;
+
   if (rooms !== null) {
     if (p.rooms_min == null || p.rooms_max == null) return false;
     if (rooms >= 4) {
@@ -318,7 +313,7 @@ function ProjectCard({ p }: { p: ProjectSummary }) {
     >
       <div className="relative aspect-[16/10]">
         <Image
-          src={`https://picsum.photos/seed/${p.slug}/900/560`}
+          src={projectImage(p.slug, 900, 560)}
           alt={p.name}
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
@@ -371,7 +366,7 @@ function FlagshipSpotlight({ p }: { p: ProjectSummary }) {
     >
       <div className="relative aspect-[16/11] lg:aspect-auto">
         <Image
-          src={`https://picsum.photos/seed/${p.slug}/1600/1100`}
+          src={projectImage(p.slug, 1600, 1100)}
           alt={p.name}
           fill
           priority

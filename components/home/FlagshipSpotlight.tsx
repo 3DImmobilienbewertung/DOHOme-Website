@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Reveal } from "@/components/animation/Reveal";
 import { Button } from "@/components/ui/Button";
 import { PlaceholderTag } from "@/components/ui/PlaceholderTag";
+import { projectImage, ROTKAMP_SEED } from "@/lib/content/media";
 
 // Flagship-Spotlight für das Erstprojekt Rotkamp 1 (Wedemark). Bild und Preis-/
 // Einheiten-Daten sind Platzhalter, bis echte Fotografie und Supabase-Aggregate
@@ -26,7 +27,7 @@ export function FlagshipSpotlight() {
           <Reveal className="overflow-hidden rounded-3xl">
             <div className="relative aspect-[4/3] w-full">
               <Image
-                src="https://picsum.photos/seed/dohome-rotkamp/1600/1200"
+                src={projectImage(ROTKAMP_SEED, 1600, 1200)}
                 alt="Neubau-Visualisierung Rotkamp 1, 30900 Wedemark"
                 fill
                 sizes="(min-width: 1024px) 60vw, 100vw"
