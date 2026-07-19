@@ -12,7 +12,7 @@ export default function GlobalError({ reset }: { error: Error & { digest?: strin
           display: "grid",
           placeItems: "center",
           background: "#1A3A29",
-          color: "#F1EFE9",
+          color: "#FAFAF7",
           fontFamily: "system-ui, sans-serif",
           textAlign: "center",
           padding: "2rem",
@@ -31,7 +31,7 @@ export default function GlobalError({ reset }: { error: Error & { digest?: strin
             style={{
               marginTop: "1.5rem",
               borderRadius: "999px",
-              background: "#CD7350",
+              background: "#E5DECF",
               color: "#0F241A",
               border: "none",
               padding: "0.85rem 1.75rem",

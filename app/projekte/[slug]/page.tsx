@@ -1,10 +1,12 @@
-import { notFound } from "next/navigation";
+import { cache } from "react";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 
 import {
   createPublicClient,
+  isSupabaseConfigured,
   type ProjectSummary,
   type ProjectPlan,
 } from "@/lib/supabase/public";
@@ -22,33 +24,46 @@ export const revalidate = 300;
 
 type PageProps = { params: Promise<{ slug: string }> };
 
-async function getProjectData(
-  slug: string,
-): Promise<{ summary: ProjectSummary; plans: ProjectPlan[] } | null> {
-  const supabase = createPublicClient();
+// cache(): dedupliziert die Abfrage zwischen generateMetadata und der Seite
+// innerhalb eines Renderings (statt vier statt zwei Queries).
+const getProjectData = cache(
+  async (
+    slug: string,
+  ): Promise<{ summary: ProjectSummary; plans: ProjectPlan[] } | null> => {
+    const supabase = createPublicClient();
 
-  const { data: summary } = await supabase
-    .from("public_project_summary")
-    .select("*")
-    .eq("slug", slug)
-    .maybeSingle<ProjectSummary>();
+    const { data: summary, error: summaryError } = await supabase
+      .from("public_project_summary")
+      .select("*")
+      .eq("slug", slug)
+      .maybeSingle<ProjectSummary>();
 
-  if (!summary) return null;
+    // DB-Fehler nicht als „nicht gefunden“ tarnen – werfen (Error-Boundary).
+    if (summaryError) {
+      throw new Error(`Projekt konnte nicht geladen werden: ${summaryError.message}`);
+    }
+    if (!summary) return null;
 
-  const { data: plans } = await supabase
-    .from("public_project_plans")
-    .select("*")
-    .eq("project_id", summary.project_id)
-    .order("sort_order", { ascending: true })
-    .returns<ProjectPlan[]>();
+    const { data: plans, error: plansError } = await supabase
+      .from("public_project_plans")
+      .select("*")
+      .eq("project_id", summary.project_id)
+      .order("sort_order", { ascending: true })
+      .returns<ProjectPlan[]>();
 
-  return { summary, plans: plans ?? [] };
-}
+    if (plansError) {
+      throw new Error(`Projektunterlagen konnten nicht geladen werden: ${plansError.message}`);
+    }
+
+    return { summary, plans: plans ?? [] };
+  },
+);
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  if (!isSupabaseConfigured()) return { title: "Projekt", robots: { index: false } };
   const data = await getProjectData(slug);
   if (!data) return { title: "Projekt nicht gefunden" };
 
@@ -85,6 +100,8 @@ function formatFileSize(kb: number | null): string {
 
 export default async function ProjektDetailPage({ params }: PageProps) {
   const { slug } = await params;
+  // Ohne Datenbank auf die Übersicht (mit „in Kürze“-Zustand) statt 500/404.
+  if (!isSupabaseConfigured()) redirect("/projekte");
   const data = await getProjectData(slug);
   if (!data) notFound();
 
@@ -218,14 +235,16 @@ export default async function ProjektDetailPage({ params }: PageProps) {
                     href={plan.file_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    download
                     className="group flex items-center justify-between gap-6 rounded-xl border border-beige-100/15 bg-beige-100/[0.03] p-6 transition-colors hover:border-beige-100/40 hover:bg-beige-100/[0.06]"
                   >
                     <div>
                       <span className="text-xs uppercase tracking-wider text-sage-300">
                         {PLAN_TYPE_LABEL[plan.plan_type]}
                       </span>
-                      <p className="mt-1 font-display text-xl">{plan.title}</p>
+                      <p className="mt-1 font-display text-xl">
+                        {plan.title}
+                        <span className="sr-only"> (PDF, öffnet in neuem Tab)</span>
+                      </p>
                       <p className="mt-1 text-sm text-beige-100/60">
                         {[
                           plan.rooms != null ? `${formatRooms(plan.rooms)} Zi.` : null,
@@ -267,7 +286,7 @@ export default async function ProjektDetailPage({ params }: PageProps) {
             </p>
             <h2 className="mt-3 max-w-2xl font-display text-3xl leading-tight md:text-5xl">
               {isAvailable
-                ? "Sichern Sie sich Ihre Wohnung in " + summary.name
+                ? "Ihre Wohnung im Projekt " + summary.name
                 : "Vormerken für das nächste DOHOme-Projekt"}
             </h2>
             <p className="mt-4 max-w-xl text-ink/70">
@@ -313,8 +332,12 @@ function StatTile({
       </dt>
       <dd className="mt-3 font-display text-2xl leading-tight md:text-[1.75rem]">
         {value}
+        {hint && (
+          <span className="mt-1 block font-sans text-sm text-sage-300">
+            {hint}
+          </span>
+        )}
       </dd>
-      {hint && <p className="mt-1 text-sm text-sage-300">{hint}</p>}
     </div>
   );
 }

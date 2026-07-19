@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @keyframes doh-draw { to { stroke-dashoffset: 0; } }
+  @keyframes doh-rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes doh-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes doh-tag { from { opacity: 0; letter-spacing: 0.55em; } to { opacity: 1; letter-spacing: 0.24em; } }
+  @keyframes doh-sheen { 0% { transform: translateX(-140%) skewX(-18deg); } 100% { transform: translateX(260%) skewX(-18deg); } }
+</style>
+</helmet>
+<div style="min-height:100vh;width:100%;display:flex;align-items:center;justify-content:center;background:#f5f5f2;font-family:'Montserrat',sans-serif;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background-image:radial-gradient(circle at 30% 20%, rgba(0,0,0,0.015), transparent 60%), radial-gradient(circle at 75% 80%, rgba(0,0,0,0.02), transparent 55%);pointer-events:none;"></div>
+
+  <div key="{{ animKey }}" style="position:relative;display:flex;flex-direction:column;align-items:center;padding:64px 40px;width:min(760px,92vw);">
+
+    <!-- Monogram -->
+    <div style="position:relative;width:236px;overflow:hidden;">
+      <svg viewBox="0 0 240 200" width="236" style="display:block;overflow:visible;" fill="none" stroke="#16412a" stroke-width="15" stroke-linecap="square" stroke-linejoin="round">
+        <path pathLength="1" d="M20 20 L96 20 C142 20 170 52 170 100 C170 148 142 180 96 180 L20 180" style="stroke-dasharray:1;stroke-dashoffset:1;animation:doh-draw 1s ease-in-out 0.15s forwards;"></path>
+        <path pathLength="1" d="M66 52 L66 148" style="stroke-dasharray:1;stroke-dashoffset:1;animation:doh-draw 0.5s ease-in-out 0.85s forwards;"></path>
+        <path pathLength="1" d="M216 14 L216 186" style="stroke-dasharray:1;stroke-dashoffset:1;animation:doh-draw 0.7s ease-in-out 1.0s forwards;"></path>
+        <path pathLength="1" d="M186 14 L216 14" style="stroke-dasharray:1;stroke-dashoffset:1;animation:doh-draw 0.35s ease-in-out 1.55s forwards;"></path>
+        <path pathLength="1" d="M120 100 L216 100" style="stroke-dasharray:1;stroke-dashoffset:1;animation:doh-draw 0.55s ease-in-out 1.35s forwards;"></path>
+      </svg>
+      <div style="position:absolute;top:-20%;left:0;width:40px;height:140%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.55),transparent);opacity:0;animation:doh-sheen 1.1s ease-in 2.0s 1;"></div>
+    </div>
+
+    <!-- Wordmark -->
+    <div style="margin-top:34px;display:flex;align-items:baseline;font-weight:700;color:#16412a;font-size:112px;line-height:1;letter-spacing:0.01em;">
+      <span style="opacity:0;animation:doh-rise 0.6s cubic-bezier(0.22,1,0.36,1) 1.7s forwards;">D</span>
+      <span style="opacity:0;animation:doh-rise 0.6s cubic-bezier(0.22,1,0.36,1) 1.78s forwards;">O</span>
+      <span style="opacity:0;animation:doh-rise 0.6s cubic-bezier(0.22,1,0.36,1) 1.86s forwards;">H</span>
+      <span style="opacity:0;animation:doh-rise 0.6s cubic-bezier(0.22,1,0.36,1) 1.94s forwards;">O</span>
+      <span style="opacity:0;animation:doh-rise 0.6s cubic-bezier(0.22,1,0.36,1) 2.02s forwards;">m</span>
+      <span style="opacity:0;animation:doh-rise 0.6s cubic-bezier(0.22,1,0.36,1) 2.10s forwards;">e</span>
+    </div>
+
+    <!-- Tagline -->
+    <div style="margin-top:14px;font-weight:400;color:#2a5a3c;font-size:30px;letter-spacing:0.24em;opacity:0;animation:doh-tag 0.9s ease-out 2.35s forwards;white-space:nowrap;">wir schaffen Lebensräume</div>
+
+    <!-- Company name -->
+    <div style="margin-top:74px;font-weight:600;color:#16412a;font-size:38px;letter-spacing:0.005em;opacity:0;animation:doh-rise 0.7s cubic-bezier(0.22,1,0.36,1) 2.7s forwards;white-space:nowrap;">Donnarumma / Horstmann GmbH</div>
+
+  </div>
+
+  <button onClick="{{ replay }}" style="position:absolute;bottom:24px;right:24px;display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid rgba(22,65,42,0.25);border-radius:999px;background:rgba(255,255,255,0.6);color:#16412a;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.04em;cursor:pointer;backdrop-filter:blur(4px);" style-hover="background:rgba(255,255,255,0.95);border-color:rgba(22,65,42,0.5);">↻ Replay</button>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { animKey: 0 };
+  renderVals() {
+    return {
+      animKey: this.state.animKey,
+      replay: () => this.setState(s => ({ animKey: s.animKey + 1 })),
+    };
+  }
+}
+</script>
+</body>
+</html>

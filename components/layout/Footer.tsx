@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Monogram } from "@/components/brand/Monogram";
+import { Wordmark } from "@/components/brand/Wordmark";
 import { site, addressLines } from "@/lib/content/site";
 
 // Globaler Footer: sitewide NAP-Block (Local-SEO + Vertrauen), Silo-Navigation,
@@ -42,10 +42,9 @@ export function Footer() {
             <Link
               href="/"
               aria-label={`${site.brand} – Startseite`}
-              className="inline-flex items-center gap-3"
+              className="inline-flex"
             >
-              <Monogram className="h-9 w-9 text-beige-100" />
-              <span className="font-display text-2xl">{site.brand}</span>
+              <Wordmark className="text-2xl text-beige-100" decorative />
             </Link>
             <p className="mt-5 max-w-xs font-display text-xl leading-snug">
               {site.claim}

@@ -70,7 +70,7 @@ export function Header() {
           }`}
         >
           <Link href="/" aria-label="DOHOme – Startseite" className="shrink-0">
-            <Wordmark className="h-9 w-auto" decorative />
+            <Wordmark className="text-[1.35rem]" decorative />
           </Link>
 
           {/* Desktop-Navigation */}

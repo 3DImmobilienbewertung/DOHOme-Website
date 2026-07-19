@@ -23,18 +23,17 @@ export default {
         },
         // Gedämpfter Text / feine Trennlinien auf Grün (AA: 5,5:1 auf green-900).
         sage: { 300: "#9DB1A4" },
-        // ── 30 % · warmer Beige-/Papier-Untergrund ──
-        beige: { 100: "#F1EFE9", 200: "#E7E3D9" },
-        // ── 10 % · Präzisions-Akzent: gebranntes Kupfer / Terrakotta ──
-        // Reserviert für Primär-CTA, Aktiv-Zustände und Schlüssel-Kennzahlen.
-        // Primär-CTA = accent-500-Fläche mit green-950-Text (4,8:1, AA).
+        // ── 30 % · helle Flächen & Text auf Grün: warmes Weiß ──
+        beige: { 100: "#FAFAF7", 200: "#EEEDE8" },
+        // ── 10 % · Akzent: warmes Beige (Primär-CTA, Aktiv-Zustände) ──
+        // Primär-CTA = accent-500-Fläche mit green-950-Text (12:1, AAA).
         accent: {
-          400: "#DA8666", // Hover
-          500: "#CD7350", // Basis — gebranntes Kupfer/Terrakotta
-          600: "#B05837", // Pressed / Kontur
+          400: "#EFEADF", // Hover (heller)
+          500: "#E5DECF", // Basis-Beige
+          600: "#D3C8B2", // Pressed / Kontur
         },
-        warmwhite: "#FBFAF7", // Aktiv-Chip auf Grün (10 %-Höhepunkt)
-        ink: "#1C2A22", // Primärtext auf Beige (13:1)
+        warmwhite: "#FFFFFF", // reiner Höhepunkt (Aktiv-Chip)
+        ink: "#1C2A22", // Primärtext auf hellem Grund (13:1)
         // Semantische Statusfarbe (Formular-Fehler) – bewusst röter/heller als der
         // Kupfer-Akzent, damit Fehler nie mit einem CTA verwechselt werden.
         danger: { 300: "#E6B8A2", 500: "#D46A5A" },
@@ -42,6 +41,7 @@ export default {
       fontFamily: {
         display: ["var(--font-fraunces)", "serif"],
         sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
+        brand: ["var(--font-montserrat)", "system-ui", "sans-serif"],
       },
       // ── Fluid-Type-Skala: eine Quelle für alle Display-/Heading-Stufen ──
       // Beendet die zwei konkurrierenden H1-Systeme (clamp vs. Breakpoint-Sprünge);

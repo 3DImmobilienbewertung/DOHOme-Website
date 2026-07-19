@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { fraunces, manrope } from "@/lib/fonts";
+import { fraunces, manrope, montserrat } from "@/lib/fonts";
 import { AppReadyProvider } from "@/components/animation/AppReady";
 import { SmoothScroll } from "@/components/animation/SmoothScroll";
 import { Preloader } from "@/components/animation/Preloader";
@@ -32,7 +32,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="de" className={`${fraunces.variable} ${manrope.variable}`}>
+    <html
+      lang="de"
+      className={`${fraunces.variable} ${manrope.variable} ${montserrat.variable}`}
+    >
       <body>
         <OrganizationJsonLd />
         {/* Ohne JS bleibt kein Vorhang stehen. */}

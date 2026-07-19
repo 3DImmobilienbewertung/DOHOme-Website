@@ -9,9 +9,9 @@
 export const site = {
   brand: "DOHOme",
   claim: "wir schaffen Lebensräume",
-  // TODO(Vito): Handelsregister-Firmierung exakt bestätigen (& vs. /). Als
-  // Rechtsname vorbelegt mit der Schreibweise aus dem Firmenordner.
-  legalName: "Donnarumma & Horstmann GmbH",
+  // Schreibweise aus dem finalen Logo-Design. TODO(Vito): exakte
+  // Handelsregister-Firmierung noch gegenprüfen.
+  legalName: "Donnarumma / Horstmann GmbH",
   // Rein gestalterische Stilisierung – nur außerhalb rechtlicher Pflichtangaben.
   brandStylized: "Donnarumma · Horstmann",
   founded: 2012,

@@ -8,6 +8,7 @@ import { useAppReady } from "./AppReady";
 
 export function Preloader() {
   const root = useRef<HTMLDivElement>(null);
+  const sheen = useRef<HTMLDivElement>(null);
   const { setReady } = useAppReady();
 
   useGSAP(
@@ -16,9 +17,8 @@ export function Preloader() {
       const isHome = window.location.pathname === "/";
       const seen = sessionStorage.getItem("dohome:intro") === "1";
 
-      // Intro nur beim ersten Seitenaufruf der Session, nur auf der Startseite und
-      // nur bei erlaubter Bewegung. Sonst sofort aufdecken – kein Zwangsvorhang
-      // bei Direkteinstieg auf Unterseiten oder für Wiederkehrer.
+      // Intro nur beim ersten Seitenaufruf der Session, nur auf der Startseite,
+      // nur bei erlaubter Bewegung. Sonst sofort aufdecken.
       if (reduce || !isHome || seen) {
         gsap.set(root.current, { display: "none" });
         setReady();
@@ -27,24 +27,22 @@ export function Preloader() {
       sessionStorage.setItem("dohome:intro", "1");
 
       const paths = gsap.utils.toArray<SVGPathElement>(".monogram path");
+      gsap.set(paths, { strokeDasharray: 1, strokeDashoffset: 1 });
+      gsap.set(sheen.current, { skewX: -18, xPercent: -120, autoAlpha: 0 });
 
       gsap
         .timeline({ onComplete: setReady })
-        // 1. DH-Monogramm "zeichnen"
-        .to(paths, {
-          strokeDashoffset: 0,
-          duration: 1.1,
-          stagger: 0.12,
-          ease: "power2.inOut",
-        })
-        // 2. kurzer Atem
-        .to(".monogram", { scale: 0.96, duration: 0.4, ease: "power2.out" }, "-=0.2")
-        // 3. Vorhang nach oben
-        .to(
-          root.current,
-          { yPercent: -100, duration: 0.9, ease: "power4.inOut" },
-          "+=0.15",
-        )
+        // DH-Monogramm Strich für Strich zeichnen (Timing aus dem Logo-Design)
+        .to(paths[0], { strokeDashoffset: 0, duration: 1.0, ease: "power1.inOut" }, 0.15)
+        .to(paths[1], { strokeDashoffset: 0, duration: 0.5, ease: "power1.inOut" }, 0.85)
+        .to(paths[2], { strokeDashoffset: 0, duration: 0.7, ease: "power1.inOut" }, 1.0)
+        .to(paths[4], { strokeDashoffset: 0, duration: 0.55, ease: "power1.inOut" }, 1.35)
+        .to(paths[3], { strokeDashoffset: 0, duration: 0.35, ease: "power1.inOut" }, 1.55)
+        // Sheen-Sweep über die fertige Marke
+        .to(sheen.current, { xPercent: 900, autoAlpha: 1, duration: 0.9, ease: "sine.in" }, 1.95)
+        .set(sheen.current, { autoAlpha: 0 })
+        // Vorhang lüften
+        .to(root.current, { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, 2.25)
         .set(root.current, { display: "none" });
     },
     { scope: root },
@@ -57,8 +55,18 @@ export function Preloader() {
       aria-label="DOHOme wird geladen"
       className="preloader fixed inset-0 z-preloader grid place-items-center bg-green-700 text-beige-100"
     >
-      {/* stroke = currentColor (text-beige-100) statt hartkodiertem Hex */}
-      <Monogram animated className="monogram h-24 w-24" />
+      <div className="relative w-48 overflow-hidden">
+        <Monogram className="monogram w-full" strokeWidth={14} />
+        <div
+          ref={sheen}
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-[-20%] left-0 w-8"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent)",
+          }}
+        />
+      </div>
     </div>
   );
 }

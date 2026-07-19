@@ -1,4 +1,14 @@
-import { Fraunces, Manrope } from "next/font/google";
+import { Fraunces, Manrope, Montserrat } from "next/font/google";
+
+// Marken-/Logo-Schrift: Montserrat (Wortmarke „DOHOme“ + Firmierung), wie im
+// finalen Logo-Design. Wird gezielt für die Marke genutzt – der redaktionelle
+// Satz bleibt Fraunces (Display) + Manrope (Text).
+export const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-montserrat",
+  weight: ["400", "500", "600", "700"],
+});
 
 // Display: Fraunces (variable Soft-Serif, opsz + SOFT für warmen, redaktionellen Charakter)
 export const fraunces = Fraunces({
