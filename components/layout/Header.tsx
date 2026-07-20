@@ -6,7 +6,6 @@ import { Wordmark } from "@/components/brand/Wordmark";
 
 const NAV = [
   { href: "/projekte", label: "Projekte" },
-  { href: "/kapitalanlage", label: "Kapitalanlage" },
   { href: "/ueber-uns", label: "Über uns" },
   { href: "/kontakt", label: "Kontakt" },
 ];

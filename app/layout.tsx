@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: "%s · DOHOme",
   },
   description:
-    "Premium-Neubau in der Region Hannover – von Anfang an richtig gebaut. Projektentwicklung & Bauträger für Eigennutzer und Kapitalanleger.",
+    "Bauträger in der Region Hannover: Wir entwickeln, planen und bauen eigene Wohnprojekte – durchdachte Grundrisse, langlebige Bauweise, ruhige Lagen.",
   openGraph: {
     type: "website",
     locale: "de_DE",

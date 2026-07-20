@@ -13,7 +13,7 @@ import { site } from "@/lib/content/site";
 export const metadata: Metadata = {
   title: "Rotkamp 1 – Neubau in der Wedemark",
   description:
-    "Rotkamp 1: Neubau-Eigentumswohnungen in der Wedemark von DOHOme. Familiengeführt, hochwertig, regional. Jetzt anrufen und vormerken lassen.",
+    "Rotkamp 1 in der Wedemark: Eigentumswohnungen aus eigener Entwicklung – durchdachte Grundrisse, hochwertige Ausführung. Sprechen Sie direkt mit uns.",
   // Ad-Landingpage: nicht indexieren (kein SEO-Wettbewerb mit /projekte).
   robots: { index: false, follow: false },
   alternates: { canonical: "/rotkamp-1" },
@@ -26,7 +26,7 @@ const FACTS: { k: string; v: string; pending?: boolean }[] = [
   { k: "Lage", v: "Wedemark – ruhig & gut angebunden" },
   { k: "Bauweise", v: "Energieeffizient, Wärmepumpe", pending: true },
   { k: "Ausstattung", v: "Hochwertig, schlüsselfertig" },
-  { k: "Einheiten", v: "wenige verfügbar", pending: true },
+  { k: "Einheiten", v: "auf Anfrage", pending: true },
   { k: "Preis", v: "auf Anfrage", pending: true },
   { k: "Bauträger", v: `familiengeführt seit ${site.founded}` },
 ];
@@ -100,9 +100,9 @@ export default function RotkampLanding() {
               Rotkamp 1 – Ihr neues Zuhause in der Wedemark
             </h1>
             <p className="mt-5 max-w-xl text-lead text-beige-100/85">
-              Hochwertige Neubau-Eigentumswohnungen von einem familiengeführten
-              Bauträger. Persönlich, ehrlich, aus einer Hand. Nur wenige
-              Einheiten.
+              Eigentumswohnungen aus eigener Entwicklung: durchdachte Grundrisse,
+              hochwertige Ausführung, ruhige Lage in der Wedemark. Wir planen und
+              bauen selbst.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <CallButton />

@@ -14,7 +14,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Projekte",
   description:
-    "Aktuelle, geplante und abgeschlossene Bauvorhaben von DOHOme in der Region Hannover – Eigentumswohnungen und Kapitalanlagen.",
+    "Aktuelle, geplante und abgeschlossene Wohnprojekte von DOHOme in der Region Hannover – Eigentumswohnungen aus eigener Entwicklung.",
   alternates: { canonical: "/projekte" },
 };
 

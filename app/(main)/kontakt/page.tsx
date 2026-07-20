@@ -8,7 +8,7 @@ import { site, addressLines } from "@/lib/content/site";
 export const metadata: Metadata = {
   title: "Kontakt",
   description:
-    "Sprechen Sie mit DOHOme – Bauträger und Projektentwickler in der Region Hannover. Persönliche Beratung zu Eigentumswohnungen, Kapitalanlagen und Grundstücken.",
+    "Sprechen Sie mit DOHOme – Bauträger in der Region Hannover. Persönliche Beratung zu unseren Wohnprojekten und zu Grundstücken in der Wedemark.",
   alternates: { canonical: "/kontakt" },
 };
 
@@ -23,8 +23,9 @@ export default function KontaktPage() {
             Lassen Sie uns sprechen
           </h1>
           <p className="mt-5 max-w-xl text-lead text-beige-100/75">
-            Ob konkrete Wohnung, Kapitalanlage oder ein Grundstück, das Sie
-            entwickeln lassen möchten – wir nehmen uns Zeit für Ihr Anliegen.
+            Ob eine konkrete Wohnung oder ein Grundstück, das entwickelt werden
+            soll: Sie sprechen direkt mit den Inhabern – nicht mit einem
+            Vertriebsteam.
           </p>
         </Reveal>
       </section>

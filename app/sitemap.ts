@@ -8,7 +8,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     "",
     "/projekte",
-    "/kapitalanlage",
     "/grundstueck-verkaufen",
     "/ueber-uns",
     "/kontakt",

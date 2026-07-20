@@ -6,11 +6,11 @@ import { Button } from "@/components/ui/Button";
 // zwei gleichwertige, aber typografisch klar getrennte Einstiege.
 const PATHS = [
   {
-    eyebrow: "Für Käufer & Anleger",
-    title: "Sie suchen ein Zuhause oder eine Anlage",
-    text: "Neubau-Eigentumswohnungen und Häuser in der Region Hannover – kuratiert, transparent, mit echten Verfügbarkeiten.",
-    primary: { href: "/projekte", label: "Projekte entdecken" },
-    secondary: { href: "/kapitalanlage", label: "Als Kapitalanlage" },
+    eyebrow: "Für künftige Bewohner",
+    title: "Sie suchen ein Zuhause",
+    text: "Eigentumswohnungen aus eigener Entwicklung: durchdachte Grundrisse, hochwertige Ausführung, ruhige Lagen in der Region Hannover.",
+    primary: { href: "/projekte", label: "Projekte ansehen" },
+    secondary: { href: "/kontakt", label: "Beratung" },
   },
   {
     eyebrow: "Für Grundstückseigentümer",
@@ -26,9 +26,9 @@ export function FunnelSplit() {
     <section className="bg-beige-100 text-ink">
       <div className="mx-auto max-w-container px-6 section">
         <Reveal>
-          <p className="eyebrow text-green-700">Wie können wir helfen?</p>
+          <p className="eyebrow text-green-700">Ihr Anliegen</p>
           <h2 className="mt-2 max-w-2xl text-display-lg text-green-900">
-            Zwei Wege, ein Partner
+            Zwei Wege, ein Ansprechpartner
           </h2>
         </Reveal>
         <div className="mt-12 grid gap-6 md:grid-cols-2">

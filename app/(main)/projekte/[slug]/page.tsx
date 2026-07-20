@@ -270,7 +270,7 @@ export default async function ProjektDetailPage({ params }: PageProps) {
         <div className="mx-auto max-w-container px-6 py-20 md:py-28">
           <div className="rounded-3xl bg-beige-100 px-8 py-14 text-ink md:px-16 md:py-20">
             <p className="text-xs uppercase tracking-eyebrow text-green-500">
-              {isAvailable ? "Jetzt sichern" : "Bleiben Sie informiert"}
+              {isAvailable ? "Verfügbare Wohnungen" : "Bleiben Sie informiert"}
             </p>
             <h2 className="mt-3 max-w-2xl font-display text-3xl leading-tight md:text-5xl">
               {isAvailable

@@ -8,10 +8,9 @@ import { site, addressLines } from "@/lib/content/site";
 const NAV_GROUPS: { title: string; links: { href: string; label: string }[] }[] =
   [
     {
-      title: "Kaufen",
+      title: "Wohnen",
       links: [
         { href: "/projekte", label: "Projekte" },
-        { href: "/kapitalanlage", label: "Kapitalanlage" },
         { href: "/kontakt", label: "Beratung anfragen" },
       ],
     },

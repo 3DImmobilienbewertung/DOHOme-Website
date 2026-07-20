@@ -68,7 +68,7 @@ export function Hero() {
       <div className="mx-auto w-full max-w-container px-6 pb-16 md:pb-24">
         <div className="line-mask">
           <p className="hero-eyebrow eyebrow text-sage-300">
-            Projektentwicklung · Region Hannover
+            Bauträger · Wedemark &amp; Region Hannover
           </p>
         </div>
 
@@ -82,8 +82,9 @@ export function Hero() {
         </h1>
 
         <p className="hero-sub mt-6 max-w-xl text-lg text-beige-100/85">
-          Von Anfang an richtig gebaut — kompromisslose Qualität, ohne Stress. Seit
-          2012, mit einem Handwerker-Netzwerk, das teils seit 30 Jahren zusammensteht.
+          Wir entwickeln, planen und bauen eigene Wohnprojekte in der Wedemark und
+          der Region Hannover — mit einem Handwerker-Netzwerk, das teils seit 30
+          Jahren zusammensteht.
         </p>
 
         <div className="mt-10 flex flex-wrap gap-4">

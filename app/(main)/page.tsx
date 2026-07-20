@@ -4,7 +4,7 @@ import { TrustBand } from "@/components/home/TrustBand";
 import { FunnelSplit } from "@/components/home/FunnelSplit";
 import { StoryTeaser } from "@/components/home/StoryTeaser";
 import { FlagshipSpotlight } from "@/components/home/FlagshipSpotlight";
-import { InvestorTeaser } from "@/components/home/InvestorTeaser";
+import { ArchitectureSection } from "@/components/home/ArchitectureSection";
 import { PressSection } from "@/components/sections/PressSection";
 import { ClosingCta } from "@/components/home/ClosingCta";
 
@@ -18,7 +18,7 @@ export default function Home() {
       <FunnelSplit />
       <StoryTeaser />
       <FlagshipSpotlight />
-      <InvestorTeaser />
+      <ArchitectureSection />
       <PressSection />
       <ClosingCta />
     </main>
