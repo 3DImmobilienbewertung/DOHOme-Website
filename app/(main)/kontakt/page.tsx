@@ -46,7 +46,7 @@ export default function KontaktPage() {
             {site.contact.phone && (
               <ContactBlock label="Telefon">
                 <a
-                  href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
+                  href={site.contact.phoneHref}
                   className="transition-colors hover:text-sage-300"
                 >
                   {site.contact.phone}

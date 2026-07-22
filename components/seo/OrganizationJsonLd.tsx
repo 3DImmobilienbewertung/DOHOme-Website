@@ -14,7 +14,6 @@ export function OrganizationJsonLd() {
     url: site.url,
     logo: `${site.url}/icon.svg`,
     slogan: site.claim,
-    foundingDate: String(site.founded),
     email: site.contact.email,
     address: {
       "@type": "PostalAddress",
@@ -26,7 +25,9 @@ export function OrganizationJsonLd() {
     areaServed: site.locations.map((name) => ({ "@type": "Place", name })),
   };
 
+  // Nur belegte Felder ausgeben – kein "null" im strukturierten Datenmarkup.
   if (site.contact.phone) data.telephone = site.contact.phone;
+  if (site.founded) data.foundingDate = String(site.founded);
 
   return (
     <script

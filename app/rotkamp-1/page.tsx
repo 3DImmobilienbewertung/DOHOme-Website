@@ -6,42 +6,55 @@ import { Monogram } from "@/components/brand/Monogram";
 import { Reveal } from "@/components/animation/Reveal";
 import { PressSection } from "@/components/sections/PressSection";
 import { CallbackForm } from "@/components/forms/CallbackForm";
+import { ProjectGallery } from "@/components/projekte/ProjectGallery";
 import { PlaceholderTag } from "@/components/ui/PlaceholderTag";
 import { projectImage, ROTKAMP_SEED } from "@/lib/content/media";
+import { rotkampGallery } from "@/lib/content/gallery";
+import {
+  rotkamp,
+  units,
+  unitsAvailable,
+  soldPercent,
+} from "@/lib/content/rotkamp";
+import {
+  testimonials,
+  testimonialsArePlaceholder,
+} from "@/lib/content/testimonials";
+import { formatEuro, formatSqm } from "@/lib/format";
 import { site } from "@/lib/content/site";
 
 export const metadata: Metadata = {
   title: "Rotkamp 1 – Neubau in der Wedemark",
-  description:
-    "Rotkamp 1 in der Wedemark: Eigentumswohnungen aus eigener Entwicklung – durchdachte Grundrisse, hochwertige Ausführung. Sprechen Sie direkt mit uns.",
+  description: `Rotkamp 1 in der Wedemark: ${rotkamp.units.total} Eigentumswohnungen aus eigener Entwicklung, ${rotkamp.units.sold} bereits verkauft. Durchdachte Grundrisse, hochwertige Ausführung.`,
   // Ad-Landingpage: nicht indexieren (kein SEO-Wettbewerb mit /projekte).
   robots: { index: false, follow: false },
   alternates: { canonical: "/rotkamp-1" },
 };
 
-// TODO(Vito): echte Rufnummer eintragen, BEVOR Ads laufen.
-const CALL = { display: "0 51 30 / 00 00 00", href: "tel:+4951300000000" };
+// Rufnummer kommt zentral aus site.ts – eine Quelle für Website und Landingpage.
+const CALL = { display: site.contact.phone ?? "", href: site.contact.phoneHref };
 
+const PROJECT = {
+  name: rotkamp.name,
+  postalCode: rotkamp.postalCode,
+  city: rotkamp.city,
+};
+
+/** Belegte Kennzahlen zuerst – unbestätigte Angaben klar markiert. */
 const FACTS: { k: string; v: string; pending?: boolean }[] = [
-  { k: "Lage", v: "Wedemark – ruhig & gut angebunden" },
-  { k: "Bauweise", v: "Energieeffizient, Wärmepumpe", pending: true },
-  { k: "Ausstattung", v: "Hochwertig, schlüsselfertig" },
-  { k: "Einheiten", v: "auf Anfrage", pending: true },
-  { k: "Preis", v: "auf Anfrage", pending: true },
-  { k: "Bauträger", v: `familiengeführt seit ${site.founded}` },
-];
-
-// Käufer-Stimmen – echte Referenzen reichst du nach.
-const TESTIMONIALS: { quote: string; who: string }[] = [
+  { k: "Wohneinheiten", v: String(rotkamp.units.total) },
+  { k: "Bereits verkauft", v: `${rotkamp.units.sold} von ${rotkamp.units.total}` },
+  { k: "Bereits bezogen", v: `${rotkamp.units.occupied} Wohnungen` },
+  { k: "Lage", v: `${rotkamp.postalCode} ${rotkamp.city} – ruhig, gut angebunden` },
   {
-    quote:
-      "Von der ersten Beratung bis zur Übergabe alles aus einer Hand – ehrlich und ohne Stress.",
-    who: "Familie M., Wedemark",
+    k: "Energie",
+    v: rotkamp.specs.energy ?? "Angabe folgt",
+    pending: !rotkamp.specs.energy,
   },
   {
-    quote:
-      "Wir haben die Inhaber persönlich kennengelernt. Diese Handschrift spürt man im Haus.",
-    who: "Käuferpaar aus der Region",
+    k: "Bezugsfertig",
+    v: rotkamp.specs.completion ?? "Termin auf Anfrage",
+    pending: !rotkamp.specs.completion,
   },
 ];
 
@@ -87,7 +100,7 @@ export default function RotkampLanding() {
         <section className="relative isolate flex min-h-[86vh] items-end overflow-hidden">
           <Image
             src={projectImage(ROTKAMP_SEED, 2000, 1400)}
-            alt="Neubau-Visualisierung Rotkamp 1, Wedemark"
+            alt={`Außenvisualisierung ${rotkamp.name}, ${rotkamp.postalCode} ${rotkamp.city}`}
             fill
             priority
             sizes="100vw"
@@ -95,14 +108,17 @@ export default function RotkampLanding() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-green-950 via-green-900/70 to-green-900/20" />
           <div className="relative mx-auto w-full max-w-container px-6 pb-16 pt-24">
-            <p className="eyebrow text-sage-300">Neubau · Wedemark</p>
+            <p className="eyebrow text-sage-300">
+              Neubau · {rotkamp.city}
+            </p>
             <h1 className="mt-3 max-w-3xl text-display-xl">
-              Rotkamp 1 – Ihr neues Zuhause in der Wedemark
+              {rotkamp.name} – Ihr neues Zuhause in der {rotkamp.city}
             </h1>
             <p className="mt-5 max-w-xl text-lead text-beige-100/85">
-              Eigentumswohnungen aus eigener Entwicklung: durchdachte Grundrisse,
-              hochwertige Ausführung, ruhige Lage in der Wedemark. Wir planen und
-              bauen selbst.
+              {rotkamp.units.total} Eigentumswohnungen aus eigener Entwicklung.
+              {" "}
+              {rotkamp.units.sold} sind bereits verkauft,{" "}
+              {rotkamp.units.occupied} Wohnungen bewohnt.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <CallButton />
@@ -114,11 +130,50 @@ export default function RotkampLanding() {
               </a>
             </div>
             <p className="mt-4 text-sm text-muted-dark">
-              Familiengeführt seit {site.founded} · Region Hannover
+              Familiengeführt · Wedemark &amp; Region Hannover
             </p>
-            <div className="mt-3">
-              <PlaceholderTag>echte Rufnummer + Projektfoto vor Ad-Start</PlaceholderTag>
-            </div>
+          </div>
+        </section>
+
+        {/* ------------------------------------------------ VERKAUFSSTAND */}
+        <section className="border-t border-beige-100/10 bg-green-950">
+          <div className="mx-auto max-w-container px-6 section-sm">
+            <Reveal>
+              <div className="flex flex-wrap items-end justify-between gap-6">
+                <div>
+                  <p className="eyebrow text-sage-300">Aktueller Stand</p>
+                  <h2 className="mt-2 text-display-lg">
+                    {rotkamp.units.sold} von {rotkamp.units.total} Wohnungen
+                    verkauft
+                  </h2>
+                </div>
+                <p className="max-w-sm text-beige-100/75">
+                  Das Projekt ist weit fortgeschritten – {rotkamp.units.occupied}{" "}
+                  Wohnungen sind bereits bewohnt. Sprechen Sie uns zu den
+                  verbleibenden Einheiten an.
+                </p>
+              </div>
+
+              {/* Fortschrittsbalken */}
+              <div className="mt-8">
+                <div
+                  className="h-2 w-full overflow-hidden rounded-full bg-beige-100/15"
+                  role="img"
+                  aria-label={`Verkaufsstand: ${soldPercent} Prozent der Wohnungen verkauft`}
+                >
+                  <div
+                    className="h-full rounded-full bg-accent-500"
+                    style={{ width: `${soldPercent}%` }}
+                  />
+                </div>
+                <div className="mt-3 flex justify-between text-sm text-muted-dark">
+                  <span className="nums">{soldPercent} % verkauft</span>
+                  <span className="nums">
+                    {unitsAvailable} Einheiten noch verfügbar
+                  </span>
+                </div>
+              </div>
+            </Reveal>
           </div>
         </section>
 
@@ -127,7 +182,7 @@ export default function RotkampLanding() {
           <div className="mx-auto max-w-container px-6 section">
             <Reveal>
               <p className="eyebrow text-sage-300">Auf einen Blick</p>
-              <h2 className="mt-2 text-display-lg">Warum Rotkamp 1</h2>
+              <h2 className="mt-2 text-display-lg">Das Projekt</h2>
             </Reveal>
             <dl className="mt-10 grid gap-px overflow-hidden rounded-2xl bg-beige-100/10 sm:grid-cols-2 lg:grid-cols-3">
               {FACTS.map((f) => (
@@ -137,7 +192,7 @@ export default function RotkampLanding() {
                     {f.v}
                     {f.pending && (
                       <span className="mt-2 block">
-                        <PlaceholderTag>echte Angabe</PlaceholderTag>
+                        <PlaceholderTag>Angabe folgt</PlaceholderTag>
                       </span>
                     )}
                   </dd>
@@ -147,32 +202,147 @@ export default function RotkampLanding() {
           </div>
         </section>
 
+        {/* ---------------------------------------------------------- GALERIE */}
+        <section className="border-t border-beige-100/10 bg-green-950">
+          <div className="mx-auto max-w-container px-6 section">
+            <Reveal>
+              <p className="eyebrow text-sage-300">Einblicke</p>
+              <h2 className="mt-2 max-w-2xl text-display-lg">
+                Visualisierungen und Baufortschritt
+              </h2>
+              <p className="mt-4 max-w-xl text-beige-100/75">
+                Außen- und Innenansichten, Lage und aktueller Baustand.
+              </p>
+            </Reveal>
+            <ProjectGallery
+              images={rotkampGallery}
+              project={PROJECT}
+              className="mt-10"
+            />
+            <div className="mt-6">
+              <PlaceholderTag>
+                finale Renderings &amp; Baustandsfotos folgen
+              </PlaceholderTag>
+            </div>
+          </div>
+        </section>
+
+        {/* ------------------------------------------------------- WOHNUNGEN */}
+        <section className="border-t border-beige-100/10">
+          <div className="mx-auto max-w-container px-6 section">
+            <Reveal>
+              <p className="eyebrow text-sage-300">Verfügbarkeit</p>
+              <h2 className="mt-2 max-w-2xl text-display-lg">
+                Die verbleibenden Wohnungen
+              </h2>
+            </Reveal>
+
+            {units.length > 0 ? (
+              <Reveal className="mt-10 overflow-x-auto">
+                <table className="w-full min-w-[42rem] border-collapse text-left">
+                  <thead>
+                    <tr className="border-b border-beige-100/15 text-sm text-muted-dark">
+                      <th scope="col" className="py-3 pr-4 font-medium">Wohnung</th>
+                      <th scope="col" className="py-3 pr-4 font-medium">Zimmer</th>
+                      <th scope="col" className="py-3 pr-4 font-medium">Wohnfläche</th>
+                      <th scope="col" className="py-3 pr-4 font-medium">Geschoss</th>
+                      <th scope="col" className="py-3 pr-4 font-medium">Kaufpreis</th>
+                      <th scope="col" className="py-3 font-medium">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {units.map((u) => (
+                      <tr key={u.id} className="border-b border-beige-100/10">
+                        <th scope="row" className="py-4 pr-4 font-display text-lg font-normal">
+                          {u.id}
+                        </th>
+                        <td className="nums py-4 pr-4">{u.rooms}</td>
+                        <td className="nums py-4 pr-4">{formatSqm(u.areaSqm)}</td>
+                        <td className="py-4 pr-4">{u.floor}</td>
+                        <td className="nums py-4 pr-4">
+                          {u.price == null ? "auf Anfrage" : formatEuro(u.price)}
+                        </td>
+                        <td className="py-4">
+                          <span
+                            className={`rounded-full px-3 py-1 text-xs ${
+                              u.status === "verfuegbar"
+                                ? "bg-accent-500 text-green-950"
+                                : "border border-beige-100/30 text-beige-100/70"
+                            }`}
+                          >
+                            {u.status === "verfuegbar"
+                              ? "verfügbar"
+                              : u.status === "reserviert"
+                                ? "reserviert"
+                                : "verkauft"}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </Reveal>
+            ) : (
+              <Reveal className="mt-10">
+                <div className="rounded-3xl border border-beige-100/15 bg-beige-100/[0.03] p-8 md:p-10">
+                  <p className="max-w-xl text-beige-100/80">
+                    Von {rotkamp.units.total} Wohneinheiten sind aktuell{" "}
+                    {rotkamp.units.sold} verkauft. Die Aufstellung der
+                    verbleibenden Wohnungen mit Grundrissen, Wohnflächen und
+                    Preisen senden wir Ihnen gern persönlich zu – oder wir gehen
+                    sie am Telefon gemeinsam durch.
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-4">
+                    <CallButton label={`Anrufen: ${CALL.display}`} />
+                    <a
+                      href="#rueckruf"
+                      className="rounded-full border border-beige-100/45 px-7 py-3.5 text-sm font-medium transition-colors hover:bg-beige-100/10"
+                    >
+                      Unterlagen anfordern
+                    </a>
+                  </div>
+                  <div className="mt-6">
+                    <PlaceholderTag>
+                      Preisliste einpflegen → Tabelle erscheint automatisch
+                    </PlaceholderTag>
+                  </div>
+                </div>
+              </Reveal>
+            )}
+          </div>
+        </section>
+
         {/* -------------------------------------------------- KÄUFER-STIMMEN */}
         <section className="bg-beige-100 text-ink">
           <div className="mx-auto max-w-container px-6 section">
             <Reveal>
               <p className="eyebrow text-green-700">Das sagen Käufer</p>
               <h2 className="mt-2 max-w-2xl text-display-lg text-green-900">
-                Menschen, die schon bei uns gebaut haben
+                Menschen, die schon bei uns gekauft haben
               </h2>
             </Reveal>
-            <div className="mt-10 grid gap-6 md:grid-cols-2">
-              {TESTIMONIALS.map((t, i) => (
-                <Reveal key={t.who} delay={i * 0.08}>
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              {testimonials.map((t, i) => (
+                <Reveal key={t.author} delay={i * 0.06}>
                   <figure className="flex h-full flex-col rounded-3xl border border-green-900/10 bg-green-900/[0.03] p-8">
-                    <blockquote className="font-display text-xl leading-snug text-green-900">
+                    <blockquote className="font-display text-lg leading-snug text-green-900">
                       „{t.quote}"
                     </blockquote>
                     <figcaption className="mt-4 text-sm text-green-900/70">
-                      {t.who}
+                      {t.author}
+                      {t.context ? ` · ${t.context}` : ""}
                     </figcaption>
                   </figure>
                 </Reveal>
               ))}
             </div>
-            <div className="mt-6">
-              <PlaceholderTag>echte Kundenstimmen (mit Freigabe)</PlaceholderTag>
-            </div>
+            {testimonialsArePlaceholder && (
+              <div className="mt-6">
+                <PlaceholderTag>
+                  Beispieltexte – echte Stimmen mit Freigabe ersetzen
+                </PlaceholderTag>
+              </div>
+            )}
           </div>
         </section>
 
@@ -184,14 +354,15 @@ export default function RotkampLanding() {
           <div className="mx-auto max-w-container px-6 section-lg">
             <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
               <Reveal>
-                <p className="eyebrow text-sage-300">In 24 Stunden zurückgerufen</p>
+                <p className="eyebrow text-sage-300">Persönlich statt Exposé</p>
                 <h2 className="mt-2 text-display-lg">
                   Rufen Sie an – oder wir rufen Sie zurück
                 </h2>
                 <p className="mt-4 max-w-md text-beige-100/80">
-                  Ein kurzes Gespräch reicht: Wir klären Ihre Fragen zu Rotkamp 1,
-                  zeigen verfügbare Einheiten und die nächsten Schritte.
-                  Persönlich, unverbindlich, direkt mit den Inhabern.
+                  Ein kurzes Gespräch reicht: Wir klären Ihre Fragen zu{" "}
+                  {rotkamp.name}, gehen die verfügbaren Wohnungen durch und
+                  besprechen die nächsten Schritte. Sie sprechen direkt mit den
+                  Inhabern.
                 </p>
                 <div className="mt-8">
                   <CallButton label={`Jetzt anrufen: ${CALL.display}`} />

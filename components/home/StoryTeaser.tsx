@@ -1,6 +1,5 @@
 import { Reveal } from "@/components/animation/Reveal";
 import { Button } from "@/components/ui/Button";
-import { site } from "@/lib/content/site";
 
 // Gründer-/Handwerks-Story-Anriss. Ankerziel des Hero-Scroll-Hinweises
 // „Unsere Geschichte“. Verweist auf die ausführliche /ueber-uns-Seite.
@@ -18,10 +17,10 @@ export function StoryTeaser() {
           <Reveal delay={0.08}>
             <div className="max-w-xl space-y-4 text-lead text-beige-100/75">
               <p>
-                Der Kern von DOHOme ist Handwerk, nicht Vertrieb. Seit{" "}
-                {site.founded} bauen Donnarumma und Horstmann in der Wedemark und
-                den Nachbarorten – mit einem Netzwerk, das teils seit 30 Jahren
-                zusammensteht.
+                Der Kern von DOHOme ist Handwerk, nicht Vertrieb. Donnarumma und
+                Horstmann entwickeln eigene Wohnprojekte in der Wedemark und den
+                Nachbarorten – mit einem Handwerker-Netzwerk, das teils seit 30
+                Jahren zusammensteht.
               </p>
               <p className="text-beige-100/60">
                 Weil wir selbst bauen und selbst verantworten, entscheidet bei uns

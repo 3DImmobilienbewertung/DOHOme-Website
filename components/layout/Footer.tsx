@@ -62,7 +62,7 @@ export function Footer() {
               </a>
               {site.contact.phone && (
                 <a
-                  href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
+                  href={site.contact.phoneHref}
                   className="mt-1 block text-beige-100/80 transition-colors hover:text-beige-100"
                 >
                   {site.contact.phone}

@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/animation/Reveal";
-import { site } from "@/lib/content/site";
+import {
+  companyStats,
+  formatStat,
+  hasPendingStats,
+} from "@/lib/content/company";
 
 export const metadata: Metadata = {
   title: "Über uns",
@@ -31,10 +35,10 @@ export default function UeberUnsPage() {
             Zwei Familien, ein Anspruch
           </h1>
           <p className="mt-5 max-w-2xl text-lead text-beige-100/75">
-            Häuser, die ein Leben lang halten. Seit {site.founded} entwickeln
-            Donnarumma und Horstmann Lebensräume in der Wedemark und der Region
-            Hannover – mit einem Handwerker-Netzwerk, das teils seit 30 Jahren
-            zusammensteht.
+            Wohnungen, die ein Leben lang tragen. Donnarumma und Horstmann
+            entwickeln, planen und bauen eigene Wohnprojekte in der Wedemark und
+            den Nachbarorten – mit einem Handwerker-Netzwerk, das teils seit 30
+            Jahren zusammensteht.
           </p>
         </Reveal>
       </section>
@@ -121,21 +125,24 @@ export default function UeberUnsPage() {
               </div>
             </div>
             <dl className="grid grid-cols-3 gap-6 self-start">
-              {[
-                ["seit", String(site.founded)],
-                ["Projekte", "—"],
-                ["Einheiten", "—"],
-              ].map(([label, value]) => (
-                <div key={label}>
-                  <dd className="text-display-lg nums text-accent-500">{value}</dd>
-                  <dt className="eyebrow mt-1 text-muted-dark">{label}</dt>
+              {companyStats.map((stat) => (
+                <div key={stat.key}>
+                  <dd className="nums text-display-lg text-accent-500">
+                    {formatStat(stat)}
+                  </dd>
+                  <dt className="eyebrow mt-1 text-muted-dark">{stat.label}</dt>
                 </div>
               ))}
             </dl>
           </div>
-          <div className="mt-6">
-            <Todo>Belegbare Kennzahlen (Projekte / Einheiten seit {site.founded})</Todo>
-          </div>
+          {hasPendingStats && (
+            <div className="mt-6">
+              <Todo>
+                Belegbare Kennzahlen: Anzahl Projekte, Wohneinheiten,
+                Gesamtwohnfläche
+              </Todo>
+            </div>
+          )}
         </div>
       </section>
 

@@ -13,7 +13,11 @@ export const site = {
   legalName: "Donnarumma/Horstmann GmbH",
   // Rein gestalterische Stilisierung – nur außerhalb rechtlicher Pflichtangaben.
   brandStylized: "Donnarumma · Horstmann",
-  founded: 2012,
+  // Gründungsjahr: Website nannte 2012, Handelsregister-Eintragung 05.11.2013.
+  // Bis zur Klärung durch den Kunden wird KEIN Jahr ausgegeben (kein
+  // widersprüchlicher Wert). Sobald bestätigt: Zahl eintragen – alle Texte
+  // blenden die Jahresangabe dann automatisch wieder ein.
+  founded: null as number | null,
   // Domain noch nicht final – aus Env, Platzhalter-Default bis zur Registrierung.
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.dohome.de",
 
@@ -26,9 +30,10 @@ export const site = {
 
   contact: {
     email: "kontakt@dohome.de",
-    // TODO(Vito): echte Telefonnummer. Bis zur Freigabe null → wird ausgeblendet,
-    // damit keine tote Nummer klickbar ist.
-    phone: null as string | null,
+    // Vom Kunden freigegebene Rufnummer (Stand: Juli 2026).
+    phone: "0174 7445452" as string | null,
+    /** E.164 für tel:-Links und Schema.org. */
+    phoneHref: "tel:+491747445452",
   },
 
   responseTime: "in der Regel innerhalb von 24 Stunden (werktags)",
@@ -55,6 +60,15 @@ export const site = {
     vatId: null as string | null, // TODO(Vito): USt-IdNr. (§ 27a UStG) fehlt noch
   },
 } as const;
+
+/**
+ * Zeitangabe zur Firmenhistorie – gibt „seit 2012" zurück, sobald das
+ * Gründungsjahr bestätigt ist, sonst einen neutralen Ersatz ohne Jahreszahl.
+ * Verhindert widersprüchliche oder leere Jahresangaben im Fließtext.
+ */
+export function sinceLabel(fallback = "familiengeführt"): string {
+  return site.founded ? `seit ${site.founded}` : fallback;
+}
 
 // Vollständige Postanschrift als Zeilenarray (Footer, Kontakt, Impressum).
 export const addressLines: string[] = [
