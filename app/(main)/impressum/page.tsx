@@ -98,6 +98,68 @@ export default function ImpressumPage() {
               {legal.managingDirectors ?? (
                 <Pending label="Verantwortliche Person" />
               )}
+              {legal.managingDirectors && (
+                <>
+                  <br />
+                  {site.address.street}, {site.address.postalCode}{" "}
+                  {site.address.city}
+                </>
+              )}
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-heading text-beige-100">
+              Streitbeilegung
+            </h2>
+            <p className="mt-3">
+              Die Europäische Kommission stellt eine Plattform zur
+              Online-Streitbeilegung bereit:{" "}
+              <a
+                href="https://ec.europa.eu/consumers/odr/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-4 hover:text-beige-100"
+              >
+                ec.europa.eu/consumers/odr
+                <span className="sr-only"> (öffnet in neuem Tab)</span>
+              </a>
+              . Unsere E-Mail-Adresse finden Sie oben.
+            </p>
+            <p className="mt-3">
+              Wir sind nicht bereit und nicht verpflichtet, an
+              Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle
+              teilzunehmen.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-heading text-beige-100">Haftung für Inhalte</h2>
+            <p className="mt-3">
+              Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt.
+              Für die Richtigkeit, Vollständigkeit und Aktualität können wir
+              jedoch keine Gewähr übernehmen. Abbildungen von Bauvorhaben sind
+              teilweise unverbindliche Visualisierungen; maßgeblich sind allein
+              die vertraglichen Vereinbarungen und die Baubeschreibung.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-heading text-beige-100">Haftung für Links</h2>
+            <p className="mt-3">
+              Unser Angebot enthält Links zu externen Websites Dritter, auf deren
+              Inhalte wir keinen Einfluss haben. Für diese fremden Inhalte ist
+              stets der jeweilige Anbieter verantwortlich.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-heading text-beige-100">Urheberrecht</h2>
+            <p className="mt-3">
+              Die durch uns erstellten Inhalte, Pläne und Visualisierungen
+              unterliegen dem deutschen Urheberrecht. Eine Vervielfältigung oder
+              Verwendung außerhalb der gesetzlichen Grenzen bedarf unserer
+              schriftlichen Zustimmung.
             </p>
           </div>
         </div>
