@@ -42,6 +42,17 @@ export function ProjectJsonLd({ project }: { project: PortfolioProject }) {
       value: project.units.available,
     };
   }
+  if (project.accessibilityNote) {
+    // Wortlaut unverändert aus der Registry – im Markup steht dieselbe Aussage
+    // wie auf der Seite, nichts Aufgewertetes.
+    residence.amenityFeature = [
+      {
+        "@type": "LocationFeatureSpecification",
+        name: project.accessibilityNote,
+        value: true,
+      },
+    ];
+  }
   if (project.area) {
     residence.floorSize = {
       "@type": "QuantitativeValue",

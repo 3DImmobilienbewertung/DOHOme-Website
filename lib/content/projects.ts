@@ -68,6 +68,14 @@ export type PortfolioProject = {
   facts?: ProjectFact[];
   /** Wohnungsspiegel. */
   unitList?: Unit[];
+  /**
+   * Aussage zur Zugänglichkeit, die für ALLE Wohnungen gilt – z. B.
+   * „alle Wohnungen seniorengerecht“.
+   *
+   * Wortlaut wird unverändert übernommen. Nicht zu „barrierefrei“ aufwerten:
+   * Der Begriff ist über DIN 18040-2 definiert und braucht einen Nachweis.
+   */
+  accessibilityNote?: string;
   location?: ProjectLocation;
   /**
    * Eigene Landingpage (Anzeigen), falls vorhanden. Die Projektdetailseite
@@ -137,7 +145,7 @@ export const portfolio: PortfolioProject[] = [
     isFlagship: false,
     city: bissendorf.city,
     postalCode: bissendorf.postalCode,
-    teaser: `${bissendorf.units.total} Wohnungen über drei Geschosse – Klinkerfassade, verglastes Treppenhaus, zu jeder Wohnung ein eigener Abstellraum.`,
+    teaser: `${bissendorf.units.total} seniorengerechte Wohnungen über drei Geschosse – Klinkerfassade, verglastes Treppenhaus, zu jeder Wohnung ein eigener Abstellraum.`,
     units: {
       total: bissendorf.units.total,
       sold: bissendorf.units.sold,
@@ -158,6 +166,7 @@ export const portfolio: PortfolioProject[] = [
       { k: "Fassade", v: bissendorf.architecture.facade },
       { k: "Dach", v: bissendorf.architecture.roof },
       { k: "Besonderheit", v: bissendorf.architecture.detail },
+      { k: "Zugänglichkeit", v: "Alle 21 Wohnungen seniorengerecht" },
       { k: "Balkone", v: bissendorf.architecture.balconies },
       { k: "Gesamtwohnfläche", v: `${dec(b.totalArea)} m²` },
       { k: "Beheizte Wohnfläche", v: `${dec(b.heatedArea)} m²` },
@@ -165,6 +174,7 @@ export const portfolio: PortfolioProject[] = [
       { k: "Geschosse", v: b.floors.join(", ") },
     ],
     unitList: bissendorfUnits,
+    accessibilityNote: bissendorf.accessibility,
     location: {
       copy: [
         `${bissendorf.name} liegt an einer gewachsenen Ortsdurchfahrt – Nachbarschaft statt Neubaugebiet am Feldrand. Das Gebäude nimmt mit Klinker und Satteldach die Bauweise der Umgebung auf und fügt sich in die Zeile ein, statt sich davor zu stellen.`,

@@ -139,6 +139,7 @@ export default async function ProjektDetailPage({ params }: PageProps) {
   const hasSale = summary.available_for_sale > 0;
   const hasRent = summary.available_for_rent > 0;
   const isAvailable = summary.available_total > 0;
+  const isReference = summary.phase === "abgeschlossen";
 
   const project = findProject(summary.slug);
   const heroImage = projectImage(summary.slug, 2400, 1400);
@@ -226,12 +227,17 @@ export default async function ProjektDetailPage({ params }: PageProps) {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="text-xs uppercase tracking-eyebrow text-sage-300">
-              Aktueller Stand
+              {isReference ? "Fertiggestellt" : "Aktueller Stand"}
             </p>
+            {/* „Ausverkauft“ passt nur zu einem laufenden Vertrieb. Eine
+                abgeschlossene Referenz ist vollständig vermarktet – das ist
+                eine Leistung, keine Absage. */}
             <h2 className="mt-2 font-display text-3xl md:text-4xl">
               {isAvailable
                 ? `${summary.available_total} Wohnungen verfügbar`
-                : "Aktuell ausverkauft"}
+                : isReference
+                  ? "Vollständig vermarktet"
+                  : "Aktuell ausverkauft"}
             </h2>
           </div>
           {summary.earliest_available_from && isAvailable && (
@@ -246,8 +252,12 @@ export default async function ProjektDetailPage({ params }: PageProps) {
 
         <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-beige-100/10 lg:grid-cols-4">
           <StatTile
-            label="Verfügbare Wohnungen"
-            value={isAvailable ? String(summary.available_total) : "—"}
+            label={isAvailable ? "Verfügbare Wohnungen" : "Wohneinheiten"}
+            value={String(
+              isAvailable
+                ? summary.available_total
+                : (project?.units.total ?? summary.available_total),
+            )}
             hint={
               hasSale && hasRent
                 ? `${summary.available_for_sale} Kauf · ${summary.available_for_rent} Miete`
@@ -255,7 +265,7 @@ export default async function ProjektDetailPage({ params }: PageProps) {
                   ? "zum Kauf"
                   : hasRent
                     ? "zur Miete"
-                    : "Referenz"
+                    : "gebaut und übergeben"
             }
           />
           <StatTile

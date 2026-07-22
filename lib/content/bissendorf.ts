@@ -49,6 +49,16 @@ export const bissendorf = {
     balconies: "Glasbrüstungen",
   },
 
+  /**
+   * Vom Kunden bestätigt: alle 21 Wohnungen sind seniorengerecht ausgeführt.
+   *
+   * BEWUSST NICHT „barrierefrei“: Dieser Begriff ist über DIN 18040-2 definiert
+   * und darf nur mit Nachweis verwendet werden. „Seniorengerecht“ ist die
+   * Formulierung des Kunden und bleibt so stehen. Erst wenn eine Bestätigung
+   * nach DIN 18040-2 vorliegt, darf hier aufgewertet werden.
+   */
+  accessibility: "alle Wohnungen seniorengerecht",
+
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Bissendorfer+Stra%C3%9Fe+21%2C+30900+Wedemark",
   mapsEmbedUrl:
@@ -93,5 +103,6 @@ export const bissendorfUnits: Unit[] = [
 export const bissendorfStory: string[] = [
   `Ein Baukörper mit ${bissendorf.units.total} Wohnungen über drei Geschosse, in ${bissendorf.architecture.facade} ausgeführt und mit ${bissendorf.architecture.roof} gedeckt. Ein über zwei Geschosse verglastes Treppenhaus gliedert die Straßenfassade und bringt Tageslicht bis in den Eingangsbereich.`,
   `Die Wohnungen reichen von ${bissendorf.facts.rooms.min} bis ${bissendorf.facts.rooms.max} Zimmern – von der kompakten Zweizimmerwohnung bis zur Vierzimmerwohnung mit rund 97 m². Zu jeder Einheit gehört ein eigener Abstellraum; zusammen ergeben sie gut 180 m² Nutzfläche zusätzlich zur Wohnfläche.`,
+  "Alle Wohnungen sind seniorengerecht ausgeführt – nicht als Sonderfall für einzelne Einheiten, sondern durchgängig. Wer hier einzieht, muss die Wohnung im Alter nicht wieder verlassen.",
   "Das Projekt ist fertiggestellt und vollständig vermarktet. Es steht hier als Referenz – für die Handschrift, die auch unsere laufenden Vorhaben trägt.",
 ];
