@@ -61,7 +61,7 @@ export const usePlaceholders = false;
  * Innenfoto, damit die Seite nie ein fehlendes Bild zeigt.
  */
 export const rotkampCover = {
-  available: false,
+  available: true,
   src: "/images/rotkamp-1/visualisierung-aussen.jpg",
   fallbackSrc: "/images/rotkamp-1/wohnraum-balkon.jpg",
   alt: "Außenvisualisierung Rotkamp 1, 30900 Wedemark – Klinkerfassade mit Satteldach und Stellplätzen",
@@ -86,6 +86,13 @@ export function coverImage() {
  * das erste Bild der Liste lädt priorisiert.
  */
 export const rotkampGallery: GalleryImage[] = [
+  {
+    src: "/images/rotkamp-1/visualisierung-aussen.jpg",
+    category: "aussen",
+    width: 1191,
+    height: 842,
+    caption: "Klinkerfassade mit Satteldach, Stellplätze im Innenhof",
+  },
   {
     src: "/images/rotkamp-1/wohnraum-balkon.jpg",
     category: "innen",

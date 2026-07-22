@@ -34,12 +34,12 @@ export function FlagshipSpotlight() {
           <Reveal className="overflow-hidden rounded-3xl">
             <div className="relative aspect-[4/3] w-full">
               <Image
-                src="/images/rotkamp-1/wohnraum-balkon.jpg"
-                alt={`Wohnraum mit bodentiefen Fenstern, ${rotkamp.name}, ${rotkamp.postalCode} ${rotkamp.city}`}
+                src="/images/rotkamp-1/visualisierung-aussen.jpg"
+                alt={`Außenvisualisierung ${rotkamp.name}, ${rotkamp.postalCode} ${rotkamp.city} – Klinkerfassade mit Satteldach`}
                 fill
                 sizes="(min-width: 1024px) 60vw, 100vw"
                 loading="lazy"
-                quality={78}
+                quality={80}
                 className="object-cover"
               />
             </div>

@@ -121,46 +121,47 @@ export default function RotkampLanding() {
 
       <main className="bg-green-900 text-beige-100">
         {/* ------------------------------------------------------------- HERO */}
-        {/* Split-Layout: Text auf ruhigem Grün (garantierter Kontrast),
-            Foto im Hochformat daneben – ohne erzwungenen Beschnitt. */}
-        <section className="border-b border-beige-100/10">
-          <div className="mx-auto grid max-w-container items-center gap-10 px-6 py-12 md:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-            <div>
-              <p className="eyebrow text-sage-300">Neubau · {rotkamp.city}</p>
-              <h1 className="mt-3 text-display-xl">
-                {rotkamp.name} – Ihr neues Zuhause in der {rotkamp.city}
-              </h1>
-              <p className="mt-5 max-w-xl text-lead text-beige-100/85">
-                {rotkamp.units.total} Eigentumswohnungen in drei Häusern, aus
-                eigener Entwicklung. {rotkamp.units.sold} sind bereits verkauft,{" "}
-                {rotkamp.units.occupied} Wohnungen bewohnt.
-              </p>
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <CallButton />
-                <a
-                  href="#rueckruf"
-                  className="rounded-full border border-beige-100/45 px-7 py-3.5 text-sm font-medium text-beige-100 transition-colors hover:bg-beige-100/10"
-                >
-                  Rückruf anfordern
-                </a>
-              </div>
-              <p className="mt-4 text-sm text-muted-dark">
-                Familiengeführt · Wedemark &amp; Region Hannover
-              </p>
-            </div>
+        {/* Vollflächiges Deckblatt: die Außenvisualisierung trägt die Bühne.
+            Höhe bewusst gedeckelt, damit der Anruf-CTA über der Falz bleibt. */}
+        <section className="relative isolate flex min-h-[min(80vh,600px)] items-end overflow-hidden">
+          <Image
+            src={cover.src}
+            alt={cover.alt}
+            fill
+            priority
+            sizes="100vw"
+            quality={84}
+            className="object-cover object-center"
+          />
+          {/* Scrim nur im unteren Drittel: garantiert Textkontrast, lässt das
+              Gebäude oben in seinen echten Farben stehen. */}
+          <div className="absolute inset-0 bg-gradient-to-t from-green-950 from-28% via-green-950/72 via-52% to-transparent to-88%" />
 
-            {/* Deckblatt. Höhe begrenzt, damit der Anruf-CTA über der Falz bleibt. */}
-            <div className="relative h-[46vh] min-h-[300px] overflow-hidden rounded-3xl lg:h-[min(56vh,460px)]">
-              <Image
-                src={cover.src}
-                alt={cover.alt}
-                fill
-                priority
-                sizes="(min-width: 1024px) 46vw, 100vw"
-                quality={82}
-                className="object-cover"
-              />
+          {/* Textschatten statt stärkerem Scrim: sichert die Lesbarkeit auch dort,
+              wo helle Fassade hinter der Schrift liegt – ohne das Rendering zu
+              verdunkeln. */}
+          <div className="relative mx-auto w-full max-w-container px-6 pb-14 pt-24 [text-shadow:0_1px_18px_rgba(15,36,26,0.6)]">
+            <p className="eyebrow text-beige-100/85">Neubau · {rotkamp.city}</p>
+            <h1 className="mt-3 max-w-3xl text-display-xl">
+              {rotkamp.name} – Ihr neues Zuhause in der {rotkamp.city}
+            </h1>
+            <p className="mt-5 max-w-xl text-lead text-beige-100/90">
+              {rotkamp.units.total} Eigentumswohnungen in drei Häusern, aus
+              eigener Entwicklung. {rotkamp.units.sold} sind bereits verkauft,{" "}
+              {rotkamp.units.occupied} Wohnungen bewohnt.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-4 [text-shadow:none]">
+              <CallButton />
+              <a
+                href="#rueckruf"
+                className="rounded-full border border-beige-100/60 bg-green-950/30 px-7 py-3.5 text-sm font-medium text-beige-100 backdrop-blur-sm transition-colors hover:bg-beige-100/15"
+              >
+                Rückruf anfordern
+              </a>
             </div>
+            <p className="mt-4 text-sm text-beige-100/70">
+              Familiengeführt · Wedemark &amp; Region Hannover
+            </p>
           </div>
         </section>
 
