@@ -76,6 +76,16 @@ export type PortfolioProject = {
    * Der Begriff ist über DIN 18040-2 definiert und braucht einen Nachweis.
    */
   accessibilityNote?: string;
+  /**
+   * Sachlicher Steuerhinweis für vermietende Käufer.
+   *
+   * Grundsätze: exakter Paragraf, Voraussetzungen benannt, Vorbehalt der
+   * steuerlichen Beratung. KEINE Renditeversprechen, KEIN „Kapitalanlage“ –
+   * DOHOme verkauft eigene Wohnungen, die Website bleibt frei von
+   * maklertypischem Anlagejargon. Nur setzen, wo tatsächlich noch Einheiten
+   * erworben werden können.
+   */
+  taxNote?: { title: string; paragraphs: string[]; disclaimer: string };
   location?: ProjectLocation;
   /**
    * Eigene Landingpage (Anzeigen), falls vorhanden. Die Projektdetailseite
@@ -134,6 +144,15 @@ export const portfolio: PortfolioProject[] = [
     ],
     unitList: rotkampUnits,
     accessibilityNote: rotkamp.accessibility,
+    taxNote: {
+      title: "Für Käufer, die vermieten",
+      paragraphs: [
+        "Wer eine Wohnung im Rotkamp 1 vermietet, kann das Gebäude nach § 7 Abs. 5a EStG degressiv abschreiben: 5 % vom jeweiligen Restwert – anstelle der linearen Abschreibung von 3 % pro Jahr, die für nach 2022 fertiggestellte Wohngebäude gilt.",
+        "Voraussetzung ist unter anderem, dass der Baubeginn zwischen dem 1. Oktober 2023 und dem 30. September 2029 liegt und der Kaufvertrag bis zum Ende des Fertigstellungsjahres geschlossen wird. Ein späterer Wechsel zur linearen Abschreibung ist möglich.",
+      ],
+      disclaimer:
+        "Diese Angabe dient der ersten Orientierung und ersetzt keine steuerliche Beratung. Ob und in welcher Höhe die Abschreibung in Ihrem Fall greift, klären Sie bitte mit Ihrer Steuerberaterin oder Ihrem Steuerberater.",
+    },
     location: {
       copy: locationCopy,
       neighbourhood,

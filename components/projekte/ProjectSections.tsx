@@ -17,7 +17,7 @@ import type { PortfolioProject } from "@/lib/content/projects";
 // kurz und auf den Anruf ausgerichtet.
 
 export function ProjectSections({ project }: { project: PortfolioProject }) {
-  const { story, facts, gallery, unitList, location } = project;
+  const { story, facts, gallery, unitList, location, taxNote } = project;
   const hasStoryBlock = Boolean(story || (facts && facts.length > 0));
 
   return (
@@ -102,6 +102,34 @@ export function ProjectSections({ project }: { project: PortfolioProject }) {
             </Reveal>
             <Reveal className="mt-10">
               <UnitTable units={unitList} projectName={project.name} />
+            </Reveal>
+          </div>
+        </section>
+      )}
+
+      {/* ------------------------------------------------------ STEUERHINWEIS */}
+      {/* Bewusst zurückhaltend gesetzt: ein sachlicher Kasten nach dem
+          Wohnungsspiegel, kein eigener Werbeblock. Die Website richtet sich an
+          Selbstnutzer; dieser Hinweis informiert vermietende Käufer, ohne die
+          Ausrichtung zu verschieben. */}
+      {taxNote && (
+        <section className="border-t border-beige-100/10">
+          <div className="mx-auto max-w-container px-6 section-sm">
+            <Reveal>
+              <div className="max-w-3xl rounded-3xl border border-beige-100/15 bg-beige-100/[0.03] p-8 md:p-10">
+                <p className="eyebrow text-sage-300">Steuerlicher Hinweis</p>
+                <h2 className="mt-2 font-display text-2xl md:text-3xl">
+                  {taxNote.title}
+                </h2>
+                <div className="mt-4 space-y-3 text-beige-100/80">
+                  {taxNote.paragraphs.map((p) => (
+                    <p key={p.slice(0, 32)}>{p}</p>
+                  ))}
+                </div>
+                <p className="mt-5 border-t border-beige-100/10 pt-4 text-sm text-muted-dark">
+                  {taxNote.disclaimer}
+                </p>
+              </div>
             </Reveal>
           </div>
         </section>
