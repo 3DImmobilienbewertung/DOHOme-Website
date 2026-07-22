@@ -78,8 +78,8 @@ const FACTS: { k: string; v: string; pending?: boolean }[] = [
     pending: !rotkamp.specs.energy,
   },
   {
-    k: "Barrierefrei",
-    v: `${accessibleUnits.length} Wohnungen behindertengerecht`,
+    k: "Zugänglichkeit",
+    v: `Alle Wohnungen seniorengerecht, ${accessibleUnits.length} davon behindertengerecht`,
   },
 ];
 

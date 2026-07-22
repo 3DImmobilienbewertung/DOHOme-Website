@@ -56,12 +56,12 @@ export function UnitTable({
               >
                 <span className="inline-flex items-center gap-2">
                   {u.id}
+                  {/* Kennzeichnung exakt wie im Wohnungsspiegel (BHG).
+                      NICHT „barrierefrei“ – dieser Begriff ist über
+                      DIN 18040-2 definiert und braucht einen Nachweis. */}
                   {u.accessible && (
-                    <span
-                      title="behindertengerecht"
-                      className="rounded border border-accent-500/50 px-1.5 py-0.5 font-sans text-[0.65rem] font-medium uppercase tracking-wide text-accent-400"
-                    >
-                      barrierefrei
+                    <span className="whitespace-nowrap rounded border border-accent-500/50 px-1.5 py-0.5 font-sans text-[0.65rem] font-medium uppercase tracking-wide text-accent-400">
+                      behindertengerecht
                     </span>
                   )}
                 </span>

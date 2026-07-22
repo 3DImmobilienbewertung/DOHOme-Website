@@ -16,7 +16,7 @@ export const bissendorf = {
   name: "Bissendorfer Straße 21",
   shortName: "Bissendorfer Straße",
   street: "Bissendorfer Straße 21",
-  // PRÜFEN: Ort und Postleitzahl vom Kunden bestätigen lassen.
+  /** Vom Kunden bestätigt. */
   city: "Wedemark",
   postalCode: "30900",
 
@@ -28,7 +28,9 @@ export const bissendorf = {
 
   facts: {
     buildings: 1,
+    /** Drei Vollgeschosse; das oberste ist das Dachgeschoss. */
     floors: ["Erdgeschoss", "1. Obergeschoss", "Dachgeschoss"],
+    fullStoreys: 3,
     rooms: { min: 2, max: 4 },
     /** Wohnfläche gesamt je Einheit (inkl. anteiliger Balkon-/Terrassenfläche). */
     area: { min: 46.89, max: 100.31 },
@@ -36,8 +38,9 @@ export const bissendorf = {
     totalArea: 1486.19,
     /** Beheizte Wohnfläche laut Blattergebnis, in m². */
     heatedArea: 1419.91,
-    /** Abstellräume als Nutzfläche, in m². */
+    /** Abstellräume als Nutzfläche, in m². Sie liegen im Dachgeschoss. */
     storageArea: 180.11,
+    storageLocation: "Dachgeschoss",
     /** Wohn- und Nutzfläche zusammen, in m². */
     grossArea: 1666.3,
   },
@@ -48,6 +51,10 @@ export const bissendorf = {
     detail: "verglastes Treppenhaus über zwei Geschosse",
     balconies: "Glasbrüstungen",
   },
+
+  /** Stellplätze: Tiefgarage unter dem Gebäude, Zufahrt über die Rampe. */
+  parking: "Tiefgarage",
+
 
   /**
    * Vom Kunden bestätigt: alle 21 Wohnungen sind seniorengerecht ausgeführt.
@@ -102,7 +109,7 @@ export const bissendorfUnits: Unit[] = [
 /** Fließtext zur Ausführung – belegt durch Wohnungsspiegel und Aufnahme. */
 export const bissendorfStory: string[] = [
   `Ein Baukörper mit ${bissendorf.units.total} Wohnungen über drei Geschosse, in ${bissendorf.architecture.facade} ausgeführt und mit ${bissendorf.architecture.roof} gedeckt. Ein über zwei Geschosse verglastes Treppenhaus gliedert die Straßenfassade und bringt Tageslicht bis in den Eingangsbereich.`,
-  `Die Wohnungen reichen von ${bissendorf.facts.rooms.min} bis ${bissendorf.facts.rooms.max} Zimmern – von der kompakten Zweizimmerwohnung bis zur Vierzimmerwohnung mit rund 97 m². Zu jeder Einheit gehört ein eigener Abstellraum; zusammen ergeben sie gut 180 m² Nutzfläche zusätzlich zur Wohnfläche.`,
+  `Die Wohnungen reichen von ${bissendorf.facts.rooms.min} bis ${bissendorf.facts.rooms.max} Zimmern – von der kompakten Zweizimmerwohnung bis zur Vierzimmerwohnung mit rund 97 m². Zu jeder Einheit gehört ein eigener Abstellraum im Dachgeschoss; zusammen ergeben sie gut 180 m² Nutzfläche zusätzlich zur Wohnfläche. Geparkt wird in der Tiefgarage – die Stellplätze liegen unter dem Haus statt auf dem Grundstück.`,
   "Alle Wohnungen sind seniorengerecht ausgeführt – nicht als Sonderfall für einzelne Einheiten, sondern durchgängig. Wer hier einzieht, muss die Wohnung im Alter nicht wieder verlassen.",
   "Das Projekt ist fertiggestellt und vollständig vermarktet. Es steht hier als Referenz – für die Handschrift, die auch unsere laufenden Vorhaben trägt.",
 ];

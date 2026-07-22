@@ -97,7 +97,7 @@ export const portfolio: PortfolioProject[] = [
     city: rotkamp.city,
     postalCode: rotkamp.postalCode,
     district: rotkamp.district,
-    teaser: `${rotkamp.units.total} Eigentumswohnungen in drei Häusern – Klinkerfassade, abgesetztes Dachgeschoss, Privatgärten im Erdgeschoss.`,
+    teaser: `${rotkamp.units.total} seniorengerechte Eigentumswohnungen in drei Häusern – Klinkerfassade, abgesetztes Dachgeschoss, Privatgärten im Erdgeschoss.`,
     units: {
       total: rotkamp.units.total,
       sold: rotkamp.units.sold,
@@ -113,6 +113,7 @@ export const portfolio: PortfolioProject[] = [
         `Drei Baukörper mit ${rotkamp.architecture.facade}fassade und ${rotkamp.architecture.roof}, das Dachgeschoss bewusst abgesetzt. Diese Handschrift ist in der Wedemark verwurzelt – sie altert gut und braucht in zwanzig Jahren keine Sanierung der Hülle.`,
         `Die Außenwände sind als ${rotkamp.architecture.construction} ausgeführt: eine Konstruktion, die Schlagregen abhält, Schall dämpft und den Klinker trägt, ohne dass eine aufgeklebte Dämmschicht das Erscheinungsbild bestimmt.`,
         "Im Erdgeschoss gehört zu jeder Wohnung ein Privatgarten, in den Obergeschossen ein Balkon. Für jede Wohnung ist ein Stellplatz vorhanden.",
+        "Alle Wohnungen sind seniorengerecht ausgeführt; vier Einheiten zusätzlich behindertengerecht. Das ist keine Zusatzausstattung für den Einzelfall, sondern der Standard im ganzen Quartier.",
       ],
     },
     facts: [
@@ -125,10 +126,14 @@ export const portfolio: PortfolioProject[] = [
         k: "Stellplätze",
         v: `${parkingTotal} – ${rotkamp.parking.garages} Garagen, ${rotkamp.parking.carports} Carports, ${rotkamp.parking.outdoor} Außenstellplätze`,
       },
-      { k: "Barrierefrei", v: `${accessibleUnits.length} Wohnungen behindertengerecht` },
+      {
+        k: "Zugänglichkeit",
+        v: `Alle Wohnungen seniorengerecht, ${accessibleUnits.length} davon behindertengerecht`,
+      },
       { k: "Geschosse", v: r.floors.join(", ") },
     ],
     unitList: rotkampUnits,
+    accessibilityNote: rotkamp.accessibility,
     location: {
       copy: locationCopy,
       neighbourhood,
@@ -145,7 +150,7 @@ export const portfolio: PortfolioProject[] = [
     isFlagship: false,
     city: bissendorf.city,
     postalCode: bissendorf.postalCode,
-    teaser: `${bissendorf.units.total} seniorengerechte Wohnungen über drei Geschosse – Klinkerfassade, verglastes Treppenhaus, zu jeder Wohnung ein eigener Abstellraum.`,
+    teaser: `${bissendorf.units.total} seniorengerechte Wohnungen über drei Vollgeschosse – Klinkerfassade, verglastes Treppenhaus, Tiefgarage und ein eigener Abstellraum je Wohnung.`,
     units: {
       total: bissendorf.units.total,
       sold: bissendorf.units.sold,
@@ -170,8 +175,15 @@ export const portfolio: PortfolioProject[] = [
       { k: "Balkone", v: bissendorf.architecture.balconies },
       { k: "Gesamtwohnfläche", v: `${dec(b.totalArea)} m²` },
       { k: "Beheizte Wohnfläche", v: `${dec(b.heatedArea)} m²` },
-      { k: "Abstellräume", v: `${dec(b.storageArea)} m² Nutzfläche` },
-      { k: "Geschosse", v: b.floors.join(", ") },
+      { k: "Stellplätze", v: bissendorf.parking },
+      {
+        k: "Abstellräume",
+        v: `${dec(b.storageArea)} m² Nutzfläche im ${b.storageLocation}`,
+      },
+      {
+        k: "Geschosse",
+        v: `${b.fullStoreys} Vollgeschosse – ${b.floors.join(", ")}`,
+      },
     ],
     unitList: bissendorfUnits,
     accessibilityNote: bissendorf.accessibility,

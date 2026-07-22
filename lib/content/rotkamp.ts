@@ -65,6 +65,16 @@ export const rotkamp = {
     detail: "abgesetztes Dachgeschoss",
   },
 
+  /**
+   * Vom Kunden bestätigt: alle Wohnungen sind seniorengerecht ausgeführt.
+   * Die vier im Wohnungsspiegel als BHG geführten Einheiten sind darüber
+   * hinaus behindertengerecht.
+   *
+   * BEWUSST NICHT „barrierefrei“: über DIN 18040-2 definiert, nur mit
+   * Nachweis verwendbar. Wortlaut des Kunden bleibt stehen.
+   */
+  accessibility: "alle Wohnungen seniorengerecht",
+
   specs: {
     energy: "Effizienzhaus-55-Standard" as string | null,
     /** Noch offen – null blendet die Angabe aus statt zu raten. */
