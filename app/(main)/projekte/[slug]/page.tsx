@@ -22,7 +22,7 @@ import { PHASE_LABEL, PLAN_TYPE_LABEL } from "@/lib/content/labels";
 import { projectImage } from "@/lib/content/media";
 import { site } from "@/lib/content/site";
 import { findProject, portfolio, toSummary } from "@/lib/content/projects";
-import { RotkampSections } from "@/components/projekte/RotkampSections";
+import { ProjectSections } from "@/components/projekte/ProjectSections";
 import { ProjectJsonLd } from "@/components/seo/ProjectJsonLd";
 
 // Aggregate alle 5 Minuten neu (ISR) – kein Live-DB-Hit pro Besucher,
@@ -296,9 +296,9 @@ export default async function ProjektDetailPage({ params }: PageProps) {
         </dl>
       </section>
 
-      {/* Projektspezifische Tiefe. Aktuell nur Rotkamp 1 – weitere Projekte
-          erhalten hier ihren eigenen Abschnitt, sobald Inhalte vorliegen. */}
-      {summary.slug === "rotkamp-1" && <RotkampSections />}
+      {/* Projektinhalte kommen aus der Registry – jeder Abschnitt erscheint
+          nur, wenn Daten dafür gepflegt sind. */}
+      {project && <ProjectSections project={project} />}
 
       {/* ------------------------------------------------- GRUNDRISSTYPEN / PDFs */}
       {plans.length > 0 && (

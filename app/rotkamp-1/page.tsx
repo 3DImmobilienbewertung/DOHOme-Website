@@ -152,8 +152,8 @@ export default function RotkampLanding() {
             </h1>
             <p className="mt-5 max-w-xl text-lead text-beige-100/90">
               {rotkamp.units.total} Eigentumswohnungen in drei Häusern, aus
-              eigener Entwicklung. {rotkamp.units.sold} sind bereits verkauft,{" "}
-              {rotkamp.units.occupied} Wohnungen bewohnt.
+              eigener Entwicklung. {rotkamp.units.sold} sind bereits verkauft –
+              die Käufer und Mieter ziehen gerade ein.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4 [text-shadow:none]">
               <CallButton />
@@ -183,9 +183,9 @@ export default function RotkampLanding() {
                   </h2>
                 </div>
                 <p className="max-w-sm text-beige-100/75">
-                  Das Projekt ist weit fortgeschritten – {rotkamp.units.occupied}{" "}
-                  Wohnungen sind bereits bewohnt. Sprechen Sie uns zu den
-                  verbleibenden Einheiten an.
+                  Das Projekt ist weit fortgeschritten: Die verkauften Wohnungen
+                  werden derzeit bezogen, Käufer und Mieter ziehen ein. Sprechen
+                  Sie uns zu den verbleibenden Einheiten an.
                 </p>
               </div>
 

@@ -4,15 +4,45 @@
 // nicht steht. Sobald `NEXT_PUBLIC_SUPABASE_URL`/`..._ANON_KEY` gesetzt sind,
 // übernehmen die Aggregations-Views die Verfügbarkeiten (siehe
 // app/(main)/projekte/page.tsx) – die Registry bleibt dann als Fallback und
-// als Quelle für Bild, Teaser und Detailtexte bestehen, die nicht in der
-// Datenbank liegen.
+// als Quelle für Bild, Teaser und Detailinhalte bestehen.
 //
-// ERGÄNZEN: Weitere Projekte als Objekt in `portfolio` eintragen. Abgeschlossene
-// Referenzen erhalten phase: "abgeschlossen" und units.available: 0.
+// ERGÄNZEN: Weitere Projekte als Objekt in `portfolio` eintragen. Die
+// Projektdetailseite rendert alle gepflegten Abschnitte automatisch; fehlt ein
+// Abschnitt (z. B. keine Lagedaten), wird er ausgelassen statt erfunden.
 
 import type { ProjectSummary } from "@/lib/supabase/public";
-import { rotkamp, unitsAvailable } from "@/lib/content/rotkamp";
-import { rotkampCover } from "@/lib/content/gallery";
+import type { Unit, PoiGroup } from "@/lib/content/types";
+import type { GalleryImage } from "@/lib/content/gallery";
+import {
+  rotkampGallery,
+  bissendorfGallery,
+  rotkampCover,
+} from "@/lib/content/gallery";
+import {
+  rotkamp,
+  units as rotkampUnits,
+  neighbourhood,
+  locationCopy,
+  unitsAvailable,
+  parkingTotal,
+  accessibleUnits,
+} from "@/lib/content/rotkamp";
+import {
+  bissendorf,
+  bissendorfUnits,
+  bissendorfStory,
+} from "@/lib/content/bissendorf";
+
+export type ProjectFact = { k: string; v: string };
+
+export type ProjectLocation = {
+  /** Fließtext zur Lage. */
+  copy: string[];
+  neighbourhood: PoiGroup[];
+  address: string;
+  mapsUrl: string;
+  mapsEmbedUrl: string;
+};
 
 export type PortfolioProject = {
   slug: string;
@@ -30,12 +60,25 @@ export type PortfolioProject = {
   area: { min: number; max: number } | null;
   rooms: { min: number; max: number } | null;
   image: { src: string; alt: string };
+  /** Bildstrecke für den Slider auf der Projektseite. */
+  gallery?: GalleryImage[];
+  /** Fließtext zur Architektur/Ausführung. */
+  story?: { title: string; paragraphs: string[] };
+  /** Kennzahlen als Definitionsliste. */
+  facts?: ProjectFact[];
+  /** Wohnungsspiegel. */
+  unitList?: Unit[];
+  location?: ProjectLocation;
   /**
    * Eigene Landingpage (Anzeigen), falls vorhanden. Die Projektdetailseite
    * unter /projekte/<slug> existiert unabhängig davon.
    */
   landingPage?: string;
 };
+
+const dec = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: 0 });
+const r = rotkamp.facts;
+const b = bissendorf.facts;
 
 export const portfolio: PortfolioProject[] = [
   {
@@ -52,10 +95,86 @@ export const portfolio: PortfolioProject[] = [
       sold: rotkamp.units.sold,
       available: unitsAvailable,
     },
-    area: { min: rotkamp.facts.area.min, max: rotkamp.facts.area.max },
-    rooms: { min: rotkamp.facts.rooms.min, max: rotkamp.facts.rooms.max },
+    area: { min: r.area.min, max: r.area.max },
+    rooms: { min: r.rooms.min, max: r.rooms.max },
     image: { src: rotkampCover.src, alt: rotkampCover.alt },
+    gallery: rotkampGallery,
+    story: {
+      title: "Gebaut, um lange zu bleiben",
+      paragraphs: [
+        `Drei Baukörper mit ${rotkamp.architecture.facade}fassade und ${rotkamp.architecture.roof}, das Dachgeschoss bewusst abgesetzt. Diese Handschrift ist in der Wedemark verwurzelt – sie altert gut und braucht in zwanzig Jahren keine Sanierung der Hülle.`,
+        `Die Außenwände sind als ${rotkamp.architecture.construction} ausgeführt: eine Konstruktion, die Schlagregen abhält, Schall dämpft und den Klinker trägt, ohne dass eine aufgeklebte Dämmschicht das Erscheinungsbild bestimmt.`,
+        "Im Erdgeschoss gehört zu jeder Wohnung ein Privatgarten, in den Obergeschossen ein Balkon. Für jede Wohnung ist ein Stellplatz vorhanden.",
+      ],
+    },
+    facts: [
+      { k: "Fassade", v: `${rotkamp.architecture.facade}, ${rotkamp.architecture.construction}` },
+      { k: "Dach", v: `${rotkamp.architecture.roof}, ${rotkamp.architecture.detail}` },
+      { k: "Energiestandard", v: rotkamp.specs.energy ?? "Angabe folgt" },
+      { k: "Gesamtwohnfläche", v: `${dec(r.totalArea)} m²` },
+      { k: "Privatgärten (EG)", v: `${dec(r.gardens.min)} – ${dec(r.gardens.max)} m²` },
+      {
+        k: "Stellplätze",
+        v: `${parkingTotal} – ${rotkamp.parking.garages} Garagen, ${rotkamp.parking.carports} Carports, ${rotkamp.parking.outdoor} Außenstellplätze`,
+      },
+      { k: "Barrierefrei", v: `${accessibleUnits.length} Wohnungen behindertengerecht` },
+      { k: "Geschosse", v: r.floors.join(", ") },
+    ],
+    unitList: rotkampUnits,
+    location: {
+      copy: locationCopy,
+      neighbourhood,
+      address: `${rotkamp.street}, ${rotkamp.postalCode} ${rotkamp.city}`,
+      mapsUrl: rotkamp.mapsUrl,
+      mapsEmbedUrl: rotkamp.mapsEmbedUrl,
+    },
     landingPage: "/rotkamp-1",
+  },
+  {
+    slug: "bissendorfer-strasse-21",
+    name: bissendorf.name,
+    phase: "abgeschlossen",
+    isFlagship: false,
+    city: bissendorf.city,
+    postalCode: bissendorf.postalCode,
+    teaser: `${bissendorf.units.total} Wohnungen über drei Geschosse – Klinkerfassade, verglastes Treppenhaus, zu jeder Wohnung ein eigener Abstellraum.`,
+    units: {
+      total: bissendorf.units.total,
+      sold: bissendorf.units.sold,
+      available: 0,
+    },
+    area: { min: b.area.min, max: b.area.max },
+    rooms: { min: b.rooms.min, max: b.rooms.max },
+    image: {
+      src: "/images/bissendorfer-strasse-21/aussenansicht-strasse.jpg",
+      alt: `${bissendorf.name}, ${bissendorf.postalCode} ${bissendorf.city} – Klinkerfassade mit Satteldach und verglastem Treppenhaus`,
+    },
+    gallery: bissendorfGallery,
+    story: {
+      title: "Eine Adresse, die sich einfügt",
+      paragraphs: bissendorfStory,
+    },
+    facts: [
+      { k: "Fassade", v: bissendorf.architecture.facade },
+      { k: "Dach", v: bissendorf.architecture.roof },
+      { k: "Besonderheit", v: bissendorf.architecture.detail },
+      { k: "Balkone", v: bissendorf.architecture.balconies },
+      { k: "Gesamtwohnfläche", v: `${dec(b.totalArea)} m²` },
+      { k: "Beheizte Wohnfläche", v: `${dec(b.heatedArea)} m²` },
+      { k: "Abstellräume", v: `${dec(b.storageArea)} m² Nutzfläche` },
+      { k: "Geschosse", v: b.floors.join(", ") },
+    ],
+    unitList: bissendorfUnits,
+    location: {
+      copy: [
+        `${bissendorf.name} liegt an einer gewachsenen Ortsdurchfahrt – Nachbarschaft statt Neubaugebiet am Feldrand. Das Gebäude nimmt mit Klinker und Satteldach die Bauweise der Umgebung auf und fügt sich in die Zeile ein, statt sich davor zu stellen.`,
+        "Stellplätze liegen ebenerdig direkt am Haus, der Eingang ist von der Straße aus einsehbar und über das verglaste Treppenhaus tageslichtdurchflutet.",
+      ],
+      neighbourhood: [],
+      address: `${bissendorf.street}, ${bissendorf.postalCode} ${bissendorf.city}`,
+      mapsUrl: bissendorf.mapsUrl,
+      mapsEmbedUrl: bissendorf.mapsEmbedUrl,
+    },
   },
 ];
 
@@ -70,7 +189,7 @@ export function findProject(slug: string): PortfolioProject | null {
  *
  * Preisfelder bleiben bewusst `null`: Kaufpreise werden nicht auf der Website
  * ausgewiesen. Die Ansichten sind darauf ausgelegt und zeigen dann Verfügbarkeit
- * statt Preis (siehe availabilityHint in ProjectFinder).
+ * statt Preis (siehe priceHint in ProjectFinder).
  */
 export function toSummary(p: PortfolioProject): ProjectSummary {
   return {
@@ -101,9 +220,9 @@ export function toSummary(p: PortfolioProject): ProjectSummary {
 /** Die gesamte Registry in View-Form – Leuchtturmprojekte zuerst. */
 export function portfolioSummaries(): ProjectSummary[] {
   return [...portfolio]
-    .sort((a, b) => {
-      if (a.isFlagship !== b.isFlagship) return a.isFlagship ? -1 : 1;
-      return a.name.localeCompare(b.name, "de");
+    .sort((a, b2) => {
+      if (a.isFlagship !== b2.isFlagship) return a.isFlagship ? -1 : 1;
+      return a.name.localeCompare(b2.name, "de");
     })
     .map(toSummary);
 }

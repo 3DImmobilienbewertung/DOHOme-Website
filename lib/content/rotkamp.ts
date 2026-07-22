@@ -7,6 +7,12 @@
 //
 // Diese Datei ist die EINZIGE Quelle für Landingpage und Startseiten-Spotlight.
 
+import type { Unit, PoiGroup } from "@/lib/content/types";
+
+// Typen liegen zentral in types.ts – hier nur re-exportiert, damit
+// bestehende Importe aus dieser Datei weiter funktionieren.
+export type { Unit, PoiGroup };
+
 export const rotkamp = {
   name: "Rotkamp 1",
   /** Offizielle Bezeichnung aus den Bauplänen. */
@@ -17,11 +23,14 @@ export const rotkamp = {
   /** Lage laut Lageplan. */
   location: "Ecke Schaumburger Straße",
 
-  /** Vom Kunden freigegebene Verkaufszahlen (Stand Juli 2026). */
+  /**
+   * Vom Kunden freigegebene Verkaufszahlen (Stand Juli 2026).
+   * Alle 17 verkauften Wohnungen werden derzeit bezogen – Käufer und Mieter
+   * ziehen ein. Bewusst KEINE Zahl „bereits bewohnt“: Der Einzug läuft.
+   */
   units: {
     total: 22,
     sold: 17,
-    occupied: 15,
   },
 
   /** Belegte Kennzahlen aus dem Wohnungsspiegel. */
@@ -77,11 +86,6 @@ export const rotkamp = {
  * Infrastruktur im Umfeld – Entfernungen laut Straßenverzeichnis (Luftlinie
  * bzw. Gehweg, gerundet). Belegte Angaben, keine Schätzungen.
  */
-export type PoiGroup = {
-  title: string;
-  items: { name: string; distance: string }[];
-};
-
 export const neighbourhood: PoiGroup[] = [
   {
     title: "Mobilität",
@@ -137,21 +141,6 @@ export const parkingTotal =
 // noch offen – sobald die Preisliste vorliegt, hier ergänzen; die Landingpage
 // rendert daraus automatisch die Wohnungstabelle.
 
-export type Unit = {
-  /** Wohnungsnummer, z. B. "WE 1". */
-  id: string;
-  /** Haus A, B oder C. */
-  house: "A" | "B" | "C";
-  floor: "EG" | "1.OG" | "DG";
-  rooms: number;
-  /** Wohnfläche inkl. 50 % Balkon/Terrasse, in m². */
-  areaSqm: number;
-  /** Freifläche: Garten (EG) oder Balkon. */
-  outdoor: string;
-  /** Behindertengerecht ausgeführt (BHG im Wohnungsspiegel). */
-  accessible?: boolean;
-  status?: "verfuegbar" | "reserviert" | "verkauft" | null;
-};
 
 export const units: Unit[] = [
   // Erdgeschoss – mit Privatgarten

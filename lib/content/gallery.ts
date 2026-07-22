@@ -138,3 +138,19 @@ export const rotkampGallery: GalleryImage[] = [
     caption: "Lageplan: drei Baukörper mit Garagen und Carports",
   },
 ];
+
+/**
+ * Bildmaterial Bissendorfer Straße 21 (fertiggestellt).
+ * ERGÄNZEN: weitere Aufnahmen – Innenräume, Treppenhaus, Rückseite. Die Galerie
+ * ist als Slider angelegt und nimmt zusätzliche Motive ohne Anpassung auf.
+ */
+export const bissendorfGallery: GalleryImage[] = [
+  {
+    src: "/images/bissendorfer-strasse-21/aussenansicht-strasse.jpg",
+    category: "aussen",
+    width: 2048,
+    height: 1536,
+    caption: "Straßenansicht mit verglastem Treppenhaus und Stellplätzen",
+    date: "August 2023",
+  },
+];
