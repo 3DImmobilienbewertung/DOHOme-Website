@@ -2,6 +2,8 @@
 
 import { z } from "zod";
 
+import { sendNotification, deliveryFallbackMessage } from "@/lib/mail";
+
 // Schlanke Rückruf-Action für Landingpages (Ad-Conversion): Name + Telefon
 // genügen. Gleiche Schutz-/Datenschutz-Prinzipien wie submitLead.
 
@@ -49,12 +51,29 @@ export async function submitCallback(
   }
 
   const data = parsed.data;
-  // TODO(backend): Rückruf mandantengebunden in Supabase `leads` schreiben +
-  // Benachrichtigung (Resend). Braucht Zugangsdaten. Bis dahin PII-frei loggen.
-  console.info("[callback] eingegangen", {
-    source: String(formData.get("source") || "landingpage"),
-    hasNote: Boolean((data.note ?? "").length),
+  const source = String(formData.get("source") || "landingpage");
+
+  const delivery = await sendNotification({
+    subject: `Rückrufbitte – ${data.name}`,
+    fields: [
+      ["Name", data.name],
+      ["Telefon", data.phone],
+      ["Anmerkung", data.note],
+      ["Quelle", source],
+    ],
   });
 
+  if (!delivery.ok) {
+    // Kein vorgetäuschter Erfolg: Wer zurückgerufen werden will, muss erfahren,
+    // dass die Bitte nicht angekommen ist.
+    console.error("[callback] Zustellung fehlgeschlagen", {
+      reason: delivery.reason,
+      source,
+    });
+    return { ok: false, error: deliveryFallbackMessage() };
+  }
+
+  // Bewusst ohne personenbezogene Daten – die stehen in der Benachrichtigung.
+  console.info("[callback] zugestellt", { source });
   return { ok: true };
 }

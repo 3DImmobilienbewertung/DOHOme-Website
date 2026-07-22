@@ -2,10 +2,17 @@
 
 import { z } from "zod";
 
+import { sendNotification, deliveryFallbackMessage } from "@/lib/mail";
+
 // Server Action für die öffentlichen Lead-Formulare (Kontakt + Grundstück).
 // Validiert serverseitig als Single Source of Truth, schützt gegen Bot-Spam und
-// meldet feldbezogene Fehler zurück. Backend-frei lauffähig – die Persistenz
-// (Supabase) + Benachrichtigung (Resend) folgt, sobald Zugangsdaten vorliegen.
+// meldet feldbezogene Fehler zurück.
+//
+// Die Anfrage wird per E-Mail zugestellt (lib/mail.ts). Schlägt das fehl oder
+// ist kein Versand konfiguriert, MELDET DIE ACTION KEINEN ERFOLG – der Absender
+// bekommt stattdessen Telefonnummer und E-Mail-Adresse genannt.
+// ERGÄNZEN: zusätzliche Persistenz in Supabase `leads` (Service-Role-Client,
+// NICHT anon), sobald die Zugangsdaten vorliegen.
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -98,11 +105,35 @@ export async function submitLead(
     };
   }
 
-  // TODO(backend): Lead mandantengebunden (DOHOme) in Supabase `leads` schreiben
-  // (Service-Role-Client, NICHT anon) und Benachrichtigung versenden (Resend).
-  // Braucht Zugangsdaten. Bis dahin: nur METADATEN loggen – niemals PII (DSGVO).
-  console.info("[lead] eingegangen", {
-    subject: lead.subject ?? "Anfrage",
+  const subject = lead.subject ?? "Anfrage über die Website";
+
+  const delivery = await sendNotification({
+    subject: `${subject} – ${lead.name}`,
+    fields: [
+      ["Name", lead.name],
+      ["E-Mail", lead.email],
+      ["Telefon", lead.phone],
+      ["Thema", lead.topic],
+      ["Grundstücksgröße", lead.plot_size],
+      ["Grundstücksadresse", lead.plot_address],
+      ["Nachricht", message],
+    ],
+    // „Antworten“ im Postfach geht direkt an den Interessenten.
+    replyTo: lead.email,
+  });
+
+  if (!delivery.ok) {
+    // Niemals Erfolg melden, wenn die Anfrage nirgends angekommen ist.
+    console.error("[lead] Zustellung fehlgeschlagen", {
+      reason: delivery.reason,
+      subject,
+    });
+    return { ok: false, error: deliveryFallbackMessage() };
+  }
+
+  // Nur Metadaten – niemals PII in die Logs (DSGVO).
+  console.info("[lead] zugestellt", {
+    subject,
     messageLength: message.length,
     hasPhone: Boolean((lead.phone ?? "").length),
     hasPlot,
