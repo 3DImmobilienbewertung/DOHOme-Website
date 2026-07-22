@@ -20,8 +20,10 @@ import {
 } from "@/lib/format";
 import { PHASE_LABEL, PLAN_TYPE_LABEL } from "@/lib/content/labels";
 import { projectImage } from "@/lib/content/media";
+import { site } from "@/lib/content/site";
 import { findProject, portfolio, toSummary } from "@/lib/content/projects";
 import { RotkampSections } from "@/components/projekte/RotkampSections";
+import { ProjectJsonLd } from "@/components/seo/ProjectJsonLd";
 
 // Aggregate alle 5 Minuten neu (ISR) – kein Live-DB-Hit pro Besucher,
 // aber stets aktuelle Verfügbarkeiten ohne Re-Deploy.
@@ -84,14 +86,35 @@ export async function generateMetadata({
   if (!data) return { title: "Projekt nicht gefunden" };
 
   const { summary } = data;
+  const project = findProject(summary.slug);
+  const place = summary.city ?? "der Region Hannover";
+
+  // Titel und Beschreibung tragen Ort und Angebot – die Projektseite ist die
+  // organische Verkaufsseite und konkurriert lokal um „Eigentumswohnung <Ort>“.
+  const title = `${summary.name} – Eigentumswohnungen in ${place}`;
+
+  const parts = [
+    summary.available_total > 0
+      ? `${summary.available_total} von ${project?.units.total ?? summary.available_total} Wohnungen noch verfügbar`
+      : "Referenzprojekt von DOHOme",
+    `Wohnflächen ${formatSqmRange(summary.area_sqm_min, summary.area_sqm_max)}`,
+    project?.rooms
+      ? `${formatRooms(project.rooms.min)} bis ${formatRooms(project.rooms.max)} Zimmer`
+      : null,
+    "aus eigener Entwicklung",
+  ].filter(Boolean);
+
   return {
-    title: summary.name,
-    description: `${summary.name} in ${summary.city ?? "der Region Hannover"} – ${
-      summary.available_total > 0
-        ? `${summary.available_total} Wohneinheiten verfügbar`
-        : "Referenzprojekt von DOHOme"
-    }. Wohnflächen ${range(summary.area_sqm_min, summary.area_sqm_max, formatSqm)}.`,
+    title,
+    description: `${summary.name} in ${summary.postal_code ?? ""} ${place}: ${parts.join(", ")}.`
+      .replace(/\s+/g, " ")
+      .trim(),
     alternates: { canonical: `/projekte/${summary.slug}` },
+    openGraph: {
+      title,
+      url: `${site.url}/projekte/${summary.slug}`,
+      images: project ? [{ url: `${site.url}${project.image.src}` }] : undefined,
+    },
   };
 }
 
@@ -123,6 +146,8 @@ export default async function ProjektDetailPage({ params }: PageProps) {
 
   return (
     <main className="bg-green-900 text-beige-100">
+      {project && <ProjectJsonLd project={project} />}
+
       {/* ---------------------------------------------------------------- HERO */}
       <section className="relative isolate flex min-h-[68vh] items-end overflow-hidden">
         <Image
@@ -139,7 +164,32 @@ export default async function ProjektDetailPage({ params }: PageProps) {
             krumme Werte wie via-52% werden stillschweigend verworfen. */}
         <div className="absolute inset-0 bg-gradient-to-t from-green-950 via-green-950/60 via-45% to-transparent to-85%" />
 
-        <div className="relative mx-auto w-full max-w-container px-6 pb-16 pt-40 [text-shadow:0_1px_18px_rgba(15,36,26,0.6)]">
+        <div className="relative mx-auto w-full max-w-container px-6 pb-16 pt-36 [text-shadow:0_1px_18px_rgba(15,36,26,0.6)]">
+          {/* Breadcrumb: Besucher aus der Suche landen direkt hier und
+              brauchen einen Weg zurueck ins Portfolio. */}
+          <nav aria-label="Brotkrumennavigation" className="mb-6">
+            <ol className="flex flex-wrap items-center gap-2 text-sm text-beige-100/70">
+              <li>
+                <Link href="/" className="transition-colors hover:text-beige-100">
+                  Startseite
+                </Link>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li>
+                <Link
+                  href="/projekte"
+                  className="transition-colors hover:text-beige-100"
+                >
+                  Projekte
+                </Link>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li aria-current="page" className="text-beige-100">
+                {summary.name}
+              </li>
+            </ol>
+          </nav>
+
           <div className="flex items-center gap-3">
             <span className="text-xs uppercase tracking-eyebrow text-sage-300">
               {PHASE_LABEL[summary.phase]}

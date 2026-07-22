@@ -13,9 +13,11 @@ import { Button } from "@/components/ui/Button";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Projekte",
+  // Titel trägt das Suchwort, nicht nur die Rubrik: lokal wird nach
+  // „Eigentumswohnung Wedemark / Region Hannover“ gesucht, nicht nach „Projekte“.
+  title: "Eigentumswohnungen in der Region Hannover",
   description:
-    "Aktuelle, geplante und abgeschlossene Wohnprojekte von DOHOme in der Region Hannover – Eigentumswohnungen aus eigener Entwicklung.",
+    "Wohnprojekte von DOHOme in Wedemark und der Region Hannover: Eigentumswohnungen aus eigener Entwicklung – geplant, gebaut und verkauft aus einer Hand.",
   alternates: { canonical: "/projekte" },
 };
 
