@@ -8,8 +8,6 @@
 // eigener Text gesetzt ist. Lazy Loading und responsive Größen übernimmt die
 // Galerie-Komponente.
 
-import { projectImage } from "./media";
-
 export type GalleryCategory = "aussen" | "innen" | "grundriss" | "baustand" | "umgebung";
 
 export type GalleryImage = {
@@ -52,15 +50,57 @@ export function buildAlt(
   return detail ? `${base} – ${detail}` : base;
 }
 
-/** Solange true, werden Platzhalter-Motive gezeigt (klar markiert). */
-export const usePlaceholders = true;
+/** Echte Aufnahmen liegen vor – Platzhalter nur noch für fehlende Motive. */
+export const usePlaceholders = false;
 
-/** Bildmaterial Rotkamp 1. Platzhalter, bis echte Dateien vorliegen. */
+/**
+ * Bildmaterial Rotkamp 1. Echte Fotos und Planzeichnungen aus dem Projekt.
+ * ERGÄNZEN: Sobald finale Außen-Renderings vorliegen, hier oben einfügen –
+ * das erste Bild der Liste lädt priorisiert.
+ */
 export const rotkampGallery: GalleryImage[] = [
-  { src: projectImage("dohome-rotkamp-a", 1600, 1100), category: "aussen", width: 1600, height: 1100, caption: "Straßenansicht" },
-  { src: projectImage("dohome-rotkamp-b", 1600, 1100), category: "aussen", width: 1600, height: 1100, caption: "Gartenseite" },
-  { src: projectImage("dohome-rotkamp-c", 1600, 1100), category: "innen", width: 1600, height: 1100, caption: "Wohnbereich" },
-  { src: projectImage("dohome-rotkamp-d", 1600, 1100), category: "innen", width: 1600, height: 1100, caption: "Küche" },
-  { src: projectImage("dohome-rotkamp-e", 1600, 1100), category: "umgebung", width: 1600, height: 1100, caption: "Lage in der Wedemark" },
-  { src: projectImage("dohome-rotkamp-f", 1600, 1100), category: "baustand", width: 1600, height: 1100, date: "Juni 2026" },
+  {
+    src: "/images/rotkamp-1/wohnraum-balkon.jpg",
+    category: "innen",
+    width: 1086,
+    height: 1448,
+    caption: "Wohnraum mit bodentiefen Fenstern und Balkonzugang",
+  },
+  {
+    src: "/images/rotkamp-1/zimmer-fenster.jpg",
+    category: "innen",
+    width: 1086,
+    height: 1448,
+    caption: "Zimmer mit bodentiefem Fenster",
+  },
+  {
+    src: "/images/rotkamp-1/dachgeschoss-balkon.jpg",
+    category: "baustand",
+    width: 1086,
+    height: 1448,
+    caption: "Dachgeschosswohnung mit Balkonzugang",
+    date: "Ausbau",
+  },
+  {
+    src: "/images/rotkamp-1/dachgeschoss-giebel.jpg",
+    category: "baustand",
+    width: 1086,
+    height: 1448,
+    caption: "Dachgeschoss mit Giebelfenster und Dachflächenfenster",
+    date: "Ausbau",
+  },
+  {
+    src: "/images/rotkamp-1/ansichten.jpg",
+    category: "aussen",
+    width: 1290,
+    height: 1090,
+    caption: "Ansichten Nord, Ost, Süd und West – Klinker mit abgesetztem Dachgeschoss",
+  },
+  {
+    src: "/images/rotkamp-1/lageplan.jpg",
+    category: "umgebung",
+    width: 1290,
+    height: 639,
+    caption: "Lageplan: drei Baukörper mit Garagen und Carports",
+  },
 ];
