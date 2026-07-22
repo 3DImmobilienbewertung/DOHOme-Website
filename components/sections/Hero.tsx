@@ -50,24 +50,29 @@ export function Hero() {
       ref={root}
       className="relative grid min-h-svh items-end overflow-hidden bg-green-700 text-beige-100"
     >
-      <div className="hero-bg absolute inset-0 -z-10">
-        {/* Platzhalter-Bild – später durch /public/images/hero.jpg ersetzen */}
+      {/* Kein -z-10: `relative` erzeugt am Section-Element keinen
+          Stacking-Kontext, ein negativer z-index würde das Bild hinter den
+          Section-Hintergrund schieben und unsichtbar machen. Der Inhalt liegt
+          stattdessen mit z-10 darüber. */}
+      <div className="hero-bg absolute inset-0">
         <Image
           src={projectImage(HERO_SEED, 2400, 1400)}
-          alt=""
+          alt="Rotkamp 1 in Wedemark – Mehrfamilienhäuser mit Klinkerfassade und Satteldach"
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="object-cover object-center"
         />
-        {/* Marken-Tönung: dunkelgrün dominiert das Bild (Dark Luxe) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-green-900 via-green-900/60 to-green-900/20" />
-        <div className="absolute inset-0 bg-green-900/30 mix-blend-multiply" />
+        {/* Marken-Tönung, nach unten gewichtet: der Text steht sicher, das
+            Gebäude behält oben seine echten Klinker- und Ziegeltöne.
+            Achtung: Tailwind kennt Verlaufs-Stopps nur in 5-%-Schritten –
+            krumme Werte wie via-52% werden stillschweigend verworfen. */}
+        <div className="absolute inset-0 bg-gradient-to-t from-green-950 via-green-950/60 via-45% to-transparent to-85%" />
       </div>
 
-      <div className="mx-auto w-full max-w-container px-6 pb-16 md:pb-24">
+      <div className="relative z-10 mx-auto w-full max-w-container px-6 pb-16 [text-shadow:0_1px_18px_rgba(15,36,26,0.6)] md:pb-24">
         <div className="line-mask">
-          <p className="hero-eyebrow eyebrow text-sage-300">
+          <p className="hero-eyebrow eyebrow text-beige-100/85">
             Bauträger · Wedemark &amp; Region Hannover
           </p>
         </div>
@@ -87,7 +92,7 @@ export function Hero() {
           Jahren zusammensteht.
         </p>
 
-        <div className="mt-10 flex flex-wrap gap-4">
+        <div className="mt-10 flex flex-wrap gap-4 [text-shadow:none]">
           <Link
             href="/projekte"
             className="hero-cta rounded-full bg-accent-500 px-7 py-3.5 text-sm font-medium text-green-950 transition-[transform,background-color] duration-300 ease-out-expo hover:-translate-y-0.5 hover:bg-accent-400"
@@ -103,7 +108,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="hero-scroll pointer-events-none absolute bottom-8 right-6 flex items-center gap-3 text-beige-100/70">
+      <div className="hero-scroll pointer-events-none absolute bottom-8 right-6 z-10 flex items-center gap-3 text-beige-100/70">
         <span className="eyebrow">Unsere Geschichte</span>
         <span className="block h-10 w-px bg-beige-100/40" />
       </div>

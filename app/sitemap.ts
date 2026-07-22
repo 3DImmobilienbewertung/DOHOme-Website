@@ -1,11 +1,16 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/lib/content/site";
+import { portfolio } from "@/lib/content/projects";
 
-// Statische, indexierbare Routen. Die dynamischen Projekt-URLs
-// (/projekte/[slug]) werden hier ergänzt, sobald die Website an die Supabase-
-// Aggregat-View angebunden ist (Slugs aus public_project_summary).
+// Indexierbare Routen. Die Projektdetailseiten kommen aus der Portfolio-
+// Registry; sobald Supabase angebunden ist, kann die Liste zusätzlich aus
+// public_project_summary gespeist werden.
+//
+// Nicht enthalten (bewusst): /impressum und /datenschutz (noindex) sowie die
+// Anzeigen-Landingpage /rotkamp-1 (noindex, damit sie nicht mit der
+// Projektseite um dasselbe Keyword konkurriert).
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = [
+  const staticRoutes = [
     "",
     "/projekte",
     "/grundstueck-verkaufen",
@@ -13,9 +18,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/kontakt",
   ];
 
-  return routes.map((path) => ({
+  const projectRoutes = portfolio.map((p) => `/projekte/${p.slug}`);
+
+  return [...staticRoutes, ...projectRoutes].map((path) => ({
     url: `${site.url}${path}`,
     changeFrequency: "weekly",
-    priority: path === "" ? 1 : 0.8,
+    // Projektdetailseiten sind die Verkaufsseiten – hoch priorisiert.
+    priority: path === "" ? 1 : path.startsWith("/projekte/") ? 0.9 : 0.8,
   }));
 }

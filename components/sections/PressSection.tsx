@@ -10,7 +10,7 @@ export function PressSection() {
         <Reveal>
           <p className="eyebrow text-sage-300">Bekannt aus der Presse</p>
           <blockquote className="mx-auto mt-5 max-w-3xl text-display-lg">
-            „{pressHighlight.quote}"
+            „{pressHighlight.quote}&ldquo;
           </blockquote>
           <p className="mt-4 text-sm text-muted-dark">
             {pressHighlight.outlet} ·{" "}

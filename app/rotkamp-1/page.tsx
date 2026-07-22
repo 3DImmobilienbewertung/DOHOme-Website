@@ -8,6 +8,8 @@ import { PressSection } from "@/components/sections/PressSection";
 import { CallbackForm } from "@/components/forms/CallbackForm";
 import { ProjectGallery } from "@/components/projekte/ProjectGallery";
 import { ConsentMap } from "@/components/projekte/ConsentMap";
+import { UnitTable } from "@/components/projekte/UnitTable";
+import { NeighbourhoodPanel } from "@/components/projekte/NeighbourhoodPanel";
 import { PlaceholderTag } from "@/components/ui/PlaceholderTag";
 import { rotkampGallery, coverImage } from "@/lib/content/gallery";
 import {
@@ -15,6 +17,7 @@ import {
   units,
   accessibleUnits,
   neighbourhood,
+  locationCopy,
   unitsAvailable,
   soldPercent,
 } from "@/lib/content/rotkamp";
@@ -133,9 +136,11 @@ export default function RotkampLanding() {
             quality={84}
             className="object-cover object-center"
           />
-          {/* Scrim nur im unteren Drittel: garantiert Textkontrast, lässt das
-              Gebäude oben in seinen echten Farben stehen. */}
-          <div className="absolute inset-0 bg-gradient-to-t from-green-950 from-28% via-green-950/72 via-52% to-transparent to-88%" />
+          {/* Scrim nach unten gewichtet: garantiert Textkontrast, lässt das
+              Gebäude oben in seinen echten Farben stehen.
+              Achtung: Tailwind kennt Verlaufs-Stopps nur in 5-%-Schritten –
+              krumme Werte wie via-52% werden stillschweigend verworfen. */}
+          <div className="absolute inset-0 bg-gradient-to-t from-green-950 via-green-950/60 via-45% to-transparent to-85%" />
 
           {/* Textschatten statt stärkerem Scrim: sichert die Lesbarkeit auch dort,
               wo helle Fassade hinter der Schrift liegt – ohne das Rendering zu
@@ -262,52 +267,8 @@ export default function RotkampLanding() {
               </h2>
             </Reveal>
 
-            <Reveal className="mt-10 overflow-x-auto">
-              <table className="w-full min-w-[44rem] border-collapse text-left">
-                <caption className="sr-only">
-                  Wohnungsspiegel {rotkamp.name}: {rotkamp.units.total}{" "}
-                  Wohneinheiten mit Zimmerzahl, Wohnfläche und Freifläche
-                </caption>
-                <thead>
-                  <tr className="border-b border-beige-100/15 text-sm text-muted-dark">
-                    <th scope="col" className="py-3 pr-4 font-medium">Wohnung</th>
-                    <th scope="col" className="py-3 pr-4 font-medium">Haus</th>
-                    <th scope="col" className="py-3 pr-4 font-medium">Geschoss</th>
-                    <th scope="col" className="py-3 pr-4 font-medium">Zimmer</th>
-                    <th scope="col" className="py-3 pr-4 font-medium">Wohnfläche</th>
-                    <th scope="col" className="py-3 font-medium">Freifläche</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {units.map((u) => (
-                    <tr key={u.id} className="border-b border-beige-100/10">
-                      <th
-                        scope="row"
-                        className="py-3.5 pr-4 font-display text-lg font-normal"
-                      >
-                        <span className="inline-flex items-center gap-2">
-                          {u.id}
-                          {u.accessible && (
-                            <span
-                              title="behindertengerecht"
-                              className="rounded border border-accent-500/50 px-1.5 py-0.5 font-sans text-[0.65rem] font-medium uppercase tracking-wide text-accent-400"
-                            >
-                              barrierefrei
-                            </span>
-                          )}
-                        </span>
-                      </th>
-                      <td className="py-3.5 pr-4 text-beige-100/75">{u.house}</td>
-                      <td className="py-3.5 pr-4 text-beige-100/75">{u.floor}</td>
-                      <td className="nums py-3.5 pr-4">
-                        {u.rooms.toLocaleString("de-DE")}
-                      </td>
-                      <td className="nums py-3.5 pr-4">{formatSqm(u.areaSqm)}</td>
-                      <td className="py-3.5 text-beige-100/75">{u.outdoor}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <Reveal className="mt-10">
+              <UnitTable units={units} projectName={rotkamp.name} />
             </Reveal>
 
             <Reveal className="mt-8">
@@ -341,52 +302,18 @@ export default function RotkampLanding() {
                 Alles Wichtige zu Fuß erreichbar
               </h2>
               <div className="mt-5 max-w-2xl space-y-4 text-lead text-beige-100/80">
-                <p>
-                  {rotkamp.name} liegt in {rotkamp.district}, dem Zentrum der
-                  Wedemark. Das Besondere an dieser Adresse: Der Alltag braucht
-                  hier kein Auto. Bahnhof, Supermarkt, Bäcker, Apotheke, Kita,
-                  Arzt und zwei weiterführende Schulen liegen im Umkreis von
-                  wenigen Hundert Metern.
-                </p>
-                <p>
-                  Der Bahnhof Mellendorf ist rund 350 Meter entfernt – von dort
-                  fährt die S4 im Takt bis Hannover Hauptbahnhof, in etwa 25
-                  Minuten. Wer pendelt, steht nicht im Stau; wer in der Region
-                  bleibt, hat Heide, Wald und Felder direkt vor der Tür.
-                </p>
-                <p className="text-beige-100/70">
-                  Für Familien ist die kurze Wegekette entscheidend: Kita und IGS
-                  Wedemark sind so nah, dass Kinder sie selbstständig erreichen –
-                  ein Argument, das in Neubaugebieten am Ortsrand selten ist.
-                </p>
+                {locationCopy.map((p) => (
+                  <p key={p.slice(0, 32)}>{p}</p>
+                ))}
               </div>
             </Reveal>
 
             <div className="mt-12 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
               <Reveal>
-                <div className="space-y-8">
-                  {neighbourhood.map((group) => (
-                    <div key={group.title}>
-                      <p className="eyebrow text-accent-400">{group.title}</p>
-                      <dl className="mt-3 space-y-2">
-                        {group.items.map((item) => (
-                          <div
-                            key={item.name}
-                            className="flex items-baseline justify-between gap-4 border-b border-beige-100/10 pb-2"
-                          >
-                            <dt className="text-beige-100/85">{item.name}</dt>
-                            <dd className="nums shrink-0 text-sm text-muted-dark">
-                              {item.distance}
-                            </dd>
-                          </div>
-                        ))}
-                      </dl>
-                    </div>
-                  ))}
-                  <p className="text-xs text-muted-dark">
-                    Entfernungen gerundet, ab Rotkamp 1.
-                  </p>
-                </div>
+                <NeighbourhoodPanel
+                  groups={neighbourhood}
+                  origin={rotkamp.name}
+                />
               </Reveal>
 
               <Reveal delay={0.08}>
@@ -415,7 +342,7 @@ export default function RotkampLanding() {
                 <Reveal key={t.author} delay={i * 0.06}>
                   <figure className="flex h-full flex-col rounded-3xl border border-green-900/10 bg-green-900/[0.03] p-8">
                     <blockquote className="font-display text-lg leading-snug text-green-900">
-                      „{t.quote}"
+                      „{t.quote}&ldquo;
                     </blockquote>
                     <figcaption className="mt-4 text-sm text-green-900/70">
                       {t.author}

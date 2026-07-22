@@ -5,6 +5,7 @@ import {
   isSupabaseConfigured,
   type ProjectSummary,
 } from "@/lib/supabase/public";
+import { portfolioSummaries } from "@/lib/content/projects";
 import { ProjectFinder } from "@/components/projekte/ProjectFinder";
 import { Button } from "@/components/ui/Button";
 
@@ -18,13 +19,11 @@ export const metadata: Metadata = {
   alternates: { canonical: "/projekte" },
 };
 
-type ProjectsResult =
-  | { state: "coming-soon" }
-  | { state: "ready"; projects: ProjectSummary[] };
-
-async function getAllProjects(): Promise<ProjectsResult> {
-  // Ohne angebundene Datenbank: freundlicher „in Kürze“-Zustand statt Absturz.
-  if (!isSupabaseConfigured()) return { state: "coming-soon" };
+async function getAllProjects(): Promise<ProjectSummary[]> {
+  // Ohne angebundene Datenbank liefert die gepflegte Portfolio-Registry die
+  // Projekte. Sobald Supabase steht, übernehmen die Aggregations-Views die
+  // tagesaktuellen Verfügbarkeiten.
+  if (!isSupabaseConfigured()) return portfolioSummaries();
 
   const supabase = createPublicClient();
   const { data, error } = await supabase
@@ -40,11 +39,13 @@ async function getAllProjects(): Promise<ProjectsResult> {
     throw new Error(`Projekte konnten nicht geladen werden: ${error.message}`);
   }
 
-  return { state: "ready", projects: data ?? [] };
+  // Leere Tabelle ist kein Fehler, aber auch kein Grund, das gepflegte
+  // Portfolio zu verbergen – die Registry bleibt der Rückfall.
+  return data && data.length > 0 ? data : portfolioSummaries();
 }
 
 export default async function ProjekteOverviewPage() {
-  const result = await getAllProjects();
+  const projects = await getAllProjects();
 
   return (
     <main className="min-h-screen bg-green-900 text-beige-100">
@@ -58,7 +59,7 @@ export default async function ProjekteOverviewPage() {
         </p>
       </section>
 
-      {result.state === "coming-soon" ? (
+      {projects.length === 0 ? (
         <section className="mx-auto max-w-container px-6 pb-8">
           <div className="rounded-3xl border border-beige-100/15 bg-beige-100/[0.03] p-10 md:p-14">
             <p className="eyebrow text-accent-400">In Kürze</p>
@@ -66,9 +67,9 @@ export default async function ProjekteOverviewPage() {
               Unsere Projekte gehen bald hier online
             </h2>
             <p className="mt-4 max-w-xl text-beige-100/75">
-              Wir bereiten die Veröffentlichung des Rotkamp&nbsp;1 und weiterer
-              Bauvorhaben in der Region Hannover vor. Lassen Sie sich vormerken –
-              Sie erfahren als Erste, sobald Einheiten verfügbar sind.
+              Wir bereiten die Veröffentlichung weiterer Bauvorhaben in der
+              Region Hannover vor. Lassen Sie sich vormerken – Sie erfahren als
+              Erste, sobald Einheiten verfügbar sind.
             </p>
             <div className="mt-8">
               <Button href="/kontakt" variant="primary">
@@ -77,14 +78,8 @@ export default async function ProjekteOverviewPage() {
             </div>
           </div>
         </section>
-      ) : result.projects.length === 0 ? (
-        <section className="mx-auto max-w-container px-6 pb-8">
-          <p className="rounded-2xl border border-beige-100/15 bg-beige-100/[0.03] p-10 text-beige-100/75">
-            Aktuell sind keine Projekte veröffentlicht.
-          </p>
-        </section>
       ) : (
-        <ProjectFinder projects={result.projects} />
+        <ProjectFinder projects={projects} />
       )}
 
       {/* CTA */}

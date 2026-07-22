@@ -110,6 +110,17 @@ export const neighbourhood: PoiGroup[] = [
   },
 ];
 
+/**
+ * Lagetext – bewusst hier und nicht in den Seiten, damit Landingpage und
+ * Projektdetailseite denselben Wortlaut zeigen. Alle Aussagen sind durch
+ * `neighbourhood` belegt.
+ */
+export const locationCopy: string[] = [
+  `${rotkamp.name} liegt in ${rotkamp.district}, dem Zentrum der Wedemark. Das Besondere an dieser Adresse: Der Alltag braucht hier kein Auto. Bahnhof, Supermarkt, Bäcker, Apotheke, Kita, Arzt und zwei weiterführende Schulen liegen im Umkreis von wenigen Hundert Metern.`,
+  "Der Bahnhof Mellendorf ist rund 350 Meter entfernt – von dort fährt die S4 im Takt bis Hannover Hauptbahnhof, in etwa 25 Minuten. Wer pendelt, steht nicht im Stau; wer in der Region bleibt, hat Heide, Wald und Felder direkt vor der Tür.",
+  "Für Familien ist die kurze Wegekette entscheidend: Kita und IGS Wedemark sind so nah, dass Kinder sie selbstständig erreichen – ein Argument, das in Neubaugebieten am Ortsrand selten ist.",
+];
+
 export const unitsAvailable = rotkamp.units.total - rotkamp.units.sold;
 
 export const soldPercent = Math.round(

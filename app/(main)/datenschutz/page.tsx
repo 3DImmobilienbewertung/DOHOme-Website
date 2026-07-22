@@ -158,7 +158,7 @@ export default function DatenschutzPage() {
               Auf Projektseiten bieten wir eine Karte des Standorts an. Diese
               wird <strong className="text-beige-100">nicht automatisch
               geladen</strong>: Sie sehen zunächst nur einen Hinweis mit der
-              Adresse. Erst wenn Sie aktiv auf „Karte laden" klicken, wird der
+              Adresse. Erst wenn Sie aktiv auf „Karte laden&ldquo; klicken, wird der
               Dienst Google Maps nachgeladen. Dabei werden Ihre IP-Adresse und
               gegebenenfalls weitere Daten an Google Ireland Limited übertragen;
               eine Übermittlung in die USA ist möglich.

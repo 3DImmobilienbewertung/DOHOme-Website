@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import type { ProjectSummary } from "@/lib/supabase/public";
-import { formatEuro, formatSqm, range } from "@/lib/format";
+import { formatEuro, formatSqmRange, formatRooms, range } from "@/lib/format";
 import { PHASE_LABEL, EMPTY_LABEL } from "@/lib/content/labels";
 import { projectImage } from "@/lib/content/media";
 
@@ -35,7 +35,13 @@ const SEGMENTS: {
   },
 ];
 
-/** Kompakte Preis-/Verfügbarkeits-Zeile für die Karten. */
+/**
+ * Kompakte Preis-/Statuszeile für die Karten.
+ *
+ * Solange keine Preisliste gepflegt ist, darf hier NICHT „Referenzprojekt“
+ * stehen – das würde ein laufendes Projekt als abgeschlossen ausweisen.
+ * Stattdessen der ehrliche Hinweis auf das persönliche Gespräch.
+ */
 function priceHint(p: ProjectSummary): string {
   if (p.available_for_sale > 0 && p.price_per_sqm_from != null) {
     return `ab ${formatEuro(p.price_per_sqm_from)} / m²`;
@@ -43,7 +49,13 @@ function priceHint(p: ProjectSummary): string {
   if (p.available_for_rent > 0 && p.rent_price_min != null) {
     return `Miete ab ${formatEuro(p.rent_price_min)}`;
   }
+  if (p.available_total > 0) return "Preise auf Anfrage";
   return "Referenzprojekt";
+}
+
+/** Sind überhaupt Kaufpreise gepflegt? Steuert den Budget-Filter. */
+function hasPriceData(projects: ProjectSummary[]): boolean {
+  return projects.some((p) => p.sale_price_min != null);
 }
 
 // ---------------------------------------------------------------- Filter-Logik
@@ -109,6 +121,10 @@ export function ProjectFinder({ projects }: { projects: ProjectSummary[] }) {
 
   const anyActive = rooms !== null || maxPrice !== null || minArea !== null;
 
+  // Budget-Filter nur zeigen, wenn Preise vorliegen. Ohne Preisdaten könnte er
+  // nie treffen und würde Interessenten in ein leeres Ergebnis führen.
+  const showPriceFacet = useMemo(() => hasPriceData(projects), [projects]);
+
   const flagship = useMemo(
     () => projects.find((p) => p.is_flagship) ?? null,
     [projects],
@@ -159,19 +175,23 @@ export function ProjectFinder({ projects }: { projects: ProjectSummary[] }) {
             )}
           </div>
 
-          <div className="mt-6 grid gap-6 md:grid-cols-3">
+          <div
+            className={`mt-6 grid gap-6 ${showPriceFacet ? "md:grid-cols-3" : "md:grid-cols-2"}`}
+          >
             <FacetGroup
               label="Zimmer"
               value={rooms}
               options={ROOM_OPTIONS}
               onChange={setRooms}
             />
-            <FacetGroup
-              label="Budget (Kauf)"
-              value={maxPrice}
-              options={PRICE_OPTIONS}
-              onChange={setMaxPrice}
-            />
+            {showPriceFacet && (
+              <FacetGroup
+                label="Budget (Kauf)"
+                value={maxPrice}
+                options={PRICE_OPTIONS}
+                onChange={setMaxPrice}
+              />
+            )}
             <FacetGroup
               label="Wohnfläche"
               value={minArea}
@@ -345,7 +365,7 @@ function ProjectCard({ p }: { p: ProjectSummary }) {
               {p.area_sqm_min != null && (
                 <>
                   {" · "}
-                  {range(p.area_sqm_min, p.area_sqm_max, formatSqm)}
+                  {formatSqmRange(p.area_sqm_min, p.area_sqm_max)}
                 </>
               )}
             </>
@@ -406,15 +426,28 @@ function FlagshipSpotlight({ p }: { p: ProjectSummary }) {
               Wohnflächen
             </dt>
             <dd className="mt-1 font-display text-2xl">
-              {range(p.area_sqm_min, p.area_sqm_max, formatSqm)}
+              {formatSqmRange(p.area_sqm_min, p.area_sqm_max)}
             </dd>
           </div>
-          <div>
-            <dt className="text-xs uppercase tracking-wider text-beige-100/55">
-              Preis
-            </dt>
-            <dd className="mt-1 font-display text-2xl">{priceHint(p)}</dd>
-          </div>
+          {/* Ohne gepflegte Preise zeigt die dritte Kachel die Zimmerzahl –
+              eine echte Information statt einer leeren Preisangabe. */}
+          {p.price_per_sqm_from != null ? (
+            <div>
+              <dt className="text-xs uppercase tracking-wider text-beige-100/55">
+                Preis
+              </dt>
+              <dd className="mt-1 font-display text-2xl">{priceHint(p)}</dd>
+            </div>
+          ) : (
+            <div>
+              <dt className="text-xs uppercase tracking-wider text-beige-100/55">
+                Zimmer
+              </dt>
+              <dd className="mt-1 font-display text-2xl">
+                {range(p.rooms_min, p.rooms_max, formatRooms)}
+              </dd>
+            </div>
+          )}
         </dl>
 
         <span className="inline-flex items-center gap-2 text-sm text-sage-300 transition-colors group-hover:text-beige-100">

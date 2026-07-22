@@ -34,6 +34,20 @@ export function range(
   return `${fmt(min)} – ${fmt(max)}`;
 }
 
+/**
+ * "52,1 – 89,4 m²" – Einheit nur einmal am Ende. Kürzer als range(…, formatSqm)
+ * und vermeidet Zeilenumbrüche in schmalen Kacheln.
+ */
+export function formatSqmRange(
+  min: number | null | undefined,
+  max: number | null | undefined,
+): string {
+  if (min == null && max == null) return "—";
+  if (min == null) return formatSqm(max);
+  if (max == null || min === max) return formatSqm(min);
+  return `${dec1.format(min)} – ${formatSqm(max)}`;
+}
+
 /** "Juli 2026" aus einem ISO-Datum. */
 export function formatMonthYear(iso: string | null | undefined): string {
   if (!iso) return "auf Anfrage";

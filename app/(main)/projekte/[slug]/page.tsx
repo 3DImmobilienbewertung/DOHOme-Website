@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
@@ -13,12 +13,15 @@ import {
 import {
   formatEuro,
   formatSqm,
+  formatSqmRange,
   formatRooms,
   formatMonthYear,
   range,
 } from "@/lib/format";
 import { PHASE_LABEL, PLAN_TYPE_LABEL } from "@/lib/content/labels";
 import { projectImage } from "@/lib/content/media";
+import { findProject, portfolio, toSummary } from "@/lib/content/projects";
+import { RotkampSections } from "@/components/projekte/RotkampSections";
 
 // Aggregate alle 5 Minuten neu (ISR) – kein Live-DB-Hit pro Besucher,
 // aber stets aktuelle Verfügbarkeiten ohne Re-Deploy.
@@ -32,6 +35,13 @@ const getProjectData = cache(
   async (
     slug: string,
   ): Promise<{ summary: ProjectSummary; plans: ProjectPlan[] } | null> => {
+    // Ohne Datenbank liefert die Portfolio-Registry das Projekt – die Seite
+    // bleibt vollständig, statt auf die Übersicht umzuleiten.
+    if (!isSupabaseConfigured()) {
+      const local = findProject(slug);
+      return local ? { summary: toSummary(local), plans: [] } : null;
+    }
+
     const supabase = createPublicClient();
 
     const { data: summary, error: summaryError } = await supabase
@@ -44,7 +54,12 @@ const getProjectData = cache(
     if (summaryError) {
       throw new Error(`Projekt konnte nicht geladen werden: ${summaryError.message}`);
     }
-    if (!summary) return null;
+    // In der Registry gepflegte Projekte bleiben erreichbar, auch wenn sie in
+    // der Datenbank (noch) fehlen.
+    if (!summary) {
+      const local = findProject(slug);
+      return local ? { summary: toSummary(local), plans: [] } : null;
+    }
 
     const { data: plans, error: plansError } = await supabase
       .from("public_project_plans")
@@ -65,7 +80,6 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  if (!isSupabaseConfigured()) return { title: "Projekt", robots: { index: false } };
   const data = await getProjectData(slug);
   if (!data) return { title: "Projekt nicht gefunden" };
 
@@ -77,7 +91,14 @@ export async function generateMetadata({
         ? `${summary.available_total} Wohneinheiten verfügbar`
         : "Referenzprojekt von DOHOme"
     }. Wohnflächen ${range(summary.area_sqm_min, summary.area_sqm_max, formatSqm)}.`,
+    alternates: { canonical: `/projekte/${summary.slug}` },
   };
+}
+
+// Registry-Projekte vorab statisch erzeugen – schnellere Auslieferung und ein
+// Build-Fehler, falls ein Slug bricht.
+export function generateStaticParams() {
+  return portfolio.map((p) => ({ slug: p.slug }));
 }
 
 function formatFileSize(kb: number | null): string {
@@ -88,8 +109,6 @@ function formatFileSize(kb: number | null): string {
 
 export default async function ProjektDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  // Ohne Datenbank auf die Übersicht (mit „in Kürze“-Zustand) statt 500/404.
-  if (!isSupabaseConfigured()) redirect("/projekte");
   const data = await getProjectData(slug);
   if (!data) notFound();
 
@@ -98,8 +117,9 @@ export default async function ProjektDetailPage({ params }: PageProps) {
   const hasRent = summary.available_for_rent > 0;
   const isAvailable = summary.available_total > 0;
 
-  // Hero-Bild kommt später aus einer project_media-Tabelle; Platzhalter via Seed.
+  const project = findProject(summary.slug);
   const heroImage = projectImage(summary.slug, 2400, 1400);
+  const heroAlt = project?.image.alt ?? summary.name;
 
   return (
     <main className="bg-green-900 text-beige-100">
@@ -107,15 +127,19 @@ export default async function ProjektDetailPage({ params }: PageProps) {
       <section className="relative isolate flex min-h-[68vh] items-end overflow-hidden">
         <Image
           src={heroImage}
-          alt={summary.name}
+          alt={heroAlt}
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-green-900 via-green-900/70 to-green-900/20" />
+        {/* Scrim nach unten gewichtet: Text steht sicher, das Gebäude behält
+            oben seine echten Farben.
+            Achtung: Tailwind kennt Verlaufs-Stopps nur in 5-%-Schritten –
+            krumme Werte wie via-52% werden stillschweigend verworfen. */}
+        <div className="absolute inset-0 bg-gradient-to-t from-green-950 via-green-950/60 via-45% to-transparent to-85%" />
 
-        <div className="relative mx-auto w-full max-w-container px-6 pb-16 pt-40">
+        <div className="relative mx-auto w-full max-w-container px-6 pb-16 pt-40 [text-shadow:0_1px_18px_rgba(15,36,26,0.6)]">
           <div className="flex items-center gap-3">
             <span className="text-xs uppercase tracking-eyebrow text-sage-300">
               {PHASE_LABEL[summary.phase]}
@@ -130,9 +154,20 @@ export default async function ProjektDetailPage({ params }: PageProps) {
           <h1 className="mt-4 font-display text-5xl leading-[0.95] md:text-7xl">
             {summary.name}
           </h1>
-          <p className="mt-4 text-lg text-beige-100/80">
-            {[summary.postal_code, summary.city].filter(Boolean).join(" ")}
+          <p className="mt-4 text-lg text-beige-100/85">
+            {[
+              summary.postal_code,
+              summary.city,
+              project?.district ? `· ${project.district}` : null,
+            ]
+              .filter(Boolean)
+              .join(" ")}
           </p>
+          {project?.teaser && (
+            <p className="mt-4 max-w-xl text-lead text-beige-100/80">
+              {project.teaser}
+            </p>
+          )}
         </div>
       </section>
 
@@ -175,13 +210,15 @@ export default async function ProjektDetailPage({ params }: PageProps) {
           />
           <StatTile
             label="Wohnflächen"
-            value={range(summary.area_sqm_min, summary.area_sqm_max, formatSqm)}
+            value={formatSqmRange(summary.area_sqm_min, summary.area_sqm_max)}
           />
           <StatTile
             label="Zimmer"
             value={range(summary.rooms_min, summary.rooms_max, formatRooms)}
           />
-          {hasSale ? (
+          {/* Preiskachel nur, wenn Preise gepflegt sind – sonst stünde hier ein
+              nichtssagendes „—“. Ohne Preise zeigen wir den Weg zum Angebot. */}
+          {hasSale && summary.sale_price_min != null ? (
             <StatTile
               label="Kaufpreis"
               value={range(summary.sale_price_min, summary.sale_price_max, formatEuro)}
@@ -191,17 +228,27 @@ export default async function ProjektDetailPage({ params }: PageProps) {
                   : undefined
               }
             />
-          ) : hasRent ? (
+          ) : hasRent && summary.rent_price_min != null ? (
             <StatTile
               label="Kaltmiete"
               value={range(summary.rent_price_min, summary.rent_price_max, formatEuro)}
               hint="pro Monat"
+            />
+          ) : isAvailable ? (
+            <StatTile
+              label="Kaufpreis"
+              value="Auf Anfrage"
+              hint="im persönlichen Gespräch"
             />
           ) : (
             <StatTile label="Status" value="Abgeschlossen" hint="Referenzobjekt" />
           )}
         </dl>
       </section>
+
+      {/* Projektspezifische Tiefe. Aktuell nur Rotkamp 1 – weitere Projekte
+          erhalten hier ihren eigenen Abschnitt, sobald Inhalte vorliegen. */}
+      {summary.slug === "rotkamp-1" && <RotkampSections />}
 
       {/* ------------------------------------------------- GRUNDRISSTYPEN / PDFs */}
       {plans.length > 0 && (
