@@ -8,11 +8,11 @@ import { PressSection } from "@/components/sections/PressSection";
 import { CallbackForm } from "@/components/forms/CallbackForm";
 import { ProjectGallery } from "@/components/projekte/ProjectGallery";
 import { PlaceholderTag } from "@/components/ui/PlaceholderTag";
-import { rotkampGallery } from "@/lib/content/gallery";
+import { rotkampGallery, coverImage } from "@/lib/content/gallery";
 import {
   rotkamp,
   units,
-  unitsWithStatus,
+  accessibleUnits,
   unitsAvailable,
   soldPercent,
 } from "@/lib/content/rotkamp";
@@ -20,7 +20,7 @@ import {
   testimonials,
   testimonialsArePlaceholder,
 } from "@/lib/content/testimonials";
-import { formatEuro, formatSqm } from "@/lib/format";
+import { formatSqm } from "@/lib/format";
 import { site } from "@/lib/content/site";
 
 export const metadata: Metadata = {
@@ -50,7 +50,10 @@ const FACTS: { k: string; v: string; pending?: boolean }[] = [
     k: "Wohnungsgrößen",
     v: `${dec(f.area.min)} – ${dec(f.area.max)} m²`,
   },
-  { k: "Zimmer", v: `${f.rooms.min} – ${f.rooms.max} Zimmer` },
+  {
+    k: "Zimmer",
+    v: `${f.rooms.min.toLocaleString("de-DE")} – ${f.rooms.max.toLocaleString("de-DE")} Zimmer`,
+  },
   {
     k: "Erdgeschoss",
     v: `Privatgarten, ${dec(f.gardens.min)} – ${dec(f.gardens.max)} m²`,
@@ -62,7 +65,7 @@ const FACTS: { k: string; v: string; pending?: boolean }[] = [
   },
   {
     k: "Bauweise",
-    v: `${rotkamp.architecture.facade}fassade, ${rotkamp.architecture.roof}`,
+    v: `${rotkamp.architecture.construction}, ${rotkamp.architecture.roof}`,
   },
   {
     k: "Energie",
@@ -70,9 +73,8 @@ const FACTS: { k: string; v: string; pending?: boolean }[] = [
     pending: !rotkamp.specs.energy,
   },
   {
-    k: "Bezugsfertig",
-    v: rotkamp.specs.completion ?? "Termin auf Anfrage",
-    pending: !rotkamp.specs.completion,
+    k: "Barrierefrei",
+    v: `${accessibleUnits.length} Wohnungen behindertengerecht`,
   },
 ];
 
@@ -100,6 +102,8 @@ function CallButton({
 }
 
 export default function RotkampLanding() {
+  const cover = coverImage();
+
   return (
     <>
       {/* ---------------------------------------------------- STICKY TOP BAR */}
@@ -143,11 +147,11 @@ export default function RotkampLanding() {
               </p>
             </div>
 
-            {/* Höhe begrenzt, damit der Anruf-CTA auf Laptops über der Falz bleibt. */}
+            {/* Deckblatt. Höhe begrenzt, damit der Anruf-CTA über der Falz bleibt. */}
             <div className="relative h-[46vh] min-h-[300px] overflow-hidden rounded-3xl lg:h-[min(56vh,460px)]">
               <Image
-                src="/images/rotkamp-1/wohnraum-balkon.jpg"
-                alt={`Wohnraum mit bodentiefen Fenstern und Balkonzugang, ${rotkamp.name}, ${rotkamp.postalCode} ${rotkamp.city}`}
+                src={cover.src}
+                alt={cover.alt}
                 fill
                 priority
                 sizes="(min-width: 1024px) 46vw, 100vw"
@@ -268,10 +272,7 @@ export default function RotkampLanding() {
                     <th scope="col" className="py-3 pr-4 font-medium">Geschoss</th>
                     <th scope="col" className="py-3 pr-4 font-medium">Zimmer</th>
                     <th scope="col" className="py-3 pr-4 font-medium">Wohnfläche</th>
-                    <th scope="col" className="py-3 pr-4 font-medium">Freifläche</th>
-                    {unitsWithStatus.length > 0 && (
-                      <th scope="col" className="py-3 font-medium">Kaufpreis</th>
-                    )}
+                    <th scope="col" className="py-3 font-medium">Freifläche</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -281,7 +282,17 @@ export default function RotkampLanding() {
                         scope="row"
                         className="py-3.5 pr-4 font-display text-lg font-normal"
                       >
-                        {u.id}
+                        <span className="inline-flex items-center gap-2">
+                          {u.id}
+                          {u.accessible && (
+                            <span
+                              title="behindertengerecht"
+                              className="rounded border border-accent-500/50 px-1.5 py-0.5 font-sans text-[0.65rem] font-medium uppercase tracking-wide text-accent-400"
+                            >
+                              barrierefrei
+                            </span>
+                          )}
+                        </span>
                       </th>
                       <td className="py-3.5 pr-4 text-beige-100/75">{u.house}</td>
                       <td className="py-3.5 pr-4 text-beige-100/75">{u.floor}</td>
@@ -289,12 +300,7 @@ export default function RotkampLanding() {
                         {u.rooms.toLocaleString("de-DE")}
                       </td>
                       <td className="nums py-3.5 pr-4">{formatSqm(u.areaSqm)}</td>
-                      <td className="py-3.5 pr-4 text-beige-100/75">{u.outdoor}</td>
-                      {unitsWithStatus.length > 0 && (
-                        <td className="nums py-3.5">
-                          {u.price == null ? "auf Anfrage" : formatEuro(u.price)}
-                        </td>
-                      )}
+                      <td className="py-3.5 text-beige-100/75">{u.outdoor}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -310,7 +316,7 @@ export default function RotkampLanding() {
                   Preis.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-4">
-                  <CallButton label={`Anrufen: ${CALL.display}`} />
+                  <CallButton label="Anrufen" />
                   <a
                     href="#rueckruf"
                     className="rounded-full border border-beige-100/45 px-7 py-3.5 text-sm font-medium transition-colors hover:bg-beige-100/10"
@@ -318,14 +324,6 @@ export default function RotkampLanding() {
                     Unterlagen anfordern
                   </a>
                 </div>
-                {unitsWithStatus.length === 0 && (
-                  <div className="mt-6">
-                    <PlaceholderTag>
-                      Preisliste einpflegen → Preise und Status erscheinen in der
-                      Tabelle
-                    </PlaceholderTag>
-                  </div>
-                )}
               </div>
             </Reveal>
           </div>
@@ -420,7 +418,7 @@ export default function RotkampLanding() {
 
       {/* ------------------------------------------- STICKY MOBILE CALL BAR */}
       <div className="fixed inset-x-0 bottom-0 z-overlay border-t border-beige-100/10 bg-green-950/95 p-3 backdrop-blur sm:hidden">
-        <CallButton className="w-full" label={`Jetzt anrufen: ${CALL.display}`} />
+        <CallButton className="w-full" label="Jetzt anrufen" />
       </div>
       <div className="h-20 sm:hidden" aria-hidden="true" />
     </>

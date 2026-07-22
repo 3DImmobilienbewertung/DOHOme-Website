@@ -13,7 +13,10 @@ const STATS: { label: string; value: string }[] = [
   { label: "Standort", value: `${rotkamp.postalCode} ${rotkamp.city}` },
   { label: "Wohneinheiten", value: `${rotkamp.units.total} in ${f.buildings} Häusern` },
   { label: "Wohnungsgrößen", value: `${dec(f.area.min)} – ${dec(f.area.max)} m²` },
-  { label: "Zimmer", value: `${f.rooms.min} – ${f.rooms.max}` },
+  {
+    label: "Zimmer",
+    value: `${f.rooms.min.toLocaleString("de-DE")} – ${f.rooms.max.toLocaleString("de-DE")}`,
+  },
 ];
 
 export function FlagshipSpotlight() {

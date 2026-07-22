@@ -54,6 +54,33 @@ export function buildAlt(
 export const usePlaceholders = false;
 
 /**
+ * Deckblatt (Titelbild) von Rotkamp 1 – die Außenvisualisierung.
+ *
+ * ABLEGEN: Datei als `public/images/rotkamp-1/visualisierung-aussen.jpg`
+ * speichern, dann `available: true` setzen. Bis dahin greift automatisch das
+ * Innenfoto, damit die Seite nie ein fehlendes Bild zeigt.
+ */
+export const rotkampCover = {
+  available: false,
+  src: "/images/rotkamp-1/visualisierung-aussen.jpg",
+  fallbackSrc: "/images/rotkamp-1/wohnraum-balkon.jpg",
+  alt: "Außenvisualisierung Rotkamp 1, 30900 Wedemark – Klinkerfassade mit Satteldach und Stellplätzen",
+  fallbackAlt:
+    "Wohnraum mit bodentiefen Fenstern und Balkonzugang, Rotkamp 1, 30900 Wedemark",
+} as const;
+
+/** Das tatsächlich zu verwendende Titelbild samt passendem Alt-Text. */
+export function coverImage() {
+  return rotkampCover.available
+    ? { src: rotkampCover.src, alt: rotkampCover.alt, isVisualisation: true }
+    : {
+        src: rotkampCover.fallbackSrc,
+        alt: rotkampCover.fallbackAlt,
+        isVisualisation: false,
+      };
+}
+
+/**
  * Bildmaterial Rotkamp 1. Echte Fotos und Planzeichnungen aus dem Projekt.
  * ERGÄNZEN: Sobald finale Außen-Renderings vorliegen, hier oben einfügen –
  * das erste Bild der Liste lädt priorisiert.
