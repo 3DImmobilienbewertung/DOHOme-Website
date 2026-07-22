@@ -61,7 +61,54 @@ export const rotkamp = {
     /** Noch offen – null blendet die Angabe aus statt zu raten. */
     completion: null as string | null,
   },
+
+  /** Ortsteil laut Straßenverzeichnis (Rotkamp liegt in Mellendorf). */
+  district: "Mellendorf",
+
+  /** Kartenlink – Adresssuche, kein Einbetten ohne Einwilligung. */
+  mapsUrl:
+    "https://www.google.com/maps/search/?api=1&query=Rotkamp+1%2C+30900+Wedemark",
+  /** Eingebettete Karte – wird erst nach ausdrücklichem Klick geladen. */
+  mapsEmbedUrl:
+    "https://www.google.com/maps?q=Rotkamp+1,+30900+Wedemark&output=embed",
 } as const;
+
+/**
+ * Infrastruktur im Umfeld – Entfernungen laut Straßenverzeichnis (Luftlinie
+ * bzw. Gehweg, gerundet). Belegte Angaben, keine Schätzungen.
+ */
+export type PoiGroup = {
+  title: string;
+  items: { name: string; distance: string }[];
+};
+
+export const neighbourhood: PoiGroup[] = [
+  {
+    title: "Mobilität",
+    items: [
+      { name: "Bahnhof Mellendorf (S4)", distance: "350 m" },
+      { name: "Bushaltestelle Rotkamp", distance: "170 m" },
+      { name: "Hannover Hbf mit der S-Bahn", distance: "rund 25 Min." },
+    ],
+  },
+  {
+    title: "Einkauf & Versorgung",
+    items: [
+      { name: "famila Verbrauchermarkt", distance: "650 m" },
+      { name: "Bäckerei Bosselmann", distance: "640 m" },
+      { name: "Apotheke am Bahnhof", distance: "680 m" },
+    ],
+  },
+  {
+    title: "Bildung & Gesundheit",
+    items: [
+      { name: "Kita Mellendorf", distance: "430 m" },
+      { name: "IGS Wedemark", distance: "590 m" },
+      { name: "Realschule Wedemark", distance: "700 m" },
+      { name: "Hausarztpraxis", distance: "640 m" },
+    ],
+  },
+];
 
 export const unitsAvailable = rotkamp.units.total - rotkamp.units.sold;
 

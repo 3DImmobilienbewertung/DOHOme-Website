@@ -7,12 +7,14 @@ import { Reveal } from "@/components/animation/Reveal";
 import { PressSection } from "@/components/sections/PressSection";
 import { CallbackForm } from "@/components/forms/CallbackForm";
 import { ProjectGallery } from "@/components/projekte/ProjectGallery";
+import { ConsentMap } from "@/components/projekte/ConsentMap";
 import { PlaceholderTag } from "@/components/ui/PlaceholderTag";
 import { rotkampGallery, coverImage } from "@/lib/content/gallery";
 import {
   rotkamp,
   units,
   accessibleUnits,
+  neighbourhood,
   unitsAvailable,
   soldPercent,
 } from "@/lib/content/rotkamp";
@@ -326,6 +328,75 @@ export default function RotkampLanding() {
                 </div>
               </div>
             </Reveal>
+          </div>
+        </section>
+
+        {/* ----------------------------------------------------------- LAGE */}
+        <section className="border-t border-beige-100/10 bg-green-950">
+          <div className="mx-auto max-w-container px-6 section">
+            <Reveal>
+              <p className="eyebrow text-sage-300">Die Lage</p>
+              <h2 className="mt-2 max-w-2xl text-display-lg">
+                Alles Wichtige zu Fuß erreichbar
+              </h2>
+              <div className="mt-5 max-w-2xl space-y-4 text-lead text-beige-100/80">
+                <p>
+                  {rotkamp.name} liegt in {rotkamp.district}, dem Zentrum der
+                  Wedemark. Das Besondere an dieser Adresse: Der Alltag braucht
+                  hier kein Auto. Bahnhof, Supermarkt, Bäcker, Apotheke, Kita,
+                  Arzt und zwei weiterführende Schulen liegen im Umkreis von
+                  wenigen Hundert Metern.
+                </p>
+                <p>
+                  Der Bahnhof Mellendorf ist rund 350 Meter entfernt – von dort
+                  fährt die S4 im Takt bis Hannover Hauptbahnhof, in etwa 25
+                  Minuten. Wer pendelt, steht nicht im Stau; wer in der Region
+                  bleibt, hat Heide, Wald und Felder direkt vor der Tür.
+                </p>
+                <p className="text-beige-100/70">
+                  Für Familien ist die kurze Wegekette entscheidend: Kita und IGS
+                  Wedemark sind so nah, dass Kinder sie selbstständig erreichen –
+                  ein Argument, das in Neubaugebieten am Ortsrand selten ist.
+                </p>
+              </div>
+            </Reveal>
+
+            <div className="mt-12 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+              <Reveal>
+                <div className="space-y-8">
+                  {neighbourhood.map((group) => (
+                    <div key={group.title}>
+                      <p className="eyebrow text-accent-400">{group.title}</p>
+                      <dl className="mt-3 space-y-2">
+                        {group.items.map((item) => (
+                          <div
+                            key={item.name}
+                            className="flex items-baseline justify-between gap-4 border-b border-beige-100/10 pb-2"
+                          >
+                            <dt className="text-beige-100/85">{item.name}</dt>
+                            <dd className="nums shrink-0 text-sm text-muted-dark">
+                              {item.distance}
+                            </dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </div>
+                  ))}
+                  <p className="text-xs text-muted-dark">
+                    Entfernungen gerundet, ab Rotkamp 1.
+                  </p>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.08}>
+                <ConsentMap
+                  embedUrl={rotkamp.mapsEmbedUrl}
+                  linkUrl={rotkamp.mapsUrl}
+                  address={`${rotkamp.street}, ${rotkamp.postalCode} ${rotkamp.city}`}
+                  className="h-full"
+                />
+              </Reveal>
+            </div>
           </div>
         </section>
 

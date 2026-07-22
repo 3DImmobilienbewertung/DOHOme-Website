@@ -10,8 +10,10 @@ export const metadata: Metadata = {
 
 // Struktur nach Art. 13/14 DSGVO, abgestimmt auf die tatsächlich eingesetzte
 // Technik: statisches Hosting, self-hosted Schriften, keine Analyse-Cookies,
-// keine Einbindung von Drittanbieter-Trackern. Sobald Analyse-Tools oder
-// externe Karten/Videos ergänzt werden, MUSS dieser Text erweitert werden.
+// keine Tracker. Google Maps wird ausschließlich nach ausdrücklichem Klick
+// nachgeladen (Zwei-Klick-Lösung, siehe ConsentMap) – deshalb bleibt die Seite
+// ohne Einwilligung cookiefrei. Sobald Analyse-Tools oder weitere externe
+// Dienste ergänzt werden, MUSS dieser Text erweitert werden.
 
 function Section({
   n,
@@ -151,7 +153,26 @@ export default function DatenschutzPage() {
             </p>
           </Section>
 
-          <Section n={6} title="Schriftarten">
+          <Section n={6} title="Kartendarstellung (Google Maps)">
+            <p>
+              Auf Projektseiten bieten wir eine Karte des Standorts an. Diese
+              wird <strong className="text-beige-100">nicht automatisch
+              geladen</strong>: Sie sehen zunächst nur einen Hinweis mit der
+              Adresse. Erst wenn Sie aktiv auf „Karte laden" klicken, wird der
+              Dienst Google Maps nachgeladen. Dabei werden Ihre IP-Adresse und
+              gegebenenfalls weitere Daten an Google Ireland Limited übertragen;
+              eine Übermittlung in die USA ist möglich.
+            </p>
+            <p>
+              <strong className="text-beige-100">Rechtsgrundlage:</strong> Ihre
+              Einwilligung durch den Klick (Art. 6 Abs. 1 lit. a DSGVO, § 25
+              Abs. 1 TDDDG). Klicken Sie nicht, findet keine Übertragung statt.
+              Sie können die Einwilligung jederzeit widerrufen, indem Sie die
+              Seite neu laden.
+            </p>
+          </Section>
+
+          <Section n={7} title="Schriftarten">
             <p>
               Schriften werden lokal von unserem Server ausgeliefert
               (self-hosted). Es besteht keine Verbindung zu Servern Dritter; es
@@ -159,7 +180,7 @@ export default function DatenschutzPage() {
             </p>
           </Section>
 
-          <Section n={7} title="Empfänger und Auftragsverarbeitung">
+          <Section n={8} title="Empfänger und Auftragsverarbeitung">
             <p>
               Zur Bereitstellung der Website und zur Bearbeitung von Anfragen
               setzen wir sorgfältig ausgewählte Dienstleister ein (insbesondere
@@ -170,7 +191,7 @@ export default function DatenschutzPage() {
             </p>
           </Section>
 
-          <Section n={8} title="Ihre Rechte">
+          <Section n={9} title="Ihre Rechte">
             <p>Ihnen stehen gegenüber uns folgende Rechte zu:</p>
             <ul className="ml-5 list-disc space-y-1">
               <li>Auskunft über die verarbeiteten Daten (Art. 15 DSGVO)</li>
@@ -199,7 +220,7 @@ export default function DatenschutzPage() {
             </p>
           </Section>
 
-          <Section n={9} title="Beschwerderecht bei der Aufsichtsbehörde">
+          <Section n={10} title="Beschwerderecht bei der Aufsichtsbehörde">
             <p>
               Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu
               beschweren. Für uns zuständig ist:
@@ -211,7 +232,7 @@ export default function DatenschutzPage() {
             </p>
           </Section>
 
-          <Section n={10} title="Aktualität">
+          <Section n={11} title="Aktualität">
             <p>
               Wir passen diese Datenschutzerklärung an, sobald sich die
               Datenverarbeitung auf dieser Website ändert – etwa durch neue
