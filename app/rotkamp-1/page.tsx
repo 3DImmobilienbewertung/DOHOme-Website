@@ -19,6 +19,7 @@ import {
   neighbourhood,
   locationCopy,
   unitsAvailable,
+  availableSummary,
   soldPercent,
 } from "@/lib/content/rotkamp";
 import {
@@ -273,11 +274,18 @@ export default function RotkampLanding() {
 
             <Reveal className="mt-8">
               <div className="rounded-3xl border border-beige-100/15 bg-beige-100/[0.03] p-8 md:p-10">
-                <p className="max-w-xl text-beige-100/80">
+                <p className="max-w-2xl text-beige-100/80">
                   {rotkamp.units.sold} der {rotkamp.units.total} Wohnungen sind
-                  bereits verkauft. Welche Einheiten aktuell noch frei sind,
-                  besprechen wir gern persönlich – mit Grundriss, Ausstattung und
-                  Preis.
+                  bereits verkauft. Frei sind noch{" "}
+                  <span className="text-beige-100">
+                    {availableSummary.count} Einheiten
+                  </span>{" "}
+                  – oben hervorgehoben. {availableSummary.groundFloor} davon
+                  liegen im Erdgeschoss mit eigenem Privatgarten,{" "}
+                  {availableSummary.accessible} sind behindertengerecht
+                  ausgeführt. Gerade die Wohnungen, die sich für ebenerdiges,
+                  seniorengerechtes Wohnen eignen, gehören damit zu den letzten
+                  verfügbaren. Preise besprechen wir persönlich.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-4">
                   <CallButton label="Anrufen" />

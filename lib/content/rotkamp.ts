@@ -79,6 +79,13 @@ export const rotkamp = {
     energy: "Effizienzhaus-55-Standard" as string | null,
     /** Noch offen – null blendet die Angabe aus statt zu raten. */
     completion: null as string | null,
+    /**
+     * Baubeginn April 2025 (vom Kunden bestätigt). Relevant für die
+     * degressive AfA nach § 7 Abs. 5a EStG: Das Fenster ist Baubeginn
+     * zwischen 1.10.2023 und 30.9.2029 – April 2025 liegt darin, der
+     * Steuerhinweis auf der Projektseite ist damit gedeckt.
+     */
+    constructionStart: "April 2025" as string | null,
   },
 
   /** Ortsteil laut Straßenverzeichnis (Rotkamp liegt in Mellendorf). */
@@ -147,38 +154,60 @@ export const parkingTotal =
 
 // ------------------------------------------------------------ Wohnungsspiegel
 //
-// Vollständige Aufstellung aus dem Wohnungsspiegel. `price` und `status` sind
-// noch offen – sobald die Preisliste vorliegt, hier ergänzen; die Landingpage
-// rendert daraus automatisch die Wohnungstabelle.
-
+// Vollständige Aufstellung aus dem Wohnungsspiegel. `status` gibt die
+// Verfügbarkeit an (Stand Juli 2026, vom Kunden bestätigt): frei sind WE 2, 3,
+// 5, 6 und 14 – alle übrigen verkauft. Sobald sich der Stand ändert, hier
+// pflegen; Tabelle, Zähler und Verkaufsstand ziehen automatisch nach.
+// Preise bleiben bewusst offen und werden im Gespräch besprochen.
 
 export const units: Unit[] = [
   // Erdgeschoss – mit Privatgarten
-  { id: "WE 1", house: "A", floor: "EG", rooms: 2.5, areaSqm: 68.16, outdoor: "Garten 37,50 m²", accessible: true },
-  { id: "WE 2", house: "A", floor: "EG", rooms: 2.5, areaSqm: 57.87, outdoor: "Garten 56,50 m²" },
-  { id: "WE 3", house: "A", floor: "EG", rooms: 2, areaSqm: 62.59, outdoor: "Garten 28,10 m²" },
-  { id: "WE 4", house: "B", floor: "EG", rooms: 2.5, areaSqm: 64.39, outdoor: "Garten 38,20 m²" },
-  { id: "WE 5", house: "B", floor: "EG", rooms: 2.5, areaSqm: 64.39, outdoor: "Garten 37,75 m²" },
-  { id: "WE 6", house: "C", floor: "EG", rooms: 2.5, areaSqm: 77.67, outdoor: "Garten 142,10 m²", accessible: true },
-  { id: "WE 7", house: "C", floor: "EG", rooms: 2.5, areaSqm: 56.81, outdoor: "Garten 70,35 m²" },
-  { id: "WE 8", house: "C", floor: "EG", rooms: 2.5, areaSqm: 68.85, outdoor: "Garten 97,35 m²" },
+  { id: "WE 1", house: "A", floor: "EG", rooms: 2.5, areaSqm: 68.16, outdoor: "Garten 37,50 m²", accessible: true, status: "verkauft" },
+  { id: "WE 2", house: "A", floor: "EG", rooms: 2.5, areaSqm: 57.87, outdoor: "Garten 56,50 m²", status: "verfuegbar" },
+  { id: "WE 3", house: "A", floor: "EG", rooms: 2, areaSqm: 62.59, outdoor: "Garten 28,10 m²", status: "verfuegbar" },
+  { id: "WE 4", house: "B", floor: "EG", rooms: 2.5, areaSqm: 64.39, outdoor: "Garten 38,20 m²", status: "verkauft" },
+  { id: "WE 5", house: "B", floor: "EG", rooms: 2.5, areaSqm: 64.39, outdoor: "Garten 37,75 m²", status: "verfuegbar" },
+  { id: "WE 6", house: "C", floor: "EG", rooms: 2.5, areaSqm: 77.67, outdoor: "Garten 142,10 m²", accessible: true, status: "verfuegbar" },
+  { id: "WE 7", house: "C", floor: "EG", rooms: 2.5, areaSqm: 56.81, outdoor: "Garten 70,35 m²", status: "verkauft" },
+  { id: "WE 8", house: "C", floor: "EG", rooms: 2.5, areaSqm: 68.85, outdoor: "Garten 97,35 m²", status: "verkauft" },
   // 1. Obergeschoss – mit Balkon
-  { id: "WE 9", house: "A", floor: "1.OG", rooms: 2.5, areaSqm: 68.67, outdoor: "Balkon", accessible: true },
-  { id: "WE 10", house: "A", floor: "1.OG", rooms: 2.5, areaSqm: 57.87, outdoor: "Balkon" },
-  { id: "WE 11", house: "A", floor: "1.OG", rooms: 2, areaSqm: 63.1, outdoor: "Balkon" },
-  { id: "WE 12", house: "B", floor: "1.OG", rooms: 2.5, areaSqm: 64.9, outdoor: "Balkon" },
-  { id: "WE 13", house: "B", floor: "1.OG", rooms: 2.5, areaSqm: 64.9, outdoor: "Balkon" },
-  { id: "WE 14", house: "C", floor: "1.OG", rooms: 2.5, areaSqm: 77.67, outdoor: "Balkon", accessible: true },
-  { id: "WE 15", house: "C", floor: "1.OG", rooms: 2.5, areaSqm: 56.81, outdoor: "Balkon" },
-  { id: "WE 16", house: "C", floor: "1.OG", rooms: 2.5, areaSqm: 69.37, outdoor: "Balkon" },
+  { id: "WE 9", house: "A", floor: "1.OG", rooms: 2.5, areaSqm: 68.67, outdoor: "Balkon", accessible: true, status: "verkauft" },
+  { id: "WE 10", house: "A", floor: "1.OG", rooms: 2.5, areaSqm: 57.87, outdoor: "Balkon", status: "verkauft" },
+  { id: "WE 11", house: "A", floor: "1.OG", rooms: 2, areaSqm: 63.1, outdoor: "Balkon", status: "verkauft" },
+  { id: "WE 12", house: "B", floor: "1.OG", rooms: 2.5, areaSqm: 64.9, outdoor: "Balkon", status: "verkauft" },
+  { id: "WE 13", house: "B", floor: "1.OG", rooms: 2.5, areaSqm: 64.9, outdoor: "Balkon", status: "verkauft" },
+  { id: "WE 14", house: "C", floor: "1.OG", rooms: 2.5, areaSqm: 77.67, outdoor: "Balkon", accessible: true, status: "verfuegbar" },
+  { id: "WE 15", house: "C", floor: "1.OG", rooms: 2.5, areaSqm: 56.81, outdoor: "Balkon", status: "verkauft" },
+  { id: "WE 16", house: "C", floor: "1.OG", rooms: 2.5, areaSqm: 69.37, outdoor: "Balkon", status: "verkauft" },
   // Dachgeschoss – größere Grundrisse
-  { id: "WE 17", house: "A", floor: "DG", rooms: 3, areaSqm: 78.93, outdoor: "Balkon" },
-  { id: "WE 18", house: "A", floor: "DG", rooms: 3, areaSqm: 73.65, outdoor: "Balkon" },
-  { id: "WE 19", house: "B", floor: "DG", rooms: 2, areaSqm: 52.13, outdoor: "Balkon" },
-  { id: "WE 20", house: "B", floor: "DG", rooms: 2, areaSqm: 52.16, outdoor: "Balkon" },
-  { id: "WE 21", house: "C", floor: "DG", rooms: 3.5, areaSqm: 89.35, outdoor: "Balkon" },
-  { id: "WE 22", house: "C", floor: "DG", rooms: 3, areaSqm: 76.04, outdoor: "Balkon" },
+  { id: "WE 17", house: "A", floor: "DG", rooms: 3, areaSqm: 78.93, outdoor: "Balkon", status: "verkauft" },
+  { id: "WE 18", house: "A", floor: "DG", rooms: 3, areaSqm: 73.65, outdoor: "Balkon", status: "verkauft" },
+  { id: "WE 19", house: "B", floor: "DG", rooms: 2, areaSqm: 52.13, outdoor: "Balkon", status: "verkauft" },
+  { id: "WE 20", house: "B", floor: "DG", rooms: 2, areaSqm: 52.16, outdoor: "Balkon", status: "verkauft" },
+  { id: "WE 21", house: "C", floor: "DG", rooms: 3.5, areaSqm: 89.35, outdoor: "Balkon", status: "verkauft" },
+  { id: "WE 22", house: "C", floor: "DG", rooms: 3, areaSqm: 76.04, outdoor: "Balkon", status: "verkauft" },
 ];
 
 /** Behindertengerecht ausgeführte Wohnungen (BHG). */
 export const accessibleUnits = units.filter((u) => u.accessible);
+
+/** Aktuell verfügbare Wohnungen – Grundlage für Tabelle und Zähler. */
+export const availableUnits = units.filter((u) => u.status === "verfuegbar");
+
+/**
+ * Zusammensetzung der noch freien Wohnungen. Wird für die Verkaufstexte
+ * genutzt, damit die Aussagen automatisch stimmen, wenn sich der Status ändert.
+ */
+export const availableSummary = {
+  count: availableUnits.length,
+  groundFloor: availableUnits.filter((u) => u.floor === "EG").length,
+  accessible: availableUnits.filter((u) => u.accessible).length,
+  rooms: {
+    min: Math.min(...availableUnits.map((u) => u.rooms)),
+    max: Math.max(...availableUnits.map((u) => u.rooms)),
+  },
+  area: {
+    min: Math.min(...availableUnits.map((u) => u.areaSqm)),
+    max: Math.max(...availableUnits.map((u) => u.areaSqm)),
+  },
+};

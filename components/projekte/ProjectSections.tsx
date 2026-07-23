@@ -19,6 +19,7 @@ import type { PortfolioProject } from "@/lib/content/projects";
 export function ProjectSections({ project }: { project: PortfolioProject }) {
   const { story, facts, gallery, unitList, location, taxNote } = project;
   const hasStoryBlock = Boolean(story || (facts && facts.length > 0));
+  const hasUnitStatus = Boolean(unitList?.some((u) => u.status));
 
   return (
     <>
@@ -95,9 +96,11 @@ export function ProjectSections({ project }: { project: PortfolioProject }) {
                 Alle {project.units.total} Wohnungen im Überblick
               </h2>
               <p className="mt-4 max-w-2xl text-beige-100/75">
-                {project.units.available > 0
-                  ? "Zimmerzahl, Wohnfläche und Zuschnitt jeder Einheit. Welche Wohnungen aktuell noch frei sind, besprechen wir persönlich – mit Grundriss, Ausstattung und Preis."
-                  : "Zimmerzahl, Wohnfläche und Zuschnitt jeder Einheit. Dieses Projekt ist vollständig vermarktet – die Aufstellung zeigt, wie wir Grundrisse schneiden."}
+                {project.units.available <= 0
+                  ? "Zimmerzahl, Wohnfläche und Zuschnitt jeder Einheit. Dieses Projekt ist vollständig vermarktet – die Aufstellung zeigt, wie wir Grundrisse schneiden."
+                  : hasUnitStatus
+                    ? "Zimmerzahl, Wohnfläche und Zuschnitt jeder Einheit – die noch verfügbaren Wohnungen sind markiert. Preise besprechen wir persönlich."
+                    : "Zimmerzahl, Wohnfläche und Zuschnitt jeder Einheit. Welche Wohnungen aktuell noch frei sind, besprechen wir persönlich – mit Grundriss, Ausstattung und Preis."}
               </p>
             </Reveal>
             <Reveal className="mt-10">
