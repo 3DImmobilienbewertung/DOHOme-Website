@@ -108,10 +108,16 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="hero-scroll pointer-events-none absolute bottom-8 right-6 z-10 flex items-center gap-3 text-beige-100/70">
+      {/* Scroll-Hinweis: führt zum Geschichts-Anriss. Bisher war das toter
+          Text (pointer-events-none) – jetzt ein echter Anker-Link. */}
+      <a
+        href="#geschichte"
+        aria-label="Zu unserer Geschichte scrollen"
+        className="hero-scroll group absolute bottom-8 right-6 z-10 flex items-center gap-3 text-beige-100/70 transition-colors hover:text-beige-100"
+      >
         <span className="eyebrow">Unsere Geschichte</span>
-        <span className="block h-10 w-px bg-beige-100/40" />
-      </div>
+        <span className="block h-10 w-px origin-top bg-beige-100/40 transition-transform duration-500 ease-out-expo group-hover:scale-y-125 group-hover:bg-beige-100/70" />
+      </a>
     </section>
   );
 }

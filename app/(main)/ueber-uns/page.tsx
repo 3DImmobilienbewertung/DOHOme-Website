@@ -6,6 +6,7 @@ import {
   formatStat,
   hasPendingStats,
 } from "@/lib/content/company";
+import { storyLong } from "@/lib/content/story";
 
 export const metadata: Metadata = {
   title: "Über uns",
@@ -44,23 +45,26 @@ export default function UeberUnsPage() {
       </section>
 
       {/* GESCHICHTE */}
-      <section className="border-t border-beige-100/10">
+      <section id="geschichte" className="scroll-mt-24 border-t border-beige-100/10">
         <div className="mx-auto max-w-container px-6 py-16 md:py-20">
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-            <div>
-              <p className="eyebrow text-sage-300">Unsere Geschichte</p>
+            <Reveal>
+              <p className="eyebrow text-sage-300">{storyLong.eyebrow}</p>
               <h2 className="mt-2 max-w-md text-display-lg">
-                Aus dem Handwerk gewachsen
+                {storyLong.heading}
               </h2>
-            </div>
-            <div className="max-w-xl space-y-4 text-beige-100/75">
-              <p>
-                Der Kern von DOHOme ist Handwerk, nicht Vertrieb. Weil wir selbst
-                bauen und selbst verantworten, entscheidet bei uns die Qualität –
-                nicht die schnellste Marge.
-              </p>
-              <Todo>Gründer-Story beider Familien (Text vom Kunden)</Todo>
-            </div>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <div className="max-w-xl space-y-4 text-beige-100/75">
+                {storyLong.paragraphs.map((p) => (
+                  <p key={p.slice(0, 32)}>{p}</p>
+                ))}
+                <p className="pt-1 text-sm text-muted-dark">
+                  Eine persönliche Anekdote der Gründer ergänzen wir, sobald sie
+                  vorliegt – der Text steht auch ohne sie.
+                </p>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -73,23 +77,10 @@ export default function UeberUnsPage() {
             <h2 className="mt-2 max-w-xl text-display-lg">Unsere Philosophie</h2>
           </Reveal>
           <dl className="mt-10 grid gap-px overflow-hidden rounded-2xl bg-beige-100/10 sm:grid-cols-3">
-            {[
-              [
-                "Von Anfang an richtig",
-                "Kompromisslose Qualität statt Nacharbeit – gebaut, um Generationen zu tragen.",
-              ],
-              [
-                "Ein Partner, keine Kette",
-                "Sie sprechen mit den Inhabern. Verantwortung bleibt an einem Tisch.",
-              ],
-              [
-                "Regional verwurzelt",
-                "Wir kennen die Orte, Bauämter und Menschen der Region Hannover.",
-              ],
-            ].map(([title, text]) => (
-              <div key={title} className="bg-green-900 p-6 md:p-8">
-                <dt className="text-heading">{title}</dt>
-                <dd className="mt-2 text-sm text-beige-100/75">{text}</dd>
+            {storyLong.principles.map((p) => (
+              <div key={p.title} className="bg-green-900 p-6 md:p-8">
+                <dt className="text-heading">{p.title}</dt>
+                <dd className="mt-2 text-sm text-beige-100/75">{p.text}</dd>
               </div>
             ))}
           </dl>
