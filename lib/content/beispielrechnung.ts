@@ -11,11 +11,11 @@
 // getilgt, degressive AfA auf den Gebäudeanteil (§ 7 Abs. 5a EStG, 5 % vom
 // Restbuchwert), Steuerwirkung über den Grenzsteuersatz.
 //
-// Hausgeld ist bewusst in drei Bestandteile zerlegt, weil sie sich wirtschaftlich
-// und steuerlich unterschiedlich verhalten:
-//   1. umlagefähige Betriebskosten – trägt der Mieter (reiner Durchlaufposten),
-//   2. nicht umlagefähige Verwaltungskosten – mindern Cashflow UND Steuer,
-//   3. Zuführung zur Instandhaltungsrücklage – mindert den Cashflow, ist aber
+// Angesetzt werden nur die beiden Posten, die der Eigentümer selbst trägt.
+// Umlagefähige Betriebskosten bleiben außen vor – sie trägt der Mieter über die
+// Nebenkostenvorauszahlung und sind für die Rechnung ein Durchlaufposten:
+//   1. Hausverwaltung – mindert Cashflow UND Steuer,
+//   2. Zuführung zur Instandhaltungsrücklage – mindert den Cashflow, ist aber
 //      erst bei tatsächlicher Verausgabung durch die WEG abziehbar.
 
 export type CalcInput = {
@@ -39,17 +39,10 @@ export type CalcInput = {
   /** AfA-Satz p. a. (degressiv, vom Restbuchwert). */
   afaSatz: number;
   /**
-   * Umlagefähige Betriebskosten je m² und Monat. Der Mieter trägt sie über die
-   * Nebenkostenvorauszahlung – für den Eigentümer ein reiner Durchlaufposten.
-   * Fließt deshalb nicht ins Ergebnis ein, sondern dient nur der Aufschlüsselung
-   * des Hausgeldes.
+   * Vergütung der Hausverwaltung je Monat. Nicht umlagefähig, sofort als
+   * Werbungskosten abziehbar.
    */
-  nebenkostenUmlagefaehigProM2: number;
-  /**
-   * Nicht umlagefähige Verwaltungskosten je Monat (z. B. WEG-Verwaltervergütung).
-   * Sofort als Werbungskosten abziehbar.
-   */
-  verwaltungskostenMonat: number;
+  hausverwaltungMonat: number;
   /**
    * Zuführung zur Instandhaltungsrücklage der WEG je Monat.
    *
@@ -61,7 +54,7 @@ export type CalcInput = {
   instandhaltungsruecklageMonat: number;
   /** Persönlicher Grenzsteuersatz als Dezimalwert. */
   grenzsteuersatz: number;
-  /** Allgemeine Kostensteigerung p. a. (Hausgeld) als Dezimalwert. */
+  /** Steigerung der laufenden Kosten p. a. als Dezimalwert. */
   kostensteigerung: number;
   /** Wertsteigerung der Immobilie p. a. – in der Grundrechnung 0. */
   wertsteigerung: number;
@@ -74,7 +67,7 @@ export type CalcYear = {
   zins: number;
   tilgung: number;
   afa: number;
-  verwaltungskosten: number;
+  hausverwaltung: number;
   instandhaltungsruecklage: number;
   /** Steuerliches Ergebnis (negativ = Verlust → Steuererstattung). */
   steuerErgebnis: number;
@@ -129,7 +122,7 @@ export function computeProjection(input: CalcInput): CalcResult {
     const kaltmiete = startKaltmieteMonat * 12 * wachstum;
 
     const kostenIndex = Math.pow(1 + input.kostensteigerung, t - 1);
-    const verwaltungskosten = input.verwaltungskostenMonat * 12 * kostenIndex;
+    const hausverwaltung = input.hausverwaltungMonat * 12 * kostenIndex;
     const instandhaltungsruecklage =
       input.instandhaltungsruecklageMonat * 12 * kostenIndex;
 
@@ -149,17 +142,17 @@ export function computeProjection(input: CalcInput): CalcResult {
     const afa = buchwert * input.afaSatz;
     buchwert -= afa;
 
-    // Werbungskosten: Zins, AfA und nicht umlagefähige Verwaltung. Die
-    // Rücklagenzuführung gehört bewusst NICHT dazu (siehe Kommentar am Typ).
-    const steuerErgebnis = kaltmiete - zinsJahr - afa - verwaltungskosten;
+    // Werbungskosten: Zins, AfA und Hausverwaltung. Die Rücklagenzuführung
+    // gehört bewusst NICHT dazu (siehe Kommentar am Typ).
+    const steuerErgebnis = kaltmiete - zinsJahr - afa - hausverwaltung;
     const steuerEffekt = -steuerErgebnis * input.grenzsteuersatz;
 
-    // Cashflow nach Steuern: Miete − Kapitaldienst − nicht umlagefähiges Hausgeld
-    // + Steuerwirkung. (Umlagefähige Kosten sind Durchlaufposten.)
+    // Cashflow nach Steuern: Miete − Kapitaldienst − eigene laufende Kosten
+    // + Steuerwirkung.
     const cashflow =
       kaltmiete -
       (zinsJahr + tilgungJahr) -
-      verwaltungskosten -
+      hausverwaltung -
       instandhaltungsruecklage +
       steuerEffekt;
 
@@ -172,7 +165,7 @@ export function computeProjection(input: CalcInput): CalcResult {
       zins: round2(zinsJahr),
       tilgung: round2(tilgungJahr),
       afa: round2(afa),
-      verwaltungskosten: round2(verwaltungskosten),
+      hausverwaltung: round2(hausverwaltung),
       instandhaltungsruecklage: round2(instandhaltungsruecklage),
       steuerErgebnis: round2(steuerErgebnis),
       steuerEffekt: round2(steuerEffekt),
@@ -211,8 +204,7 @@ export function computeProjection(input: CalcInput): CalcResult {
 
 /**
  * Standard-Annahmen für Rotkamp 1 (Beispielwohnung 77,67 m² – entspricht WE 6
- * bzw. WE 14, beide aktuell verfügbar). Vom Kunden vorgegebene Werte; Hausgeld
- * ist bewusst als Annahme markiert, solange die tatsächliche Abrechnung fehlt.
+ * bzw. WE 14, beide aktuell verfügbar). Alle Werte vom Kunden vorgegeben.
  */
 export const rotkampCalcDefaults: CalcInput = {
   kaufpreis: 388000,
@@ -225,10 +217,8 @@ export const rotkampCalcDefaults: CalcInput = {
   kaufnebenkostenPct: 0.07,
   gebaeudeanteilPct: 0.85,
   afaSatz: 0.05,
-  // 194 € je Monat bei 69 m² (Angabe des Kunden) = 2,81 € je m² und Monat.
-  nebenkostenUmlagefaehigProM2: 2.81,
-  // WEG-Verwaltervergütung, Angabe des Kunden (grober Richtwert).
-  verwaltungskostenMonat: 35,
+  // Angaben des Kunden.
+  hausverwaltungMonat: 35,
   instandhaltungsruecklageMonat: 30,
   grenzsteuersatz: 0.42,
   kostensteigerung: 0.02,
@@ -243,11 +233,10 @@ export const rotkampCalcDefaults: CalcInput = {
  * Finanzierung abhängen. Alles andere ist mit üblichen Werten vorbelegt und
  * jederzeit änderbar.
  *
- * BEWUSST NICHT leer: Grenzsteuersatz und Hausgeldbestandteile. Ein leeres Feld
- * wird als 0 gerechnet – ein Steuersatz von 0 % würde die Steuerwirkung
- * unterschlagen und das Ergebnis stark zu negativ zeigen, ein Hausgeld von 0 €
- * umgekehrt zu positiv. Beides wäre irreführend, obwohl formal „nichts
- * vorgegeben" wäre.
+ * BEWUSST NICHT leer: Grenzsteuersatz und laufende Kosten. Ein leeres Feld wird
+ * als 0 gerechnet – ein Steuersatz von 0 % würde die Steuerwirkung unterschlagen
+ * und das Ergebnis stark zu negativ zeigen, Kosten von 0 € umgekehrt zu positiv.
+ * Beides wäre irreführend, obwohl formal „nichts vorgegeben" wäre.
  */
 export const BLANK_FIELDS: (keyof CalcInput)[] = [
   "kaufpreis",

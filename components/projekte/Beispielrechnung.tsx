@@ -68,9 +68,8 @@ const FIELDS: { group: string; items: FieldDef[] }[] = [
   {
     group: "Laufende Kosten und Steuern",
     items: [
-      { key: "nebenkostenUmlagefaehigProM2", label: "Betriebskosten je m²", kind: "eur", step: 0.1, hint: "monatlich, umlagefähig – trägt der Mieter", placeholder: "z. B. 2,81" },
+      { key: "hausverwaltungMonat", label: "Hausverwaltung", kind: "eur", step: 5, hint: "monatlich, nicht umlagefähig", placeholder: "z. B. 35" },
       { key: "instandhaltungsruecklageMonat", label: "Instandhaltungsrücklage", kind: "eur", step: 5, hint: "monatlich an die WEG", placeholder: "z. B. 30" },
-      { key: "verwaltungskostenMonat", label: "Verwaltungskosten", kind: "eur", step: 5, hint: "monatlich, nicht umlagefähig", placeholder: "z. B. 35" },
       { key: "gebaeudeanteilPct", label: "Gebäudeanteil am Kaufpreis", kind: "pct", step: 1, hint: "Grund und Boden ist nicht abschreibbar" },
       { key: "afaSatz", label: "Abschreibung p. a. (degressiv)", kind: "pct", step: 0.5 },
       { key: "grenzsteuersatz", label: "Persönlicher Grenzsteuersatz", kind: "pct", step: 1, placeholder: "z. B. 42" },
@@ -150,10 +149,8 @@ export function Beispielrechnung({
   );
 
   const startMiete = input.wohnflaeche * input.kaltmieteProM2;
-  const nebenkostenMonat = input.nebenkostenUmlagefaehigProM2 * input.wohnflaeche;
   const eigenanteilMonat =
-    input.instandhaltungsruecklageMonat + input.verwaltungskostenMonat;
-  const hausgeldMonat = nebenkostenMonat + eigenanteilMonat;
+    input.hausverwaltungMonat + input.instandhaltungsruecklageMonat;
   const missingLabels = missing.map(
     (k) => ALL_FIELDS.find((f) => f.key === k)?.label ?? String(k),
   );
@@ -215,13 +212,15 @@ export function Beispielrechnung({
             {num.format(input.kaltmieteProM2)} €)
           </p>
 
-          {/* Hausgeld aufgeschlüsselt: der umlagefähige Teil belastet den
-              Eigentümer nicht – der häufigste Denkfehler bei solchen Rechnungen. */}
-          {hausgeldMonat > 0 && (
+          {/* Nur die Posten, die der Eigentümer selbst trägt. Umlagefähige
+              Betriebskosten zahlt der Mieter und bleiben deshalb außen vor. */}
+          {eigenanteilMonat > 0 && (
             <p className="mt-2 text-sm text-muted-dark">
-              Hausgeld {eur.format(hausgeldMonat)} pro Monat, davon{" "}
-              {eur.format(nebenkostenMonat)} umlagefähig (trägt der Mieter) und{" "}
-              {eur.format(eigenanteilMonat)} Ihr Anteil.
+              Ihre laufenden Kosten {eur.format(eigenanteilMonat)} pro Monat –
+              Hausverwaltung {eur.format(input.hausverwaltungMonat)} und
+              Instandhaltungsrücklage{" "}
+              {eur.format(input.instandhaltungsruecklageMonat)}. Umlagefähige
+              Betriebskosten trägt der Mieter.
             </p>
           )}
         </>
@@ -337,7 +336,7 @@ export function Beispielrechnung({
                       <td className="nums py-2.5 pr-4 text-beige-100/70">{eur.format(y.tilgung)}</td>
                       <td className="nums py-2.5 pr-4 text-beige-100/70">{eur.format(y.afa)}</td>
                       <td className="nums py-2.5 pr-4 text-beige-100/70">
-                        {eur.format(y.instandhaltungsruecklage + y.verwaltungskosten)}
+                        {eur.format(y.hausverwaltung + y.instandhaltungsruecklage)}
                       </td>
                       <td className="nums py-2.5 pr-4">{eur2.format(y.steuerEffekt)}</td>
                       <td
