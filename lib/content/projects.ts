@@ -32,6 +32,10 @@ import {
   bissendorfUnits,
   bissendorfStory,
 } from "@/lib/content/bissendorf";
+import {
+  rotkampCalcDefaults,
+  type CalcInput,
+} from "@/lib/content/beispielrechnung";
 
 export type ProjectFact = { k: string; v: string };
 
@@ -86,6 +90,12 @@ export type PortfolioProject = {
    * erworben werden können.
    */
   taxNote?: { title: string; paragraphs: string[]; disclaimer: string };
+  /**
+   * Ausgangswerte der 10-Jahres-Beispielrechnung. Nur setzen, wo tatsächlich
+   * noch Einheiten erworben werden können – bei vollständig vermarkteten
+   * Projekten wäre die Rechnung gegenstandslos.
+   */
+  calc?: { defaults: CalcInput; unitNote?: string };
   location?: ProjectLocation;
   /**
    * Eigene Landingpage (Anzeigen), falls vorhanden. Die Projektdetailseite
@@ -152,6 +162,11 @@ export const portfolio: PortfolioProject[] = [
       ],
       disclaimer:
         "Diese Angabe dient der ersten Orientierung und ersetzt keine steuerliche Beratung. Ob und in welcher Höhe die Abschreibung in Ihrem Fall greift, klären Sie bitte mit Ihrer Steuerberaterin oder Ihrem Steuerberater.",
+    },
+    calc: {
+      defaults: rotkampCalcDefaults,
+      unitNote:
+        "Als Beispiel dient eine 77,67 m² große Wohnung – dieser Zuschnitt ist aktuell noch verfügbar.",
     },
     location: {
       copy: locationCopy,

@@ -3,6 +3,7 @@ import { ProjectGallery } from "@/components/projekte/ProjectGallery";
 import { ConsentMap } from "@/components/projekte/ConsentMap";
 import { UnitTable } from "@/components/projekte/UnitTable";
 import { NeighbourhoodPanel } from "@/components/projekte/NeighbourhoodPanel";
+import { Beispielrechnung } from "@/components/projekte/Beispielrechnung";
 import type { PortfolioProject } from "@/lib/content/projects";
 
 // Inhaltliche Tiefe der Projektdetailseite – vollständig datengetrieben.
@@ -17,7 +18,7 @@ import type { PortfolioProject } from "@/lib/content/projects";
 // kurz und auf den Anruf ausgerichtet.
 
 export function ProjectSections({ project }: { project: PortfolioProject }) {
-  const { story, facts, gallery, unitList, location, taxNote } = project;
+  const { story, facts, gallery, unitList, location, taxNote, calc } = project;
   const hasStoryBlock = Boolean(story || (facts && facts.length > 0));
   const hasUnitStatus = Boolean(unitList?.some((u) => u.status));
 
@@ -133,6 +134,21 @@ export function ProjectSections({ project }: { project: PortfolioProject }) {
                   {taxNote.disclaimer}
                 </p>
               </div>
+            </Reveal>
+          </div>
+        </section>
+      )}
+
+      {/* ---------------------------------------------------- BEISPIELRECHNUNG */}
+      {calc && (
+        <section className="border-t border-beige-100/10 bg-green-950">
+          <div className="mx-auto max-w-container px-6 section-sm">
+            <Reveal>
+              <Beispielrechnung
+                defaults={calc.defaults}
+                projectName={project.name}
+                unitNote={calc.unitNote}
+              />
             </Reveal>
           </div>
         </section>
