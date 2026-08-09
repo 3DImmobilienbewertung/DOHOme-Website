@@ -242,12 +242,55 @@ export const rotkampCalcDefaults: CalcInput = {
   afaSatz: 0.05,
   // 194 € je Monat bei 69 m² (Angabe des Kunden) = 2,81 € je m² und Monat.
   nebenkostenUmlagefaehigProM2: 2.81,
-  // OFFEN: WEG-Verwaltervergütung liegt noch nicht vor – bewusst 0, statt zu raten.
-  verwaltungskostenMonat: 0,
+  // WEG-Verwaltervergütung, Angabe des Kunden (grober Richtwert).
+  verwaltungskostenMonat: 35,
   instandhaltungsruecklageMonat: 30,
   mietausfallPct: 0.02,
   grenzsteuersatz: 0.42,
   kostensteigerung: 0.02,
   wertsteigerung: 0,
   jahre: 10,
+};
+
+/**
+ * Ausgangswerte des allgemeinen Rechners.
+ *
+ * Leer bleiben nur die Werte, die zwingend vom konkreten Objekt und der
+ * Finanzierung abhängen. Alles andere ist mit üblichen Werten vorbelegt und
+ * jederzeit änderbar.
+ *
+ * BEWUSST NICHT leer: Grenzsteuersatz und Hausgeldbestandteile. Ein leeres Feld
+ * wird als 0 gerechnet – ein Steuersatz von 0 % würde die Steuerwirkung
+ * unterschlagen und das Ergebnis stark zu negativ zeigen, ein Hausgeld von 0 €
+ * umgekehrt zu positiv. Beides wäre irreführend, obwohl formal „nichts
+ * vorgegeben" wäre.
+ */
+export const BLANK_FIELDS: (keyof CalcInput)[] = [
+  "kaufpreis",
+  "wohnflaeche",
+  "kaltmieteProM2",
+  "eigenkapitalKaufpreis",
+  "zins",
+  "tilgung",
+];
+
+/** Ohne diese Angaben lässt sich nichts rechnen. */
+export const REQUIRED_FIELDS: (keyof CalcInput)[] = [
+  "kaufpreis",
+  "wohnflaeche",
+  "kaltmieteProM2",
+  "zins",
+  "tilgung",
+];
+
+export const genericCalcDefaults: CalcInput = {
+  ...rotkampCalcDefaults,
+  // Die Felder aus BLANK_FIELDS werden in der Komponente ohnehin geleert; die
+  // Nullen hier machen nur deutlich, dass es keine Vorgabe gibt.
+  kaufpreis: 0,
+  wohnflaeche: 0,
+  kaltmieteProM2: 0,
+  eigenkapitalKaufpreis: 0,
+  zins: 0,
+  tilgung: 0,
 };

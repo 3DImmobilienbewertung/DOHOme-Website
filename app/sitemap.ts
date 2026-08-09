@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/grundstueck-verkaufen",
     "/ueber-uns",
     "/kontakt",
+    "/rechner",
   ];
 
   const projectRoutes = portfolio.map((p) => `/projekte/${p.slug}`);

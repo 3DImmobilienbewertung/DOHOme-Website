@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Reveal } from "@/components/animation/Reveal";
 import { ProjectGallery } from "@/components/projekte/ProjectGallery";
 import { ConsentMap } from "@/components/projekte/ConsentMap";
@@ -149,6 +151,15 @@ export function ProjectSections({ project }: { project: PortfolioProject }) {
                 projectName={project.name}
                 unitNote={calc.unitNote}
               />
+              <p className="mt-5 text-sm text-beige-100/70">
+                Sie möchten mit ganz eigenen Zahlen rechnen?{" "}
+                <Link
+                  href="/rechner"
+                  className="underline underline-offset-4 transition-colors hover:text-beige-100"
+                >
+                  Zum leeren Rechner
+                </Link>
+              </p>
             </Reveal>
           </div>
         </section>
