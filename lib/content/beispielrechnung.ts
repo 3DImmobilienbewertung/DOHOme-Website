@@ -9,9 +9,15 @@
 //
 // Modell: jährliche Betrachtung über `jahre` Jahre, Darlehen monatlich annuitätisch
 // getilgt, degressive AfA auf den Gebäudeanteil (§ 7 Abs. 5a EStG, 5 % vom
-// Restbuchwert), Steuerwirkung über den Grenzsteuersatz. Umlagefähige Betriebs-
-// kosten sind Durchlaufposten (Mieter zahlt, Eigentümer leitet weiter) und bleiben
-// deshalb außen vor – relevant ist nur der nicht umlagefähige Anteil des Hausgeldes.
+// Restbuchwert), Steuerwirkung über den Grenzsteuersatz.
+//
+// Hausgeld ist bewusst in drei Bestandteile zerlegt, weil sie sich wirtschaftlich
+// und steuerlich unterschiedlich verhalten:
+//   1. umlagefähige Betriebskosten – trägt der Mieter (Durchlaufposten); nur der
+//      Leerstandsanteil bleibt beim Eigentümer und ist dann abziehbar,
+//   2. nicht umlagefähige Verwaltungskosten – mindern Cashflow UND Steuer,
+//   3. Zuführung zur Instandhaltungsrücklage – mindert den Cashflow, ist aber
+//      erst bei tatsächlicher Verausgabung durch die WEG abziehbar.
 
 export type CalcInput = {
   kaufpreis: number;
@@ -33,10 +39,26 @@ export type CalcInput = {
   gebaeudeanteilPct: number;
   /** AfA-Satz p. a. (degressiv, vom Restbuchwert). */
   afaSatz: number;
-  /** Hausgeld je Monat (gesamt). */
-  hausgeldMonat: number;
-  /** Davon nicht umlagefähig (Kosten des Eigentümers) je Monat. */
-  hausgeldNichtUmlagefaehigMonat: number;
+  /**
+   * Umlagefähige Betriebskosten je m² und Monat. Der Mieter trägt sie über die
+   * Nebenkostenvorauszahlung – für den Eigentümer sind sie ein Durchlaufposten,
+   * mit Ausnahme des Leerstandsanteils.
+   */
+  nebenkostenUmlagefaehigProM2: number;
+  /**
+   * Nicht umlagefähige Verwaltungskosten je Monat (z. B. WEG-Verwaltervergütung).
+   * Sofort als Werbungskosten abziehbar.
+   */
+  verwaltungskostenMonat: number;
+  /**
+   * Zuführung zur Instandhaltungsrücklage der WEG je Monat.
+   *
+   * STEUERLICH: Die Einzahlung in die Rücklage ist beim Vermieter NICHT sofort
+   * als Werbungskosten abziehbar – erst wenn die Verwaltung das Geld tatsächlich
+   * für Erhaltungsmaßnahmen verausgabt. Sie mindert also den Cashflow, aber
+   * zunächst nicht die Steuer. Genau so wird hier gerechnet.
+   */
+  instandhaltungsruecklageMonat: number;
   /** Mietausfall-/Leerstandsreserve als Anteil der Kaltmiete. */
   mietausfallPct: number;
   /** Persönlicher Grenzsteuersatz als Dezimalwert. */
@@ -55,7 +77,10 @@ export type CalcYear = {
   zins: number;
   tilgung: number;
   afa: number;
-  hausgeldNichtUml: number;
+  /** Selbst getragener Anteil umlagefähiger Kosten (Leerstand). */
+  nebenkostenLeerstand: number;
+  verwaltungskosten: number;
+  instandhaltungsruecklage: number;
   /** Steuerliches Ergebnis (negativ = Verlust → Steuererstattung). */
   steuerErgebnis: number;
   /** Steuerwirkung (positiv = Erstattung, negativ = zusätzliche Steuer). */
@@ -109,10 +134,14 @@ export function computeProjection(input: CalcInput): CalcResult {
     const mietausfall = kaltmiete * input.mietausfallPct;
     const effektiveMiete = kaltmiete - mietausfall;
 
-    const hausgeldNichtUml =
-      input.hausgeldNichtUmlagefaehigMonat *
-      12 *
-      Math.pow(1 + input.kostensteigerung, t - 1);
+    const kostenIndex = Math.pow(1 + input.kostensteigerung, t - 1);
+    // Umlagefähige Kosten trägt der Mieter – außer im Leerstand.
+    const nebenkostenUml =
+      input.nebenkostenUmlagefaehigProM2 * input.wohnflaeche * 12 * kostenIndex;
+    const nebenkostenLeerstand = nebenkostenUml * input.mietausfallPct;
+    const verwaltungskosten = input.verwaltungskostenMonat * 12 * kostenIndex;
+    const instandhaltungsruecklage =
+      input.instandhaltungsruecklageMonat * 12 * kostenIndex;
 
     // Darlehen monatlich annuitätisch fortschreiben.
     let zinsJahr = 0;
@@ -130,13 +159,22 @@ export function computeProjection(input: CalcInput): CalcResult {
     const afa = buchwert * input.afaSatz;
     buchwert -= afa;
 
-    const steuerErgebnis = effektiveMiete - zinsJahr - afa - hausgeldNichtUml;
+    // Werbungskosten: Zins, AfA, Verwaltung und der im Leerstand selbst
+    // getragene Anteil der Betriebskosten. Die Rücklagenzuführung gehört
+    // bewusst NICHT dazu (siehe Kommentar am Typ).
+    const steuerErgebnis =
+      effektiveMiete - zinsJahr - afa - verwaltungskosten - nebenkostenLeerstand;
     const steuerEffekt = -steuerErgebnis * input.grenzsteuersatz;
 
     // Cashflow nach Steuern: Miete − Kapitaldienst − nicht umlagefähiges Hausgeld
     // + Steuerwirkung. (Umlagefähige Kosten sind Durchlaufposten.)
     const cashflow =
-      effektiveMiete - (zinsJahr + tilgungJahr) - hausgeldNichtUml + steuerEffekt;
+      effektiveMiete -
+      (zinsJahr + tilgungJahr) -
+      verwaltungskosten -
+      instandhaltungsruecklage -
+      nebenkostenLeerstand +
+      steuerEffekt;
 
     summeCashflow += cashflow;
     summeTilgung += tilgungJahr;
@@ -148,7 +186,9 @@ export function computeProjection(input: CalcInput): CalcResult {
       zins: round2(zinsJahr),
       tilgung: round2(tilgungJahr),
       afa: round2(afa),
-      hausgeldNichtUml: round2(hausgeldNichtUml),
+      nebenkostenLeerstand: round2(nebenkostenLeerstand),
+      verwaltungskosten: round2(verwaltungskosten),
+      instandhaltungsruecklage: round2(instandhaltungsruecklage),
       steuerErgebnis: round2(steuerErgebnis),
       steuerEffekt: round2(steuerEffekt),
       cashflow: round2(cashflow),
@@ -200,8 +240,11 @@ export const rotkampCalcDefaults: CalcInput = {
   kaufnebenkostenPct: 0.07,
   gebaeudeanteilPct: 0.85,
   afaSatz: 0.05,
-  hausgeldMonat: 300,
-  hausgeldNichtUmlagefaehigMonat: 106,
+  // 194 € je Monat bei 69 m² (Angabe des Kunden) = 2,81 € je m² und Monat.
+  nebenkostenUmlagefaehigProM2: 2.81,
+  // OFFEN: WEG-Verwaltervergütung liegt noch nicht vor – bewusst 0, statt zu raten.
+  verwaltungskostenMonat: 0,
+  instandhaltungsruecklageMonat: 30,
   mietausfallPct: 0.02,
   grenzsteuersatz: 0.42,
   kostensteigerung: 0.02,

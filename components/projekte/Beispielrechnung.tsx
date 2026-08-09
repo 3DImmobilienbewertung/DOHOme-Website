@@ -78,11 +78,25 @@ const FIELDS: { group: string; items: FieldDef[] }[] = [
     group: "Laufende Kosten und Steuern",
     items: [
       {
-        key: "hausgeldNichtUmlagefaehigMonat",
-        label: "Hausgeld nicht umlagefähig",
+        key: "nebenkostenUmlagefaehigProM2",
+        label: "Betriebskosten je m²",
+        kind: "eur",
+        step: 0.1,
+        hint: "monatlich, umlagefähig – trägt der Mieter",
+      },
+      {
+        key: "instandhaltungsruecklageMonat",
+        label: "Instandhaltungsrücklage",
         kind: "eur",
         step: 5,
-        hint: "monatlich – Ihr Kostenanteil",
+        hint: "monatlich an die WEG",
+      },
+      {
+        key: "verwaltungskostenMonat",
+        label: "Verwaltungskosten",
+        kind: "eur",
+        step: 5,
+        hint: "monatlich, nicht umlagefähig",
       },
       {
         key: "mietausfallPct",
@@ -143,6 +157,11 @@ export function Beispielrechnung({
   }
 
   const cf1 = result.cashflowMonatJahr1;
+  const nebenkostenMonat =
+    input.nebenkostenUmlagefaehigProM2 * input.wohnflaeche;
+  const eigenanteilMonat =
+    input.instandhaltungsruecklageMonat + input.verwaltungskostenMonat;
+  const hausgeldMonat = nebenkostenMonat + eigenanteilMonat;
 
   return (
     <div className="rounded-3xl border border-beige-100/15 bg-beige-100/[0.03] p-6 md:p-10">
@@ -187,6 +206,14 @@ export function Beispielrechnung({
         Annuität {eur.format(result.annuitaetMonat)} pro Monat · Darlehen{" "}
         {eur.format(result.darlehen)} · Start-Kaltmiete {eur.format(startMiete)} pro
         Monat ({num.format(input.wohnflaeche)} m² × {num.format(input.kaltmieteProM2)} €)
+      </p>
+
+      {/* Hausgeld aufgeschlüsselt: der umlagefähige Teil belastet den Eigentümer
+          nicht – das ist der häufigste Denkfehler bei solchen Rechnungen. */}
+      <p className="mt-2 text-sm text-muted-dark">
+        Hausgeld {eur.format(hausgeldMonat)} pro Monat, davon{" "}
+        {eur.format(nebenkostenMonat)} umlagefähig (trägt der Mieter) und{" "}
+        {eur.format(eigenanteilMonat)} Ihr Anteil.
       </p>
 
       {/* -------------------------------------------------------- ANNAHMEN */}
@@ -271,6 +298,7 @@ export function Beispielrechnung({
                   <th scope="col" className="py-2.5 pr-4 font-medium">Zins</th>
                   <th scope="col" className="py-2.5 pr-4 font-medium">Tilgung</th>
                   <th scope="col" className="py-2.5 pr-4 font-medium">Abschreibung</th>
+                  <th scope="col" className="py-2.5 pr-4 font-medium">Rücklage</th>
                   <th scope="col" className="py-2.5 pr-4 font-medium">Steuerwirkung</th>
                   <th scope="col" className="py-2.5 pr-4 font-medium">Cashflow</th>
                   <th scope="col" className="py-2.5 font-medium">Restschuld</th>
@@ -291,6 +319,9 @@ export function Beispielrechnung({
                     </td>
                     <td className="nums py-2.5 pr-4 text-beige-100/70">
                       {eur.format(y.afa)}
+                    </td>
+                    <td className="nums py-2.5 pr-4 text-beige-100/70">
+                      {eur.format(y.instandhaltungsruecklage + y.verwaltungskosten)}
                     </td>
                     <td className="nums py-2.5 pr-4">{eur2.format(y.steuerEffekt)}</td>
                     <td
@@ -323,11 +354,13 @@ export function Beispielrechnung({
           Ihrem Steuerberater.
         </p>
         <p className="mt-3">
-          Nicht enthalten sind unter anderem Instandhaltungsrücklagen über das
-          Hausgeld hinaus, Modernisierungen, Kosten der Anschlussfinanzierung nach
-          Ablauf der Zinsbindung sowie eine mögliche Besteuerung eines
-          Veräußerungsgewinns. Das Hausgeld ist eine Annahme, solange die
-          tatsächliche Abrechnung nicht vorliegt.
+          Die Zuführung zur Instandhaltungsrücklage mindert den Cashflow, ist
+          steuerlich aber erst abziehbar, wenn die Eigentümergemeinschaft das Geld
+          tatsächlich für Erhaltungsmaßnahmen verwendet – so ist es hier gerechnet.
+          Nicht enthalten sind unter anderem Instandhaltungen über die Rücklage
+          hinaus, Modernisierungen, Kosten der Anschlussfinanzierung nach Ablauf
+          der Zinsbindung sowie eine mögliche Besteuerung eines
+          Veräußerungsgewinns.
         </p>
         <p className="mt-3 text-xs text-muted-dark">
           Ihre Eingaben werden ausschließlich in Ihrem Browser verarbeitet und
