@@ -71,7 +71,6 @@ const FIELDS: { group: string; items: FieldDef[] }[] = [
       { key: "nebenkostenUmlagefaehigProM2", label: "Betriebskosten je m²", kind: "eur", step: 0.1, hint: "monatlich, umlagefähig – trägt der Mieter", placeholder: "z. B. 2,81" },
       { key: "instandhaltungsruecklageMonat", label: "Instandhaltungsrücklage", kind: "eur", step: 5, hint: "monatlich an die WEG", placeholder: "z. B. 30" },
       { key: "verwaltungskostenMonat", label: "Verwaltungskosten", kind: "eur", step: 5, hint: "monatlich, nicht umlagefähig", placeholder: "z. B. 35" },
-      { key: "mietausfallPct", label: "Mietausfallreserve", kind: "pct", step: 0.5, hint: "Anteil der Kaltmiete" },
       { key: "gebaeudeanteilPct", label: "Gebäudeanteil am Kaufpreis", kind: "pct", step: 1, hint: "Grund und Boden ist nicht abschreibbar" },
       { key: "afaSatz", label: "Abschreibung p. a. (degressiv)", kind: "pct", step: 0.5 },
       { key: "grenzsteuersatz", label: "Persönlicher Grenzsteuersatz", kind: "pct", step: 1, placeholder: "z. B. 42" },
@@ -375,9 +374,10 @@ export function Beispielrechnung({
           Die Zuführung zur Instandhaltungsrücklage mindert den Cashflow, ist
           steuerlich aber erst abziehbar, wenn die Eigentümergemeinschaft das Geld
           tatsächlich für Erhaltungsmaßnahmen verwendet – so ist es hier gerechnet.
-          Nicht enthalten sind unter anderem Instandhaltungen über die Rücklage
-          hinaus, Modernisierungen, Kosten der Anschlussfinanzierung nach Ablauf
-          der Zinsbindung sowie eine mögliche Besteuerung eines
+          Die Rechnung unterstellt eine durchgehende Vermietung. Nicht enthalten
+          sind unter anderem Leerstand und Mietausfall, Instandhaltungen über die
+          Rücklage hinaus, Modernisierungen, Kosten der Anschlussfinanzierung nach
+          Ablauf der Zinsbindung sowie eine mögliche Besteuerung eines
           Veräußerungsgewinns.
         </p>
         <p className="mt-3 text-xs text-muted-dark">
