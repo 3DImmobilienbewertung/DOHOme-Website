@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Monogram } from "@/components/brand/Monogram";
@@ -10,6 +10,16 @@ export function Preloader() {
   const root = useRef<HTMLDivElement>(null);
   const sheen = useRef<HTMLDivElement>(null);
   const { setReady } = useAppReady();
+
+  // Sicherheitsnetz: Die CSS-Failsafe in globals.css blendet den Vorhang nach
+  // 4 s aus, kann aber kein setReady() auslösen. Käme die Timeline nie durch
+  // – etwa weil der Tab im Hintergrund lädt und requestAnimationFrame nicht
+  // tickt –, bliebe der Hero dauerhaft unsichtbar. Deshalb wird die Seite
+  // spätestens nach 4,5 s in jedem Fall freigegeben.
+  useEffect(() => {
+    const t = window.setTimeout(setReady, 4500);
+    return () => window.clearTimeout(t);
+  }, [setReady]);
 
   useGSAP(
     () => {
