@@ -1,4 +1,4 @@
-// Projektdaten Bissendorfer Straße 21 – fertiggestelltes Wohnprojekt.
+// Projektdaten Bissendorfer Straße 11 – fertiggestelltes Wohnprojekt.
 //
 // Quelle: Wohnungsspiegel des Kunden (21 Wohneinheiten, EG / 1. OG / DG) sowie
 // Außenaufnahme vom August 2023.
@@ -13,9 +13,9 @@
 import type { Unit } from "@/lib/content/types";
 
 export const bissendorf = {
-  name: "Bissendorfer Straße 21",
+  name: "Bissendorfer Straße 11",
   shortName: "Bissendorfer Straße",
-  street: "Bissendorfer Straße 21",
+  street: "Bissendorfer Straße 11",
   /** Vom Kunden bestätigt. */
   city: "Wedemark",
   postalCode: "30900",
@@ -67,9 +67,9 @@ export const bissendorf = {
   accessibility: "alle Wohnungen seniorengerecht",
 
   mapsUrl:
-    "https://www.google.com/maps/search/?api=1&query=Bissendorfer+Stra%C3%9Fe+21%2C+30900+Wedemark",
+    "https://www.google.com/maps/search/?api=1&query=Bissendorfer+Stra%C3%9Fe+11%2C+30900+Wedemark",
   mapsEmbedUrl:
-    "https://www.google.com/maps?q=Bissendorfer+Stra%C3%9Fe+21,+30900+Wedemark&output=embed",
+    "https://www.google.com/maps?q=Bissendorfer+Stra%C3%9Fe+11,+30900+Wedemark&output=embed",
 } as const;
 
 // ------------------------------------------------------------ Wohnungsspiegel

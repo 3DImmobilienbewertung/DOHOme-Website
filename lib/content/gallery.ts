@@ -168,17 +168,59 @@ export const rotkampGallery: GalleryImage[] = [
 ];
 
 /**
- * Bildmaterial Bissendorfer Straße 21 (fertiggestellt).
+ * Bildmaterial Bissendorfer Straße 11 (fertiggestellt).
  * ERGÄNZEN: weitere Aufnahmen – Innenräume, Treppenhaus, Rückseite. Die Galerie
  * ist als Slider angelegt und nimmt zusätzliche Motive ohne Anpassung auf.
  */
 export const bissendorfGallery: GalleryImage[] = [
   {
-    src: "/images/bissendorfer-strasse-21/aussenansicht-strasse.jpg",
+    src: "/images/bissendorfer-strasse-11/strassenansicht-sonne.jpg",
+    category: "aussen",
+    width: 1600,
+    height: 1200,
+    caption: "Straßenansicht mit verglastem Treppenhaus über zwei Geschosse",
+  },
+  {
+    src: "/images/bissendorfer-strasse-11/wohnraum-terrassentuer.jpg",
+    category: "innen",
+    width: 1600,
+    height: 1200,
+    caption: "Wohnraum mit Terrassentür und Fenster zum Garten",
+  },
+  {
+    src: "/images/bissendorfer-strasse-11/privatgarten.jpg",
+    category: "aussen",
+    width: 1600,
+    height: 1200,
+    caption: "Privatgarten mit gepflasterter Terrasse",
+  },
+  {
+    src: "/images/bissendorfer-strasse-11/zimmer-gartenseite.jpg",
+    category: "innen",
+    width: 1600,
+    height: 1200,
+    caption: "Zimmer zur ruhigen Gartenseite",
+  },
+  {
+    src: "/images/bissendorfer-strasse-11/zimmer-strassenseite.jpg",
+    category: "innen",
+    width: 1600,
+    height: 1200,
+    caption: "Zimmer mit Fenster zur Straßenseite",
+  },
+  {
+    src: "/images/bissendorfer-strasse-11/tiefgaragenzufahrt.jpg",
+    category: "aussen",
+    width: 1600,
+    height: 1200,
+    caption: "Zufahrt zur Tiefgarage, Stellplätze ebenerdig am Haus",
+  },
+  {
+    src: "/images/bissendorfer-strasse-11/aussenansicht-strasse.jpg",
     category: "aussen",
     width: 2048,
     height: 1536,
-    caption: "Straßenansicht mit verglastem Treppenhaus und Stellplätzen",
+    caption: "Gebäude von der Straße, Klinker mit Satteldach",
     date: "August 2023",
   },
 ];

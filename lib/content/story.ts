@@ -2,7 +2,7 @@
 // /ueber-uns. Ein Wortlaut, keine zwei driftenden Fassungen.
 //
 // Grundsatz: Nur Belegtes. Alle Aussagen sind aus dem gesicherten Projektstand
-// abgeleitet (Rotkamp 1, Bissendorfer Straße 21, HAZ-Bericht „Vorzeigeprojekt
+// abgeleitet (Rotkamp 1, Bissendorfer Straße 11, HAZ-Bericht „Vorzeigeprojekt
 // für Wedemark") oder allgemeingültig für das Geschäftsmodell. KEINE erfundenen
 // Jahreszahlen: Das Gründungsjahr ist offen (2012 vs. HR 05.11.2013), deshalb
 // steht hier nirgends ein konkretes Jahr.

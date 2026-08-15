@@ -178,7 +178,7 @@ export const portfolio: PortfolioProject[] = [
     landingPage: "/rotkamp-1",
   },
   {
-    slug: "bissendorfer-strasse-21",
+    slug: "bissendorfer-strasse-11",
     name: bissendorf.name,
     phase: "abgeschlossen",
     isFlagship: false,
@@ -193,7 +193,7 @@ export const portfolio: PortfolioProject[] = [
     area: { min: b.area.min, max: b.area.max },
     rooms: { min: b.rooms.min, max: b.rooms.max },
     image: {
-      src: "/images/bissendorfer-strasse-21/aussenansicht-strasse.jpg",
+      src: "/images/bissendorfer-strasse-11/strassenansicht-sonne.jpg",
       alt: `${bissendorf.name}, ${bissendorf.postalCode} ${bissendorf.city} – Klinkerfassade mit Satteldach und verglastem Treppenhaus`,
     },
     gallery: bissendorfGallery,

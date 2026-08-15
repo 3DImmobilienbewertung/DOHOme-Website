@@ -40,6 +40,14 @@ const nextConfig = {
         destination: "/grundstueck-verkaufen",
         permanent: true,
       },
+      // Hausnummer korrigiert: Das Objekt liegt in der Bissendorfer Straße 11,
+      // nicht 21. Die alte URL war nie öffentlich, die Weiterleitung kostet
+      // nichts und fängt geteilte Vorschau-Links ab.
+      {
+        source: "/projekte/bissendorfer-strasse-21",
+        destination: "/projekte/bissendorfer-strasse-11",
+        permanent: true,
+      },
     ];
   },
 };

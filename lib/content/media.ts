@@ -8,8 +8,8 @@
 /** Echte Motive, Schlüssel = Slug bzw. Seed. ERGÄNZEN je neuem Projekt. */
 const PROJECT_IMAGE: Record<string, string> = {
   "rotkamp-1": "/images/rotkamp-1/visualisierung-aussen.jpg",
-  "bissendorfer-strasse-21":
-    "/images/bissendorfer-strasse-21/aussenansicht-strasse.jpg",
+  "bissendorfer-strasse-11":
+    "/images/bissendorfer-strasse-11/strassenansicht-sonne.jpg",
 };
 
 /** True, wenn für den Schlüssel ein echtes Motiv hinterlegt ist. */
