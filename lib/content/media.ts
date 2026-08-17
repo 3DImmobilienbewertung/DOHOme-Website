@@ -10,6 +10,8 @@ const PROJECT_IMAGE: Record<string, string> = {
   "rotkamp-1": "/images/rotkamp-1/visualisierung-aussen.jpg",
   "bissendorfer-strasse-11":
     "/images/bissendorfer-strasse-11/strassenansicht-sonne.jpg",
+  "walsroder-strasse-7":
+    "/images/walsroder-strasse-7/luftbild-strassenseite.jpg",
 };
 
 /** True, wenn für den Schlüssel ein echtes Motiv hinterlegt ist. */

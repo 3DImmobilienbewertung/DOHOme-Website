@@ -224,3 +224,38 @@ export const bissendorfGallery: GalleryImage[] = [
     date: "August 2023",
   },
 ];
+
+/**
+ * Bildmaterial Walsroder Straße 7 (fertiggestellt). Luftaufnahmen aus dem
+ * Marketing-Archiv (DJI). ERGÄNZEN: Innenaufnahmen, sobald verfügbar.
+ */
+export const walsroderGallery: GalleryImage[] = [
+  {
+    src: "/images/walsroder-strasse-7/luftbild-strassenseite.jpg",
+    category: "aussen",
+    width: 2000,
+    height: 1125,
+    caption: "Straßenseite mit verglastem Treppenhaus und Carports",
+  },
+  {
+    src: "/images/walsroder-strasse-7/gartenseite-balkone.jpg",
+    category: "aussen",
+    width: 2000,
+    height: 1125,
+    caption: "Gartenseite mit Balkonen, dahinter offene Feldflur",
+  },
+  {
+    src: "/images/walsroder-strasse-7/carports-stellplaetze.jpg",
+    category: "aussen",
+    width: 2000,
+    height: 1125,
+    caption: "Carports und Stellplätze auf dem eigenen Grundstück",
+  },
+  {
+    src: "/images/walsroder-strasse-7/balkone-detail.jpg",
+    category: "aussen",
+    width: 2000,
+    height: 1125,
+    caption: "Balkone und Terrassen zur ruhigen Rückseite",
+  },
+];

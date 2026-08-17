@@ -16,6 +16,7 @@ import type { GalleryImage } from "@/lib/content/gallery";
 import {
   rotkampGallery,
   bissendorfGallery,
+  walsroderGallery,
   rotkampCover,
 } from "@/lib/content/gallery";
 import {
@@ -32,6 +33,11 @@ import {
   bissendorfUnits,
   bissendorfStory,
 } from "@/lib/content/bissendorf";
+import {
+  walsroder,
+  walsroderStory,
+  walsroderAvgArea,
+} from "@/lib/content/walsroder";
 import {
   rotkampCalcDefaults,
   type CalcInput,
@@ -107,6 +113,7 @@ export type PortfolioProject = {
 const dec = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: 0 });
 const r = rotkamp.facts;
 const b = bissendorf.facts;
+const w = walsroder.facts;
 
 export const portfolio: PortfolioProject[] = [
   {
@@ -230,6 +237,49 @@ export const portfolio: PortfolioProject[] = [
       address: `${bissendorf.street}, ${bissendorf.postalCode} ${bissendorf.city}`,
       mapsUrl: bissendorf.mapsUrl,
       mapsEmbedUrl: bissendorf.mapsEmbedUrl,
+    },
+  },
+  {
+    slug: "walsroder-strasse-7",
+    name: walsroder.name,
+    phase: "abgeschlossen",
+    isFlagship: false,
+    city: walsroder.city,
+    postalCode: walsroder.postalCode,
+    teaser: `${walsroder.units.total} Wohnungen auf ${dec(w.totalArea)} m² Wohnfläche – Klinkerfassade, verglastes Treppenhaus, Carports auf dem Grundstück.`,
+    units: { total: walsroder.units.total, sold: walsroder.units.sold, available: 0 },
+    // Wohnungsspiegel liegt noch nicht vor – deshalb keine Spanne je Wohnung,
+    // nur die belegte Gesamtfläche in den Fakten.
+    area: null,
+    rooms: null,
+    image: {
+      src: "/images/walsroder-strasse-7/luftbild-strassenseite.jpg",
+      alt: `${walsroder.name}, ${walsroder.postalCode} ${walsroder.city} – Klinkerfassade mit Satteldach, verglastes Treppenhaus und Carports`,
+    },
+    gallery: walsroderGallery,
+    story: { title: "Wohnen am Ortsrand", paragraphs: walsroderStory },
+    facts: [
+      { k: "Wohneinheiten", v: `${walsroder.units.total} Wohnungen` },
+      { k: "Gesamtwohnfläche", v: `${dec(w.totalArea)} m²` },
+      {
+        k: "Wohnfläche je Wohnung",
+        v: `im Mittel rund ${dec(walsroderAvgArea)} m²`,
+      },
+      { k: "Fassade", v: walsroder.architecture.facade },
+      { k: "Dach", v: walsroder.architecture.roof },
+      { k: "Besonderheit", v: walsroder.architecture.detail },
+      { k: "Freiflächen", v: walsroder.architecture.balconies },
+      { k: "Stellplätze", v: walsroder.architecture.parking },
+    ],
+    location: {
+      copy: [
+        `${walsroder.name} liegt am Ortsrand: vorne die Straße mit kurzer Anbindung, hinten offene Feldflur. Diese Lage verbindet Erreichbarkeit mit Ruhe – der Blick aus den rückwärtigen Wohnungen geht ins Grüne statt auf die nächste Fassade.`,
+        "Die Stellplätze liegen auf dem eigenen Grundstück, überdacht als Carport oder ebenerdig direkt am Haus.",
+      ],
+      neighbourhood: [],
+      address: `${walsroder.street}, ${walsroder.postalCode} ${walsroder.city}`,
+      mapsUrl: walsroder.mapsUrl,
+      mapsEmbedUrl: walsroder.mapsEmbedUrl,
     },
   },
 ];
