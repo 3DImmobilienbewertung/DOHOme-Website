@@ -244,15 +244,22 @@ export const walsroderGallery: GalleryImage[] = [
     height: 1125,
     caption: "Gartenseite mit Balkonen, dahinter offene Feldflur",
   },
+];
+
+/**
+ * Bildmaterial Walsroder Straße 9 (fertiggestellt) – Nachbarobjekt der
+ * Nummer 7, gemeinsamer Innenhof. ERGÄNZEN: Innenaufnahmen.
+ */
+export const walsroder9Gallery: GalleryImage[] = [
   {
-    src: "/images/walsroder-strasse-7/carports-stellplaetze.jpg",
+    src: "/images/walsroder-strasse-9/carports-innenhof.jpg",
     category: "aussen",
     width: 2000,
     height: 1125,
-    caption: "Carports und Stellplätze auf dem eigenen Grundstück",
+    caption: "Carports und Stellplätze im gemeinsamen Innenhof",
   },
   {
-    src: "/images/walsroder-strasse-7/balkone-detail.jpg",
+    src: "/images/walsroder-strasse-9/gartenseite-balkone.jpg",
     category: "aussen",
     width: 2000,
     height: 1125,

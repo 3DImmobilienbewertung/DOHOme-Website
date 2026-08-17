@@ -17,6 +17,7 @@ import {
   rotkampGallery,
   bissendorfGallery,
   walsroderGallery,
+  walsroder9Gallery,
   rotkampCover,
 } from "@/lib/content/gallery";
 import {
@@ -38,6 +39,11 @@ import {
   walsroderStory,
   walsroderAvgArea,
 } from "@/lib/content/walsroder";
+import {
+  walsroder9,
+  walsroder9Story,
+  walsroder9AvgArea,
+} from "@/lib/content/walsroder9";
 import {
   rotkampCalcDefaults,
   type CalcInput,
@@ -114,6 +120,7 @@ const dec = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: 0 
 const r = rotkamp.facts;
 const b = bissendorf.facts;
 const w = walsroder.facts;
+const w9 = walsroder9.facts;
 
 export const portfolio: PortfolioProject[] = [
   {
@@ -280,6 +287,46 @@ export const portfolio: PortfolioProject[] = [
       address: `${walsroder.street}, ${walsroder.postalCode} ${walsroder.city}`,
       mapsUrl: walsroder.mapsUrl,
       mapsEmbedUrl: walsroder.mapsEmbedUrl,
+    },
+  },
+  {
+    slug: "walsroder-strasse-9",
+    name: walsroder9.name,
+    phase: "abgeschlossen",
+    isFlagship: false,
+    city: walsroder9.city,
+    postalCode: walsroder9.postalCode,
+    teaser: `${walsroder9.units.total} Wohnungen auf ${dec(w9.totalArea)} m² Wohnfläche – Klinkerfassade, Balkone zum Grünen, Carports im gemeinsamen Innenhof.`,
+    units: { total: walsroder9.units.total, sold: walsroder9.units.sold, available: 0 },
+    area: null,
+    rooms: null,
+    image: {
+      src: "/images/walsroder-strasse-9/carports-innenhof.jpg",
+      alt: `${walsroder9.name}, ${walsroder9.postalCode} ${walsroder9.city} – Klinkerfassade mit Satteldach und Carports im Innenhof`,
+    },
+    gallery: walsroder9Gallery,
+    story: { title: "Der größere Nachbar", paragraphs: walsroder9Story },
+    facts: [
+      { k: "Wohneinheiten", v: `${walsroder9.units.total} Wohnungen` },
+      { k: "Gesamtwohnfläche", v: `${dec(w9.totalArea)} m²` },
+      {
+        k: "Wohnfläche je Wohnung",
+        v: `im Mittel rund ${dec(walsroder9AvgArea)} m²`,
+      },
+      { k: "Fassade", v: walsroder9.architecture.facade },
+      { k: "Dach", v: walsroder9.architecture.roof },
+      { k: "Freiflächen", v: walsroder9.architecture.balconies },
+      { k: "Stellplätze", v: walsroder9.architecture.parking },
+    ],
+    location: {
+      copy: [
+        `${walsroder9.name} steht direkt neben der Nummer 7. Beide Gebäude fassen einen gemeinsamen Innenhof – die Stellplätze liegen dort geschützt, die Wohnungen orientieren sich nach außen.`,
+        "Vorne die Straße mit kurzer Anbindung, hinten offene Feldflur: eine Lage, die Erreichbarkeit und Ruhe verbindet.",
+      ],
+      neighbourhood: [],
+      address: `${walsroder9.street}, ${walsroder9.postalCode} ${walsroder9.city}`,
+      mapsUrl: walsroder9.mapsUrl,
+      mapsEmbedUrl: walsroder9.mapsEmbedUrl,
     },
   },
 ];
