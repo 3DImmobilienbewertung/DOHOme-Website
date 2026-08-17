@@ -18,6 +18,7 @@ import {
   bissendorfGallery,
   walsroderGallery,
   walsroder9Gallery,
+  holunderwegGallery,
   rotkampCover,
 } from "@/lib/content/gallery";
 import {
@@ -44,6 +45,11 @@ import {
   walsroder9Story,
   walsroder9AvgArea,
 } from "@/lib/content/walsroder9";
+import {
+  holunderweg,
+  holunderwegStory,
+  holunderwegAvgArea,
+} from "@/lib/content/holunderweg";
 import {
   rotkampCalcDefaults,
   type CalcInput,
@@ -121,6 +127,7 @@ const r = rotkamp.facts;
 const b = bissendorf.facts;
 const w = walsroder.facts;
 const w9 = walsroder9.facts;
+const h = holunderweg.facts;
 
 export const portfolio: PortfolioProject[] = [
   {
@@ -327,6 +334,47 @@ export const portfolio: PortfolioProject[] = [
       address: `${walsroder9.street}, ${walsroder9.postalCode} ${walsroder9.city}`,
       mapsUrl: walsroder9.mapsUrl,
       mapsEmbedUrl: walsroder9.mapsEmbedUrl,
+    },
+  },
+  {
+    slug: "holunderweg-2",
+    name: holunderweg.name,
+    phase: "abgeschlossen",
+    isFlagship: false,
+    city: holunderweg.city,
+    postalCode: holunderweg.postalCode,
+    teaser: `${holunderweg.units.total} Wohnungen auf ${dec(h.totalArea)} m² Wohnfläche – Klinkerfassade, Balkone und Dachterrassen, voll unterkellert.`,
+    units: { total: holunderweg.units.total, sold: holunderweg.units.sold, available: 0 },
+    area: null,
+    rooms: null,
+    image: {
+      src: "/images/holunderweg-2/luftbild-balkone.jpg",
+      alt: `${holunderweg.name}, ${holunderweg.postalCode} ${holunderweg.city} – Klinkerfassade mit Satteldach, Balkone und Dachterrassen`,
+    },
+    gallery: holunderwegGallery,
+    story: { title: "Großzügig geschnitten, voll unterkellert", paragraphs: holunderwegStory },
+    facts: [
+      { k: "Wohneinheiten", v: `${holunderweg.units.total} Wohnungen in zwei Hauseingängen` },
+      { k: "Gesamtwohnfläche", v: `${dec(h.totalArea)} m²` },
+      {
+        k: "Wohnfläche je Wohnung",
+        v: `im Mittel rund ${dec(holunderwegAvgArea)} m²`,
+      },
+      { k: "Keller", v: "voll unterkellert" },
+      { k: "Fassade", v: holunderweg.architecture.facade },
+      { k: "Dach", v: holunderweg.architecture.roof },
+      { k: "Freiflächen", v: holunderweg.architecture.balconies },
+      { k: "Stellplätze", v: holunderweg.architecture.parking },
+    ],
+    location: {
+      copy: [
+        `${holunderweg.name} liegt in einer ruhigen Wohnstraße – gewachsene Nachbarschaft mit Vorgärten und altem Baumbestand statt Durchgangsverkehr.`,
+        "Die Stellplätze liegen als Garagen und Außenstellplätze direkt am Haus.",
+      ],
+      neighbourhood: [],
+      address: `${holunderweg.street}, ${holunderweg.postalCode} ${holunderweg.city}`,
+      mapsUrl: holunderweg.mapsUrl,
+      mapsEmbedUrl: holunderweg.mapsEmbedUrl,
     },
   },
 ];

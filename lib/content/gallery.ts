@@ -266,3 +266,31 @@ export const walsroder9Gallery: GalleryImage[] = [
     caption: "Balkone und Terrassen zur ruhigen Rückseite",
   },
 ];
+
+/**
+ * Bildmaterial Holunderweg 2 a/b (fertiggestellt). Luftaufnahmen aus dem
+ * Marketing-Archiv (DJI). ERGÄNZEN: Innenaufnahmen.
+ */
+export const holunderwegGallery: GalleryImage[] = [
+  {
+    src: "/images/holunderweg-2/luftbild-balkone.jpg",
+    category: "aussen",
+    width: 2000,
+    height: 1125,
+    caption: "Balkone und Dachterrassen zur ruhigen Gartenseite",
+  },
+  {
+    src: "/images/holunderweg-2/luftbild-strasse-garagen.jpg",
+    category: "aussen",
+    width: 2000,
+    height: 1125,
+    caption: "Zwei Hauseingänge mit Garagen an der Wohnstraße",
+  },
+  {
+    src: "/images/holunderweg-2/strassenansicht.jpg",
+    category: "aussen",
+    width: 2000,
+    height: 1125,
+    caption: "Klinkerfassade an begrünter Wohnstraße",
+  },
+];
