@@ -19,6 +19,8 @@ import {
   walsroderGallery,
   walsroder9Gallery,
   holunderwegGallery,
+  walsroder10bGallery,
+  beekeuferGallery,
   rotkampCover,
 } from "@/lib/content/gallery";
 import {
@@ -51,6 +53,16 @@ import {
   holunderwegAvgArea,
 } from "@/lib/content/holunderweg";
 import {
+  walsroder10b,
+  walsroder10bStory,
+  walsroder10bAvgArea,
+} from "@/lib/content/walsroder10b";
+import {
+  beekeufer,
+  beekeuferStory,
+  beekeuferAvgArea,
+} from "@/lib/content/beekeufer";
+import {
   rotkampCalcDefaults,
   type CalcInput,
 } from "@/lib/content/beispielrechnung";
@@ -78,6 +90,8 @@ export type PortfolioProject = {
   /** Ein Satz für die Übersichtskarte. */
   teaser: string;
   units: { total: number; sold: number; available: number };
+  /** Gesamtwohnfläche des Projekts in m² – Grundlage der Unternehmenskennzahlen. */
+  totalAreaSqm: number;
   /** Wohnfläche je Einheit in m². */
   area: { min: number; max: number } | null;
   rooms: { min: number; max: number } | null;
@@ -88,6 +102,11 @@ export type PortfolioProject = {
   story?: { title: string; paragraphs: string[] };
   /** Kennzahlen als Definitionsliste. */
   facts?: ProjectFact[];
+  /**
+   * Presseberichte über DIESES Projekt (E-E-A-T). Nur verlinken, nicht den
+   * Artikeltext übernehmen – Urheberrecht.
+   */
+  press?: { outlet: string; headline: string; url: string }[];
   /** Wohnungsspiegel. */
   unitList?: Unit[];
   /**
@@ -127,6 +146,8 @@ const r = rotkamp.facts;
 const b = bissendorf.facts;
 const w = walsroder.facts;
 const w9 = walsroder9.facts;
+const w10 = walsroder10b.facts;
+const bk = beekeufer.facts;
 const h = holunderweg.facts;
 
 export const portfolio: PortfolioProject[] = [
@@ -144,6 +165,7 @@ export const portfolio: PortfolioProject[] = [
       sold: rotkamp.units.sold,
       available: unitsAvailable,
     },
+    totalAreaSqm: r.totalArea,
     area: { min: r.area.min, max: r.area.max },
     rooms: { min: r.rooms.min, max: r.rooms.max },
     image: { src: rotkampCover.src, alt: rotkampCover.alt },
@@ -211,12 +233,20 @@ export const portfolio: PortfolioProject[] = [
       sold: bissendorf.units.sold,
       available: 0,
     },
+    totalAreaSqm: b.totalArea,
     area: { min: b.area.min, max: b.area.max },
     rooms: { min: b.rooms.min, max: b.rooms.max },
     image: {
       src: "/images/bissendorfer-strasse-11/strassenansicht-sonne.jpg",
       alt: `${bissendorf.name}, ${bissendorf.postalCode} ${bissendorf.city} – Klinkerfassade mit Satteldach und verglastem Treppenhaus`,
     },
+    press: [
+      {
+        outlet: "Hannoversche Allgemeine Zeitung",
+        headline: "Bauboom in der Wedemark – Kritiker fordern Ideen",
+        url: "https://www.haz.de/lokales/umland/wedemark/bauboom-in-der-wedemark-kritiker-befuerchten-verstaedterung-und-fordern-ideen-SNB2DP66PFEZEOMZSMF3HN4YK4.html",
+      },
+    ],
     gallery: bissendorfGallery,
     story: {
       title: "Eine Adresse, die sich einfügt",
@@ -262,6 +292,7 @@ export const portfolio: PortfolioProject[] = [
     postalCode: walsroder.postalCode,
     teaser: `${walsroder.units.total} Wohnungen auf ${dec(w.totalArea)} m² Wohnfläche – Klinkerfassade, verglastes Treppenhaus, Carports auf dem Grundstück.`,
     units: { total: walsroder.units.total, sold: walsroder.units.sold, available: 0 },
+    totalAreaSqm: w.totalArea,
     // Wohnungsspiegel liegt noch nicht vor – deshalb keine Spanne je Wohnung,
     // nur die belegte Gesamtfläche in den Fakten.
     area: null,
@@ -305,6 +336,7 @@ export const portfolio: PortfolioProject[] = [
     postalCode: walsroder9.postalCode,
     teaser: `${walsroder9.units.total} Wohnungen auf ${dec(w9.totalArea)} m² Wohnfläche – Klinkerfassade, Balkone zum Grünen, Carports im gemeinsamen Innenhof.`,
     units: { total: walsroder9.units.total, sold: walsroder9.units.sold, available: 0 },
+    totalAreaSqm: w9.totalArea,
     area: null,
     rooms: null,
     image: {
@@ -313,6 +345,18 @@ export const portfolio: PortfolioProject[] = [
     },
     gallery: walsroder9Gallery,
     story: { title: "Der größere Nachbar", paragraphs: walsroder9Story },
+    press: [
+      {
+        outlet: "Hannoversche Allgemeine Zeitung",
+        headline: "Bürgermeister: Vorzeigeprojekt für Wedemark",
+        url: "https://www.haz.de/lokales/umland/wedemark/buergermeister-vorzeigeprojekt-fuer-wedemark-5VMAH23YYTLM4PAVVT4ODNG6UU.html",
+      },
+      {
+        outlet: "Hannoversche Allgemeine Zeitung",
+        headline: "Vorzeigeprojekt für Wedemark",
+        url: "https://www.haz.de/lokales/umland/wedemark/buergermeister-vorzeigeprojekt-fuer-wedemark-5FMPP7K2PV2K4GMMJCM6NKEWHM.html",
+      },
+    ],
     facts: [
       { k: "Wohneinheiten", v: `${walsroder9.units.total} Wohnungen` },
       { k: "Gesamtwohnfläche", v: `${dec(w9.totalArea)} m²` },
@@ -345,6 +389,7 @@ export const portfolio: PortfolioProject[] = [
     postalCode: holunderweg.postalCode,
     teaser: `${holunderweg.units.total} Wohnungen auf ${dec(h.totalArea)} m² Wohnfläche – Klinkerfassade, Balkone und Dachterrassen, voll unterkellert.`,
     units: { total: holunderweg.units.total, sold: holunderweg.units.sold, available: 0 },
+    totalAreaSqm: h.totalArea,
     area: null,
     rooms: null,
     image: {
@@ -375,6 +420,82 @@ export const portfolio: PortfolioProject[] = [
       address: `${holunderweg.street}, ${holunderweg.postalCode} ${holunderweg.city}`,
       mapsUrl: holunderweg.mapsUrl,
       mapsEmbedUrl: holunderweg.mapsEmbedUrl,
+    },
+  },
+  {
+    slug: "walsroder-strasse-10b",
+    name: walsroder10b.name,
+    phase: "abgeschlossen",
+    isFlagship: false,
+    city: walsroder10b.city,
+    postalCode: walsroder10b.postalCode,
+    teaser: `${walsroder10b.units.total} Wohnungen auf ${dec(w10.totalArea)} m² Wohnfläche – zwei Vollgeschosse in Klinker, unterkellert, Gärten im Erdgeschoss.`,
+    units: { total: walsroder10b.units.total, sold: walsroder10b.units.sold, available: 0 },
+    totalAreaSqm: w10.totalArea,
+    area: null,
+    rooms: null,
+    image: {
+      src: "/images/walsroder-strasse-10b/luftbild-zufahrt.jpg",
+      alt: `${walsroder10b.name}, ${walsroder10b.postalCode} ${walsroder10b.city} – Klinkerfassade mit Satteldach über zwei Vollgeschosse`,
+    },
+    gallery: walsroder10bGallery,
+    story: { title: "Bewusst niedrig gehalten", paragraphs: walsroder10bStory },
+    facts: [
+      { k: "Wohneinheiten", v: `${walsroder10b.units.total} Wohnungen` },
+      { k: "Gesamtwohnfläche", v: `${dec(w10.totalArea)} m²` },
+      { k: "Wohnfläche je Wohnung", v: `im Mittel rund ${dec(walsroder10bAvgArea)} m²` },
+      { k: "Geschosse", v: `${w10.fullStoreys} Vollgeschosse` },
+      { k: "Keller", v: "voll unterkellert" },
+      { k: "Fassade", v: walsroder10b.architecture.facade },
+      { k: "Freiflächen", v: walsroder10b.architecture.balconies },
+      { k: "Stellplätze", v: walsroder10b.architecture.parking },
+    ],
+    location: {
+      copy: [
+        `${walsroder10b.name} liegt in einer gewachsenen Wohnstraße. Zwei Vollgeschosse statt drei: Das Haus bleibt auf Augenhöhe mit der Nachbarbebauung, statt sie zu überragen.`,
+      ],
+      neighbourhood: [],
+      address: `${walsroder10b.street}, ${walsroder10b.postalCode} ${walsroder10b.city}`,
+      mapsUrl: walsroder10b.mapsUrl,
+      mapsEmbedUrl: walsroder10b.mapsEmbedUrl,
+    },
+  },
+  {
+    slug: "am-beekeufer-11",
+    name: beekeufer.name,
+    phase: "abgeschlossen",
+    isFlagship: false,
+    city: beekeufer.city,
+    postalCode: beekeufer.postalCode,
+    teaser: `${beekeufer.units.total} Wohnungen auf ${dec(bk.totalArea)} m² Wohnfläche – Klinker mit Photovoltaik auf dem Dach, unterkellert, Gärten im Erdgeschoss.`,
+    units: { total: beekeufer.units.total, sold: beekeufer.units.sold, available: 0 },
+    totalAreaSqm: bk.totalArea,
+    area: null,
+    rooms: null,
+    image: {
+      src: "/images/am-beekeufer-11/luftbild-photovoltaik.jpg",
+      alt: `${beekeufer.name}, ${beekeufer.postalCode} ${beekeufer.city} – Klinkerfassade mit Photovoltaik auf dem Satteldach`,
+    },
+    gallery: beekeuferGallery,
+    story: { title: "Strom vom eigenen Dach", paragraphs: beekeuferStory },
+    facts: [
+      { k: "Wohneinheiten", v: `${beekeufer.units.total} Wohnungen` },
+      { k: "Gesamtwohnfläche", v: `${dec(bk.totalArea)} m²` },
+      { k: "Wohnfläche je Wohnung", v: `im Mittel rund ${dec(beekeuferAvgArea)} m²` },
+      { k: "Dach", v: beekeufer.architecture.roof },
+      { k: "Keller", v: "voll unterkellert" },
+      { k: "Fassade", v: beekeufer.architecture.facade },
+      { k: "Freiflächen", v: beekeufer.architecture.balconies },
+      { k: "Stellplätze", v: beekeufer.architecture.parking },
+    ],
+    location: {
+      copy: [
+        `${beekeufer.name} liegt in ruhiger Wohnlage abseits der Durchgangsstraßen. Die Photovoltaikanlage auf dem Satteldach erzeugt Strom dort, wo er gebraucht wird.`,
+      ],
+      neighbourhood: [],
+      address: `${beekeufer.street}, ${beekeufer.postalCode} ${beekeufer.city}`,
+      mapsUrl: beekeufer.mapsUrl,
+      mapsEmbedUrl: beekeufer.mapsEmbedUrl,
     },
   },
 ];
@@ -427,3 +548,16 @@ export function portfolioSummaries(): ProjectSummary[] {
     })
     .map(toSummary);
 }
+
+/**
+ * Belegte Unternehmenskennzahlen, aus dem Portfolio abgeleitet.
+ *
+ * Bewusst berechnet statt gepflegt: Sobald ein Projekt dazukommt, stimmen
+ * Startseite und Über-uns automatisch. Handgepflegte Zahlen laufen
+ * erfahrungsgemäß irgendwann auseinander.
+ */
+export const portfolioTotals = {
+  projects: portfolio.length,
+  units: portfolio.reduce((s, p) => s + p.units.total, 0),
+  livingSpace: Math.round(portfolio.reduce((s, p) => s + p.totalAreaSqm, 0)),
+};

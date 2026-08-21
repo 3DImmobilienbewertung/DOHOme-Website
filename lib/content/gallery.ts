@@ -294,3 +294,46 @@ export const holunderwegGallery: GalleryImage[] = [
     caption: "Klinkerfassade an begrünter Wohnstraße",
   },
 ];
+
+/** Bildmaterial Walsroder Straße 10 b (fertiggestellt). */
+export const walsroder10bGallery: GalleryImage[] = [
+  {
+    src: "/images/walsroder-strasse-10b/luftbild-zufahrt.jpg",
+    category: "aussen",
+    width: 2000,
+    height: 1125,
+    caption: "Zufahrt und Stellplätze, zwei Vollgeschosse in Klinker",
+  },
+  {
+    src: "/images/walsroder-strasse-10b/giebelseite.jpg",
+    category: "aussen",
+    width: 2000,
+    height: 1125,
+    caption: "Giebelseite mit Satteldach",
+  },
+  {
+    src: "/images/walsroder-strasse-10b/gartenseite.jpg",
+    category: "aussen",
+    width: 2000,
+    height: 1125,
+    caption: "Gartenseite mit Balkonen und Terrassen",
+  },
+];
+
+/** Bildmaterial Am Beekeufer 11 (fertiggestellt). */
+export const beekeuferGallery: GalleryImage[] = [
+  {
+    src: "/images/am-beekeufer-11/luftbild-photovoltaik.jpg",
+    category: "aussen",
+    width: 2000,
+    height: 1125,
+    caption: "Klinkerfassade mit Photovoltaik auf dem Satteldach",
+  },
+  {
+    src: "/images/am-beekeufer-11/gaerten-obenansicht.jpg",
+    category: "aussen",
+    width: 1125,
+    height: 2000,
+    caption: "Gartenanteile und Terrassen von oben",
+  },
+];

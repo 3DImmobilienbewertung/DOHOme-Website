@@ -1,14 +1,14 @@
-// Unternehmenskennzahlen („Realisierte Projekte und Wohneinheiten seit Gründung").
+// Unternehmenskennzahlen für Startseite (TrustBand) und /ueber-uns.
 //
-// NACHTRAGEN: Sobald die belegten Zahlen vorliegen, hier `value` setzen –
-// alle Ansichten (Startseite, Über uns) ziehen automatisch nach. Kennzahlen mit
-// `value: null` werden entweder als Platzhalter markiert oder ausgeblendet,
-// je nach Kontext. Keine erfundenen Zahlen ausliefern.
+// Werte werden aus der Portfolio-Registry berechnet (portfolioTotals), nicht
+// von Hand gepflegt: Sobald ein Projekt dazukommt, stimmen die Kennzahlen
+// automatisch. So kann keine Zahl auf der Website hinter dem tatsächlichen
+// Portfolio zurückbleiben.
+
+import { portfolioTotals } from "@/lib/content/projects";
 
 export type CompanyStat = {
-  /** Interner Schlüssel. */
   key: string;
-  /** Belegte Zahl – null, solange nicht bestätigt. */
   value: number | null;
   /** Einheit/Suffix, z. B. "m²". */
   unit?: string;
@@ -16,9 +16,14 @@ export type CompanyStat = {
 };
 
 export const companyStats: CompanyStat[] = [
-  { key: "projects", value: null, label: "realisierte Projekte" },
-  { key: "units", value: null, label: "Wohneinheiten" },
-  { key: "livingSpace", value: null, unit: "m²", label: "Gesamtwohnfläche" },
+  { key: "projects", value: portfolioTotals.projects, label: "realisierte Projekte" },
+  { key: "units", value: portfolioTotals.units, label: "Wohneinheiten" },
+  {
+    key: "livingSpace",
+    value: portfolioTotals.livingSpace,
+    unit: "m²",
+    label: "Gesamtwohnfläche",
+  },
 ];
 
 /** Deutsche Tausendertrennung; „—" solange die Zahl fehlt. */
