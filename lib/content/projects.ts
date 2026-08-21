@@ -20,6 +20,7 @@ import {
   walsroder9Gallery,
   holunderwegGallery,
   walsroder10bGallery,
+  holunderweg4Gallery,
   beekeuferGallery,
   rotkampCover,
 } from "@/lib/content/gallery";
@@ -62,6 +63,11 @@ import {
   beekeuferStory,
   beekeuferAvgArea,
 } from "@/lib/content/beekeufer";
+import {
+  holunderweg4,
+  holunderweg4Story,
+  holunderweg4AvgArea,
+} from "@/lib/content/holunderweg4";
 import {
   rotkampCalcDefaults,
   type CalcInput,
@@ -148,6 +154,7 @@ const w = walsroder.facts;
 const w9 = walsroder9.facts;
 const w10 = walsroder10b.facts;
 const bk = beekeufer.facts;
+const h4 = holunderweg4.facts;
 const h = holunderweg.facts;
 
 export const portfolio: PortfolioProject[] = [
@@ -496,6 +503,44 @@ export const portfolio: PortfolioProject[] = [
       address: `${beekeufer.street}, ${beekeufer.postalCode} ${beekeufer.city}`,
       mapsUrl: beekeufer.mapsUrl,
       mapsEmbedUrl: beekeufer.mapsEmbedUrl,
+    },
+  },
+  {
+    slug: "holunderweg-4",
+    name: holunderweg4.name,
+    phase: "abgeschlossen",
+    isFlagship: false,
+    city: holunderweg4.city,
+    postalCode: holunderweg4.postalCode,
+    teaser: `${holunderweg4.units.total} Wohnungen auf ${dec(h4.totalArea)} m² Wohnfläche – Klinker mit Satteldach, unterkellert, Gärten im Erdgeschoss.`,
+    units: { total: holunderweg4.units.total, sold: holunderweg4.units.sold, available: 0 },
+    totalAreaSqm: h4.totalArea,
+    area: null,
+    rooms: null,
+    image: {
+      src: "/images/holunderweg-4/luftbild-bahnseite.jpg",
+      alt: `${holunderweg4.name}, ${holunderweg4.postalCode} ${holunderweg4.city} – Klinkerfassade mit Satteldach`,
+    },
+    gallery: holunderweg4Gallery,
+    story: { title: "Ruhig am Ortsrand", paragraphs: holunderweg4Story },
+    facts: [
+      { k: "Wohneinheiten", v: `${holunderweg4.units.total} Wohnungen` },
+      { k: "Gesamtwohnfläche", v: `${dec(h4.totalArea)} m²` },
+      { k: "Wohnfläche je Wohnung", v: `im Mittel rund ${dec(holunderweg4AvgArea)} m²` },
+      { k: "Keller", v: "voll unterkellert" },
+      { k: "Fassade", v: holunderweg4.architecture.facade },
+      { k: "Dach", v: holunderweg4.architecture.roof },
+      { k: "Freiflächen", v: holunderweg4.architecture.balconies },
+      { k: "Stellplätze", v: holunderweg4.architecture.parking },
+    ],
+    location: {
+      copy: [
+        `${holunderweg4.name} liegt am Ortsrand: vorne eine ruhige Wohnstraße, hinter dem Haus die Bahnstrecke mit schneller Anbindung. Klinker und Satteldach nehmen die Bauweise der Nachbarschaft auf.`,
+      ],
+      neighbourhood: [],
+      address: `${holunderweg4.street}, ${holunderweg4.postalCode} ${holunderweg4.city}`,
+      mapsUrl: holunderweg4.mapsUrl,
+      mapsEmbedUrl: holunderweg4.mapsEmbedUrl,
     },
   },
 ];

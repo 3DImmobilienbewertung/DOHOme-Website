@@ -18,6 +18,7 @@ const PROJECT_IMAGE: Record<string, string> = {
   "walsroder-strasse-10b":
     "/images/walsroder-strasse-10b/luftbild-zufahrt.jpg",
   "am-beekeufer-11": "/images/am-beekeufer-11/luftbild-photovoltaik.jpg",
+  "holunderweg-4": "/images/holunderweg-4/luftbild-bahnseite.jpg",
 };
 
 /** True, wenn für den Schlüssel ein echtes Motiv hinterlegt ist. */

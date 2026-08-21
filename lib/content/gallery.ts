@@ -337,3 +337,21 @@ export const beekeuferGallery: GalleryImage[] = [
     caption: "Gartenanteile und Terrassen von oben",
   },
 ];
+
+/** Bildmaterial Holunderweg 4 (fertiggestellt) – Luftaufnahmen. */
+export const holunderweg4Gallery: GalleryImage[] = [
+  {
+    src: "/images/holunderweg-4/luftbild-bahnseite.jpg",
+    category: "aussen",
+    width: 2000,
+    height: 1125,
+    caption: "Luftbild mit Blick zur Bahnseite, Garagen und Gärten",
+  },
+  {
+    src: "/images/holunderweg-4/dachansicht-gaerten.jpg",
+    category: "aussen",
+    width: 1125,
+    height: 2000,
+    caption: "Dachansicht mit Gärten und Stellplätzen",
+  },
+];
