@@ -8,14 +8,20 @@ import { useEffect, useRef, useState } from "react";
 //   • Das Standbild darunter bleibt sichtbar, bis das Video wirklich läuft.
 //     Es wird erst eingeblendet, wenn `playing` gesetzt ist – kein schwarzer
 //     Kasten, kein Ruckeln beim ersten Frame.
-//   • Geladen wird erst nach dem Mount (preload="none" + manueller Start),
-//     damit das Video nicht mit dem LCP-Bild um Bandbreite konkurriert.
-//   • `prefers-reduced-motion`: kein Video. Wer Bewegung abbestellt hat,
-//     bekommt das ruhige Standbild.
+//   • Geladen wird erst nach dem Mount, damit das Video nicht mit dem
+//     LCP-Bild um Bandbreite konkurriert.
+//   • Zwei Fassungen: 720p für große Bildschirme, 540p fürs Handy. Auf einem
+//     Telefon ist der Unterschied nicht zu sehen, das Datenvolumen aber schon –
+//     deshalb bekommt dort niemand die große Datei.
+//   • `prefers-reduced-motion` und der Datensparmodus unterdrücken das Video
+//     ganz. Wer Bewegung abbestellt hat, bekommt das ruhige Standbild.
 //   • Stumm, in Schleife, `playsInline` – sonst blockt iOS die Wiedergabe
 //     oder erzwingt Vollbild.
 //   • Rein dekorativ: aria-hidden, kein Bedienelement. Der Inhalt der Seite
 //     hängt nicht am Video.
+
+/** Ab dieser Breite lohnt die große Fassung. */
+const WIDE = "(min-width: 1024px)";
 
 export function HeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
@@ -30,8 +36,11 @@ export function HeroVideo() {
     const conn = (navigator as { connection?: { saveData?: boolean } }).connection;
     if (conn?.saveData) return;
 
-    el.src = "/video/hero.mp4";
+    el.src = window.matchMedia(WIDE).matches
+      ? "/video/hero-720.mp4"
+      : "/video/hero-540.mp4";
     el.load();
+
     const start = () => {
       el.play().then(() => setPlaying(true)).catch(() => {
         // Autoplay verweigert – Standbild bleibt stehen. Kein Fehler für den
