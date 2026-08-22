@@ -104,6 +104,11 @@ export type PortfolioProject = {
   image: { src: string; alt: string };
   /** Bildstrecke für den Slider auf der Projektseite. */
   gallery?: GalleryImage[];
+  /**
+   * Projektvideo (Drohnenflug). Ohne Autoplay – der Besucher startet es
+   * selbst. `portrait` für Aufnahmen im Hochformat.
+   */
+  video?: { src: string; poster: string; caption?: string; portrait?: boolean };
   /** Fließtext zur Architektur/Ausführung. */
   story?: { title: string; paragraphs: string[] };
   /** Kennzahlen als Definitionsliste. */
@@ -177,6 +182,13 @@ export const portfolio: PortfolioProject[] = [
     rooms: { min: r.rooms.min, max: r.rooms.max },
     image: { src: rotkampCover.src, alt: rotkampCover.alt },
     gallery: rotkampGallery,
+    video: {
+      src: "/video/rotkamp-1.mp4",
+      poster: "/video/rotkamp-1-poster.jpg",
+      caption:
+        "Drohnenflug über Rotkamp 1 – die drei Baukörper kurz vor Fertigstellung.",
+      portrait: true,
+    },
     story: {
       title: "Gebaut, um lange zu bleiben",
       paragraphs: [

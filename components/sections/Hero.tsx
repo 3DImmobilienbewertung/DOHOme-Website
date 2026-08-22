@@ -7,6 +7,7 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useAppReady } from "@/components/animation/AppReady";
 import { projectImage, HERO_SEED } from "@/lib/content/media";
+import { HeroVideo } from "@/components/sections/HeroVideo";
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
@@ -55,6 +56,9 @@ export function Hero() {
           Section-Hintergrund schieben und unsichtbar machen. Der Inhalt liegt
           stattdessen mit z-10 darüber. */}
       <div className="hero-bg absolute inset-0">
+        {/* Standbild trägt den ersten Eindruck: es ist sofort da und bleibt der
+            LCP-Kandidat. Das Video legt sich erst darüber, wenn es abspielt –
+            so wartet niemand auf 5 MB, bevor die Bühne steht. */}
         <Image
           src={projectImage(HERO_SEED, 2400, 1400)}
           alt="Rotkamp 1 in Wedemark – Mehrfamilienhäuser mit Klinkerfassade und Satteldach"
@@ -63,6 +67,7 @@ export function Hero() {
           sizes="100vw"
           className="object-cover object-center"
         />
+        <HeroVideo />
         {/* Marken-Tönung, nach unten gewichtet: der Text steht sicher, das
             Gebäude behält oben seine echten Klinker- und Ziegeltöne.
             Achtung: Tailwind kennt Verlaufs-Stopps nur in 5-%-Schritten –

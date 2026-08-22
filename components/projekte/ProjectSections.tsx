@@ -4,6 +4,7 @@ import { Reveal } from "@/components/animation/Reveal";
 import { ProjectGallery } from "@/components/projekte/ProjectGallery";
 import { ConsentMap } from "@/components/projekte/ConsentMap";
 import { UnitTable } from "@/components/projekte/UnitTable";
+import { ProjectVideo } from "@/components/projekte/ProjectVideo";
 import { NeighbourhoodPanel } from "@/components/projekte/NeighbourhoodPanel";
 import { Beispielrechnung } from "@/components/projekte/Beispielrechnung";
 import type { PortfolioProject } from "@/lib/content/projects";
@@ -20,7 +21,7 @@ import type { PortfolioProject } from "@/lib/content/projects";
 // kurz und auf den Anruf ausgerichtet.
 
 export function ProjectSections({ project }: { project: PortfolioProject }) {
-  const { story, facts, gallery, unitList, location, taxNote, calc } = project;
+  const { story, facts, gallery, video, unitList, location, taxNote, calc } = project;
   const hasStoryBlock = Boolean(story || (facts && facts.length > 0));
   const hasUnitStatus = Boolean(unitList?.some((u) => u.status));
 
@@ -83,6 +84,29 @@ export function ProjectSections({ project }: { project: PortfolioProject }) {
                   postalCode: project.postalCode,
                   city: project.city,
                 }}
+              />
+            </Reveal>
+          </div>
+        </section>
+      )}
+
+      {/* -------------------------------------------------------------- VIDEO */}
+      {video && (
+        <section className="border-t border-beige-100/10">
+          <div className="mx-auto max-w-container px-6 section-sm">
+            <Reveal>
+              <p className="eyebrow text-sage-300">Aus der Luft</p>
+              <h2 className="mt-2 max-w-2xl text-display-lg">
+                {project.name} im Video
+              </h2>
+            </Reveal>
+            <Reveal className="mt-8">
+              <ProjectVideo
+                src={video.src}
+                poster={video.poster}
+                title={`Drohnenaufnahme ${project.name}`}
+                caption={video.caption}
+                portrait={video.portrait}
               />
             </Reveal>
           </div>
