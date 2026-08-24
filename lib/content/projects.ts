@@ -50,7 +50,6 @@ import {
 } from "@/lib/content/walsroder9";
 import {
   holunderweg,
-  holunderwegStory,
   holunderwegAvgArea,
 } from "@/lib/content/holunderweg";
 import {
@@ -153,6 +152,11 @@ export type PortfolioProject = {
 };
 
 const dec = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: 0 });
+const dec2 = (n: number) =>
+  n.toLocaleString("de-DE", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 const r = rotkamp.facts;
 const b = bissendorf.facts;
 const w = walsroder.facts;
@@ -406,7 +410,7 @@ export const portfolio: PortfolioProject[] = [
     isFlagship: false,
     city: holunderweg.city,
     postalCode: holunderweg.postalCode,
-    teaser: `${holunderweg.units.total} Wohnungen auf ${dec(h.totalArea)} m² Wohnfläche – Klinkerfassade, Balkone und Dachterrassen, voll unterkellert.`,
+    teaser: `${holunderweg.units.total} Wohnungen auf ${dec2(h.totalArea)} m² Wohnfläche – Klinkerfassade, Balkone und Dachterrassen, voll unterkellert.`,
     units: { total: holunderweg.units.total, sold: holunderweg.units.sold, available: 0 },
     totalAreaSqm: h.totalArea,
     area: null,
@@ -416,10 +420,9 @@ export const portfolio: PortfolioProject[] = [
       alt: `${holunderweg.name}, ${holunderweg.postalCode} ${holunderweg.city} – Klinkerfassade mit Satteldach, Balkone und Dachterrassen`,
     },
     gallery: holunderwegGallery,
-    story: { title: "Großzügig geschnitten, voll unterkellert", paragraphs: holunderwegStory },
     facts: [
       { k: "Wohneinheiten", v: `${holunderweg.units.total} Wohnungen in zwei Hauseingängen` },
-      { k: "Gesamtwohnfläche", v: `${dec(h.totalArea)} m²` },
+      { k: "Gesamtwohnfläche", v: `${dec2(h.totalArea)} m²` },
       {
         k: "Wohnfläche je Wohnung",
         v: `im Mittel rund ${dec(holunderwegAvgArea)} m²`,
@@ -432,8 +435,7 @@ export const portfolio: PortfolioProject[] = [
     ],
     location: {
       copy: [
-        `${holunderweg.name} liegt in einer ruhigen Wohnstraße – gewachsene Nachbarschaft mit Vorgärten und altem Baumbestand statt Durchgangsverkehr.`,
-        "Die Stellplätze liegen als Garagen und Außenstellplätze direkt am Haus.",
+        `Standort: ${holunderweg.street}, ${holunderweg.postalCode} ${holunderweg.city}.`,
       ],
       neighbourhood: [],
       address: `${holunderweg.street}, ${holunderweg.postalCode} ${holunderweg.city}`,

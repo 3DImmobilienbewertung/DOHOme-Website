@@ -277,21 +277,21 @@ export const holunderwegGallery: GalleryImage[] = [
     category: "aussen",
     width: 2000,
     height: 1125,
-    caption: "Balkone und Dachterrassen zur ruhigen Gartenseite",
+    caption: "Rückseite mit Balkonen, Terrassen und Gartenflächen",
   },
   {
     src: "/images/holunderweg-2/luftbild-strasse-garagen.jpg",
     category: "aussen",
     width: 2000,
     height: 1125,
-    caption: "Zwei Hauseingänge mit Garagen an der Wohnstraße",
+    caption: "Luftaufnahme der Straßen- und Hofseite",
   },
   {
     src: "/images/holunderweg-2/strassenansicht.jpg",
     category: "aussen",
     width: 2000,
     height: 1125,
-    caption: "Klinkerfassade an begrünter Wohnstraße",
+    caption: "Straßenansicht mit Klinkerfassade",
   },
 ];
 
