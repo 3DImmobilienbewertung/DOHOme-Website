@@ -24,6 +24,8 @@ export type CalcInput = {
   wohnflaeche: number;
   /** Kaltmiete je m² und Monat. */
   kaltmieteProM2: number;
+  /** Zusätzliche Stellplatzmiete je Monat. */
+  stellplatzmieteMonat: number;
   /** Mietsteigerung p. a. als Dezimalwert (0,02 = 2 %). */
   mietsteigerung: number;
   /** Eigenkapital, das auf den Kaufpreis fließt (ohne Kaufnebenkosten). */
@@ -54,6 +56,8 @@ export type CalcInput = {
   instandhaltungsruecklageMonat: number;
   /** Persönlicher Grenzsteuersatz als Dezimalwert. */
   grenzsteuersatz: number;
+  /** Solidaritätszuschlag auf die errechnete Steuerwirkung. */
+  soliSatz: number;
   /** Steigerung der laufenden Kosten p. a. als Dezimalwert. */
   kostensteigerung: number;
   /** Wertsteigerung der Immobilie p. a. – in der Grundrechnung 0. */
@@ -104,11 +108,14 @@ export function computeProjection(input: CalcInput): CalcResult {
   const darlehen = Math.max(0, input.kaufpreis - input.eigenkapitalKaufpreis);
   const kaufnebenkosten = input.kaufpreis * input.kaufnebenkostenPct;
   const eigenkapitalGesamt = input.eigenkapitalKaufpreis + kaufnebenkosten;
-  const gebaeudewert = input.kaufpreis * input.gebaeudeanteilPct;
+  const gesamtinvestition = input.kaufpreis + kaufnebenkosten;
+  // WE-3-Datenblatt: Aufteilung von Gesamtkaufpreis einschließlich
+  // Kaufnebenkosten in Grund-/Boden- und Gebäudeanteil.
+  const gebaeudewert = gesamtinvestition * input.gebaeudeanteilPct;
   const annuitaetMonat = (darlehen * (input.zins + input.tilgung)) / 12;
-  const startKaltmieteMonat = input.wohnflaeche * input.kaltmieteProM2;
+  const startKaltmieteMonat =
+    input.wohnflaeche * input.kaltmieteProM2 + input.stellplatzmieteMonat;
 
-  const monatsZins = input.zins / 12;
   let restschuld = darlehen;
   let buchwert = gebaeudewert;
 
@@ -126,17 +133,15 @@ export function computeProjection(input: CalcInput): CalcResult {
     const instandhaltungsruecklage =
       input.instandhaltungsruecklageMonat * 12 * kostenIndex;
 
-    // Darlehen monatlich annuitätisch fortschreiben.
-    let zinsJahr = 0;
-    let tilgungJahr = 0;
-    for (let m = 0; m < 12 && restschuld > 0; m++) {
-      const zinsMonat = restschuld * monatsZins;
-      let tilgungMonat = annuitaetMonat - zinsMonat;
-      if (tilgungMonat > restschuld) tilgungMonat = restschuld; // letzte Rate kappen
-      zinsJahr += zinsMonat;
-      tilgungJahr += tilgungMonat;
-      restschuld -= tilgungMonat;
-    }
+    // Jahresweise Annuitätenfortschreibung wie im WE-3-Datenblatt: Zins auf
+    // die Restschuld zu Jahresbeginn, Tilgung als Annuität abzüglich Zins.
+    const zinsJahr = restschuld * input.zins;
+    const annuitaetJahr = Math.min(
+      restschuld + zinsJahr,
+      annuitaetMonat * 12,
+    );
+    const tilgungJahr = Math.min(restschuld, annuitaetJahr - zinsJahr);
+    restschuld -= tilgungJahr;
 
     // Degressive AfA vom Restbuchwert.
     const afa = buchwert * input.afaSatz;
@@ -145,13 +150,14 @@ export function computeProjection(input: CalcInput): CalcResult {
     // Werbungskosten: Zins, AfA und Hausverwaltung. Die Rücklagenzuführung
     // gehört bewusst NICHT dazu (siehe Kommentar am Typ).
     const steuerErgebnis = kaltmiete - zinsJahr - afa - hausverwaltung;
-    const steuerEffekt = -steuerErgebnis * input.grenzsteuersatz;
+    const steuerEffekt =
+      -steuerErgebnis * input.grenzsteuersatz * (1 + input.soliSatz);
 
     // Cashflow nach Steuern: Miete − Kapitaldienst − eigene laufende Kosten
     // + Steuerwirkung.
     const cashflow =
       kaltmiete -
-      (zinsJahr + tilgungJahr) -
+      annuitaetJahr -
       hausverwaltung -
       instandhaltungsruecklage +
       steuerEffekt;
@@ -203,24 +209,27 @@ export function computeProjection(input: CalcInput): CalcResult {
 }
 
 /**
- * Standard-Annahmen für Rotkamp 1 (Beispielwohnung 77,67 m² – entspricht WE 6
- * bzw. WE 14, beide aktuell verfügbar). Alle Werte vom Kunden vorgegeben.
+ * Vollständige Kalkulation für WE 3 aus dem Exposé, Stand 24. August 2026.
+ * Kaufpreis enthält den Außenstellplatz; die Miete setzt sich aus 14 €/m² für
+ * die Wohnung und 40 € Stellplatzmiete zusammen.
  */
 export const rotkampCalcDefaults: CalcInput = {
-  kaufpreis: 388000,
-  wohnflaeche: 77.67,
+  kaufpreis: 319191,
+  wohnflaeche: 62.59,
   kaltmieteProM2: 14,
+  stellplatzmieteMonat: 40,
   mietsteigerung: 0.02,
-  eigenkapitalKaufpreis: 77600,
+  eigenkapitalKaufpreis: 31919.1,
   zins: 0.042,
   tilgung: 0.015,
   kaufnebenkostenPct: 0.07,
-  gebaeudeanteilPct: 0.85,
+  gebaeudeanteilPct: 0.91,
   afaSatz: 0.05,
   // Angaben des Kunden.
   hausverwaltungMonat: 35,
-  instandhaltungsruecklageMonat: 30,
+  instandhaltungsruecklageMonat: 45,
   grenzsteuersatz: 0.42,
+  soliSatz: 0.055,
   kostensteigerung: 0.02,
   wertsteigerung: 0,
   jahre: 10,

@@ -3,22 +3,16 @@ import Link from "next/link";
 
 import { Reveal } from "@/components/animation/Reveal";
 import { Beispielrechnung } from "@/components/projekte/Beispielrechnung";
-import {
-  genericCalcDefaults,
-  BLANK_FIELDS,
-} from "@/lib/content/beispielrechnung";
+import { rotkampCalcDefaults } from "@/lib/content/beispielrechnung";
 
-// Allgemeiner Rechner: leer, ohne Bezug zu einem konkreten Projekt.
-//
-// Bewusst NICHT in der Hauptnavigation. Die Website richtet sich an
-// Selbstnutzer; dieser Rechner ist ein Werkzeug für Interessenten, die
-// vermieten wollen – erreichbar über die Projektseite und per Direktlink.
-// Indexierbar, weil er eigenständigen Nutzen hat und lokal gesucht wird.
+// 10-Jahres-Rechner auf Basis der vollständigen WE-3-Kalkulation. Sämtliche
+// Werte bleiben veränderbar; der konkrete Startfall verhindert unrealistische
+// Nullannahmen und macht die Funktionsweise sofort nachvollziehbar.
 
 export const metadata: Metadata = {
-  title: "Vermietung durchrechnen – 10-Jahres-Rechner",
+  title: "WE 3 – 10-Jahres-Rechner",
   description:
-    "Kostenloser Rechner für vermietete Eigentumswohnungen: Cashflow, Tilgung, Abschreibung und Steuerwirkung über zehn Jahre. Eigene Zahlen eintragen, sofort rechnen.",
+    "WE 3 in Rotkamp 1 über zehn Jahre rechnen: 2 % Mietsteigerung, Finanzierung, 5 % degressive AfA, Cashflow, Tilgung und Vermögenszuwachs.",
   alternates: { canonical: "/rechner" },
 };
 
@@ -27,15 +21,14 @@ export default function RechnerPage() {
     <main className="bg-green-900 text-beige-100">
       <section className="mx-auto max-w-container px-6 pt-32 pb-10 md:pt-40 md:pb-14">
         <Reveal>
-          <p className="eyebrow text-sage-300">Werkzeug</p>
+          <p className="eyebrow text-sage-300">WE 3 · Rotkamp 1</p>
           <h1 className="mt-3 max-w-3xl text-display-xl">
-            Vermietung in zehn Jahren durchrechnen
+            Ihre Entwicklung über zehn Jahre
           </h1>
           <p className="mt-5 max-w-2xl text-lead text-beige-100/75">
-            Was bleibt am Monatsende übrig, wie viel Darlehen ist nach zehn
-            Jahren getilgt, und wie wirkt die Abschreibung? Tragen Sie Ihre
-            eigenen Zahlen ein – der Rechner arbeitet für jede Eigentumswohnung,
-            nicht nur für unsere.
+            Die geprüfte WE-3-Kalkulation wird mit 2 % jährlicher Mietsteigerung,
+            2 % Kostensteigerung, degressiver AfA und laufender Tilgung über zehn
+            Jahre fortgeschrieben. Jeden Wert können Sie direkt verändern.
           </p>
         </Reveal>
       </section>
@@ -43,9 +36,9 @@ export default function RechnerPage() {
       <section className="mx-auto max-w-container px-6 pb-16 md:pb-24">
         <Reveal>
           <Beispielrechnung
-            defaults={genericCalcDefaults}
-            variant="leer"
-            blankFields={BLANK_FIELDS}
+            defaults={rotkampCalcDefaults}
+            projectName="Wohnung 3 im Rotkamp 1"
+            unitNote="Startwerte: 62,59 m², Außenstellplatz, 90 % Kaufpreisfinanzierung und 2 % Mietsteigerung pro Jahr."
           />
         </Reveal>
       </section>

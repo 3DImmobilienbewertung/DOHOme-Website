@@ -3,28 +3,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/animation/Reveal";
-import { InvestmentVideoPlaceholder } from "@/components/investment/InvestmentVideoPlaceholder";
-import { TaxNotice } from "@/components/investment/TaxNotice";
 
 export const metadata: Metadata = {
-  title: "Steuern sparen mit einer Neubauwohnung",
+  title: "WE 3: Steuern sparen und Vermögen aufbauen",
   description:
-    "Seniorengerechte Neubauwohnungen direkt vom Bauträger: 5 % degressive AfA prüfen, Vermietung kalkulieren und Erstgespräch vereinbaren.",
+    "WE 3 in Rotkamp 1: 5 % degressive AfA, 7.546 € kalkulierte Steuererstattung und 5.516 € Vermögenszuwachs im ersten Jahr.",
   alternates: { canonical: "/steuern-sparen" },
 };
 
 const advantages = [
   {
-    title: "Kein Sanierungsstau zum Start",
-    text: "Neubau statt unbekannter Altbauhistorie: moderne Gebäudetechnik, dokumentierter Zustand und kein übernommener Modernisierungsrückstand.",
+    title: "15.540 € AfA",
+    text: "5 % degressive Gebäude-AfA auf den kalkulierten Gebäudeanteil von 310.796 € im ersten vollen Vermietungsjahr.",
   },
   {
-    title: "100 % seniorengerecht",
-    text: "Alltagstaugliche Grundrisse und komfortable Erschließung sprechen eine breite Zielgruppe an – heute und in späteren Lebensphasen.",
+    title: "10.995 € Jahresmiete",
+    text: "Kalkulierte Wohnungsmiete und Stellplatzmiete für die seniorengerechte Erdgeschosswohnung mit Terrasse und Garten.",
   },
   {
-    title: "Direkt vom Bauträger",
-    text: "Wir entwickeln, planen und bauen selbst. Sie erhalten Grundrisse, Bauinformationen und Projektstand ohne zwischengeschalteten Produktvertrieb.",
+    title: "4.309 € Tilgung",
+    text: "Der im ersten Jahr kalkulierte Schuldenabbau erhöht Ihr Eigentum – zusätzlich zum positiven Netto-Cashflow.",
   },
 ];
 
@@ -62,24 +60,25 @@ export default function SteuernSparenPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-green-950 via-green-950/80 to-green-950/15" />
         <div className="relative mx-auto w-full max-w-container px-6 pb-16 pt-36 md:pb-24">
           <Reveal>
-            <p className="eyebrow text-accent-400">Neubauwohnungen in der Wedemark</p>
+            <p className="eyebrow text-accent-400">WE 3 · Rotkamp 1 · 6 Wohnungen verfügbar</p>
             <h1 className="mt-4 max-w-4xl text-display-xl">
-              Steuern sparen. Neubau vermieten. Vermögen aufbauen.
+              Miete und Steuererstattung finanzieren Ihr Wohneigentum mit.
             </h1>
             <p className="mt-6 max-w-2xl text-lead text-beige-100/80">
-              Seniorengerechte Eigentumswohnungen direkt vom Bauträger – mit
-              5 % degressiver AfA, modernem Gebäudestandard und klarer Kalkulation.
+              WE 3 zeigt es konkret: 54.262 € Eigenkapitaleinsatz, 7.546 €
+              kalkulierte Steuererstattung und 5.516 € Vermögenszuwachs im ersten
+              vollen Vermietungsjahr – ohne Wertsteigerung gerechnet.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button href="/steuern-sparen/erstgespraech">Kostenloses Erstgespräch</Button>
-              <Button href="/rechner" variant="secondary">10-Jahres-Rechner</Button>
+              <Button href="/steuern-sparen/erstgespraech">WE-3-Kalkulation anfordern</Button>
+              <Button href="/projekte/rotkamp-1" variant="secondary">Wohnung 3 ansehen</Button>
             </div>
           </Reveal>
           <dl className="mt-10 grid max-w-3xl grid-cols-3 gap-px overflow-hidden rounded-2xl bg-beige-100/15 backdrop-blur-sm">
             {[
-              ["5 %", "degressive Gebäude-AfA"],
-              ["6", "Wohnungen aktuell verfügbar"],
-              ["100 %", "seniorengerecht geplant"],
+              ["7.546 €", "Steuererstattung · Jahr 1"],
+              ["+ 5.516 €", "Vermögenszuwachs · Jahr 1"],
+              ["16 / 22", "Wohnungen bereits verkauft"],
             ].map(([value, label]) => (
               <div key={label} className="bg-green-950/75 p-4 md:p-5">
                 <dd className="nums text-2xl text-accent-500 md:text-4xl">{value}</dd>
@@ -93,9 +92,9 @@ export default function SteuernSparenPage() {
       <section className="border-t border-beige-100/10">
         <div className="mx-auto max-w-container px-6 py-16 md:py-24">
           <Reveal>
-            <p className="eyebrow text-sage-300">Warum DOHOme-Neubau</p>
+            <p className="eyebrow text-sage-300">Die drei finanziellen Hebel</p>
             <h2 className="mt-3 max-w-3xl text-display-lg">
-              Drei Fakten. Keine Umwege.
+              Miete. Steuerwirkung. Tilgung.
             </h2>
           </Reveal>
           <div className="mt-10 grid gap-px overflow-hidden rounded-2xl bg-beige-100/10 md:grid-cols-3">
@@ -108,7 +107,7 @@ export default function SteuernSparenPage() {
           </div>
           <div className="mt-8">
             <Button href="/steuern-sparen/neubauwohnung" variant="secondary">
-              AfA und Neubau im Detail
+              So wurde WE 3 berechnet
             </Button>
           </div>
         </div>
@@ -141,18 +140,6 @@ export default function SteuernSparenPage() {
         </div>
       </section>
 
-      <section className="border-t border-beige-100/10">
-        <div className="mx-auto max-w-container px-6 py-16 md:py-24">
-          <p className="eyebrow text-sage-300">Käufer berichten</p>
-          <h2 className="mt-3 max-w-2xl text-display-lg">Erfahrungen aus erster Hand</h2>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            <InvestmentVideoPlaceholder number={1} title="Entscheidung für den Neubau" />
-            <InvestmentVideoPlaceholder number={2} title="Zusammenarbeit mit DOHOme" />
-            <InvestmentVideoPlaceholder number={3} title="Übergabe und Vermietung" />
-          </div>
-        </div>
-      </section>
-
       <section className="border-t border-beige-100/10 bg-beige-100 text-ink">
         <div className="mx-auto max-w-container px-6 py-14 md:py-20">
           <p className="eyebrow text-green-700">Wohnung 3 · Rotkamp 1</p>
@@ -171,7 +158,7 @@ export default function SteuernSparenPage() {
             ))}
           </dl>
           <div className="mt-8">
-            <Button href="/steuern-sparen/erstgespraech">Meine Zahlen prüfen lassen</Button>
+            <Button href="/steuern-sparen/erstgespraech">Diese Kalkulation für mich prüfen</Button>
           </div>
         </div>
       </section>
@@ -246,22 +233,19 @@ export default function SteuernSparenPage() {
 
       <section className="border-t border-beige-100/10">
         <div className="mx-auto max-w-container px-6 py-16 md:py-24">
-          <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr] lg:items-end">
-            <div>
-              <p className="eyebrow text-accent-400">Noch 6 Wohnungen verfügbar</p>
-              <h2 className="mt-3 max-w-2xl text-display-lg">In 20 Minuten wissen Sie, ob das Modell zu Ihnen passt.</h2>
+          <div className="max-w-3xl">
+              <p className="eyebrow text-accent-400">16 von 22 Wohnungen verkauft</p>
+              <h2 className="mt-3 max-w-2xl text-display-lg">Welche der sechs Wohnungen passt zu Ihrem Einkommen?</h2>
               <p className="mt-5 max-w-xl text-beige-100/70">
-                Verfügbare Wohnung, kalkulierte Miete, Finanzierung und steuerliche
-                Wirkung – konkret anhand Ihrer Zahlen.
+                In 20 Minuten erhalten Sie eine klare Vorauswahl mit Kaufpreis,
+                Eigenkapitalbedarf, Miete, Finanzierung und Steuerwirkung.
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
-                <Button href="/steuern-sparen/erstgespraech">Jetzt Erstgespräch sichern</Button>
+                <Button href="/steuern-sparen/erstgespraech">Meine Wohnung berechnen lassen</Button>
                 <Link href="/projekte/rotkamp-1" className="self-center text-sm underline underline-offset-4">
                   Rotkamp 1 ansehen
                 </Link>
               </div>
-            </div>
-            <TaxNotice />
           </div>
         </div>
       </section>

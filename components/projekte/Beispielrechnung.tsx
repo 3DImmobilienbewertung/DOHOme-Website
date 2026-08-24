@@ -53,6 +53,7 @@ const FIELDS: { group: string; items: FieldDef[] }[] = [
       { key: "kaufpreis", label: "Kaufpreis", kind: "eur", step: 1000, placeholder: "z. B. 388000" },
       { key: "wohnflaeche", label: "Wohnfläche (m²)", kind: "num", step: 0.01, placeholder: "z. B. 77,67" },
       { key: "kaltmieteProM2", label: "Kaltmiete je m²", kind: "eur", step: 0.5, hint: "monatlich", placeholder: "z. B. 14" },
+      { key: "stellplatzmieteMonat", label: "Stellplatzmiete", kind: "eur", step: 5, hint: "monatlich", placeholder: "z. B. 40" },
       { key: "mietsteigerung", label: "Mietsteigerung p. a.", kind: "pct", step: 0.5 },
     ],
   },
@@ -73,6 +74,7 @@ const FIELDS: { group: string; items: FieldDef[] }[] = [
       { key: "gebaeudeanteilPct", label: "Gebäudeanteil am Kaufpreis", kind: "pct", step: 1, hint: "Grund und Boden ist nicht abschreibbar" },
       { key: "afaSatz", label: "Abschreibung p. a. (degressiv)", kind: "pct", step: 0.5 },
       { key: "grenzsteuersatz", label: "Persönlicher Grenzsteuersatz", kind: "pct", step: 1, placeholder: "z. B. 42" },
+      { key: "soliSatz", label: "Solidaritätszuschlag", kind: "pct", step: 0.5, hint: "auf die Steuerwirkung" },
       { key: "kostensteigerung", label: "Kostensteigerung p. a.", kind: "pct", step: 0.5 },
       { key: "wertsteigerung", label: "Wertsteigerung p. a.", kind: "pct", step: 0.5, hint: "bewusst vorsichtig: 0 %" },
     ],
@@ -148,7 +150,8 @@ export function Beispielrechnung({
     [raw, initial],
   );
 
-  const startMiete = input.wohnflaeche * input.kaltmieteProM2;
+  const wohnungsmiete = input.wohnflaeche * input.kaltmieteProM2;
+  const startMiete = wohnungsmiete + input.stellplatzmieteMonat;
   const eigenanteilMonat =
     input.hausverwaltungMonat + input.instandhaltungsruecklageMonat;
   const missingLabels = missing.map(
@@ -209,7 +212,7 @@ export function Beispielrechnung({
             Annuität {eur.format(result.annuitaetMonat)} pro Monat · Darlehen{" "}
             {eur.format(result.darlehen)} · Start-Kaltmiete{" "}
             {eur.format(startMiete)} pro Monat ({num.format(input.wohnflaeche)} m² ×{" "}
-            {num.format(input.kaltmieteProM2)} €)
+            {num.format(input.kaltmieteProM2)} € + {eur.format(input.stellplatzmieteMonat)} Stellplatz)
           </p>
 
           {/* Nur die Posten, die der Eigentümer selbst trägt. Umlagefähige

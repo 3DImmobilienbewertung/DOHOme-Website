@@ -232,7 +232,7 @@ export const portfolio: PortfolioProject[] = [
     calc: {
       defaults: rotkampCalcDefaults,
       unitNote:
-        "Als Beispiel dient eine 77,67 m² große Wohnung – dieser Zuschnitt ist aktuell noch verfügbar.",
+        "Berechnet wird die verfügbare WE 3: 62,59 m², Erdgeschoss mit Terrasse, Garten und Außenstellplatz.",
     },
     location: {
       copy: locationCopy,
