@@ -17,6 +17,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/ueber-uns",
     "/kontakt",
     "/rechner",
+    "/steuern-sparen",
+    "/steuern-sparen/neubauwohnung",
+    "/steuern-sparen/erstgespraech",
   ];
 
   const projectRoutes = portfolio.map((p) => `/projekte/${p.slug}`);

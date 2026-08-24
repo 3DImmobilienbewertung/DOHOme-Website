@@ -32,12 +32,11 @@ export function FlagshipSpotlight() {
 
         <div className="mt-10 grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
           <Reveal className="overflow-hidden rounded-3xl">
-            {/* Dieselbe freigegebene Außenvisualisierung wie im Exposé: Die
-                Projektkarte zeigt damit sofort den architektonischen Entwurf. */}
+            {/* Freigegebenes Original-Luftbild; unverändert übernommen. */}
             <div className="relative aspect-[4/3] w-full">
               <Image
-                src="/images/rotkamp-1/visualisierung-aussen.jpg"
-                alt={`Außenvisualisierung ${rotkamp.name}, ${rotkamp.postalCode} ${rotkamp.city} – Klinkerfassade mit Satteldach und Stellplätzen`}
+                src="/images/rotkamp-1/luftbild-projekt.jpg"
+                alt={`Luftbild ${rotkamp.name}, ${rotkamp.postalCode} ${rotkamp.city} – Wohngebäude mit Photovoltaik, Garagen und Stellplätzen`}
                 fill
                 sizes="(min-width: 1024px) 60vw, 100vw"
                 loading="lazy"
