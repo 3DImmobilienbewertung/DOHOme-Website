@@ -5,7 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 
 import type { ProjectSummary } from "@/lib/supabase/public";
-import { formatEuro, formatSqmRange, formatRooms, range } from "@/lib/format";
+import {
+  formatEuro,
+  formatSqm,
+  formatSqmRange,
+  formatTotalSqm,
+  formatRooms,
+  range,
+} from "@/lib/format";
 import { PHASE_LABEL, EMPTY_LABEL } from "@/lib/content/labels";
 import { projectImage } from "@/lib/content/media";
 
@@ -423,10 +430,12 @@ function FlagshipSpotlight({ p }: { p: ProjectSummary }) {
           </div>
           <div>
             <dt className="text-xs uppercase tracking-wider text-beige-100/55">
-              Wohnflächen
+              {p.area_sqm_min != null ? "Wohnflächen" : "Gesamtfläche"}
             </dt>
             <dd className="mt-1 font-display text-2xl">
-              {formatSqmRange(p.area_sqm_min, p.area_sqm_max)}
+              {p.area_sqm_min != null
+                ? formatSqmRange(p.area_sqm_min, p.area_sqm_max)
+                : formatTotalSqm(p.total_area_sqm)}
             </dd>
           </div>
           {/* Ohne gepflegte Preise zeigt die dritte Kachel die Zimmerzahl –
@@ -441,10 +450,14 @@ function FlagshipSpotlight({ p }: { p: ProjectSummary }) {
           ) : (
             <div>
               <dt className="text-xs uppercase tracking-wider text-beige-100/55">
-                Zimmer
+                {p.rooms_min != null ? "Zimmer" : "Ø je Wohnung"}
               </dt>
               <dd className="mt-1 font-display text-2xl">
-                {range(p.rooms_min, p.rooms_max, formatRooms)}
+                {p.rooms_min != null
+                  ? range(p.rooms_min, p.rooms_max, formatRooms)
+                  : p.total_area_sqm != null && p.units_total != null
+                    ? formatSqm(p.total_area_sqm / p.units_total)
+                    : "siehe Projekt"}
               </dd>
             </div>
           )}

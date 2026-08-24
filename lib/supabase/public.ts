@@ -43,6 +43,10 @@ export type ProjectSummary = {
   available_for_rent: number;
   area_sqm_min: number | null;
   area_sqm_max: number | null;
+  /** Registry-Ergänzung für Referenzprojekte ohne Wohnungsspiegel. */
+  total_area_sqm?: number;
+  /** Registry-Ergänzung für Durchschnittswerte abgeschlossener Projekte. */
+  units_total?: number;
   rooms_min: number | null;
   rooms_max: number | null;
   sale_price_min: number | null;

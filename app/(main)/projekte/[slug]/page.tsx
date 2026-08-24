@@ -14,6 +14,7 @@ import {
   formatEuro,
   formatSqm,
   formatSqmRange,
+  formatTotalSqm,
   formatRooms,
   formatMonthYear,
   range,
@@ -97,7 +98,11 @@ export async function generateMetadata({
     summary.available_total > 0
       ? `${summary.available_total} von ${project?.units.total ?? summary.available_total} Wohnungen noch verfügbar`
       : "Referenzprojekt von DOHOme",
-    `Wohnflächen ${formatSqmRange(summary.area_sqm_min, summary.area_sqm_max)}`,
+    project?.area
+      ? `Wohnflächen ${formatSqmRange(summary.area_sqm_min, summary.area_sqm_max)}`
+      : project
+        ? `Gesamtwohnfläche ${formatTotalSqm(project.totalAreaSqm)}`
+        : null,
     project?.rooms
       ? `${formatRooms(project.rooms.min)} bis ${formatRooms(project.rooms.max)} Zimmer`
       : null,
@@ -269,12 +274,22 @@ export default async function ProjektDetailPage({ params }: PageProps) {
             }
           />
           <StatTile
-            label="Wohnflächen"
-            value={formatSqmRange(summary.area_sqm_min, summary.area_sqm_max)}
+            label={project?.area ? "Wohnflächen" : "Gesamtwohnfläche"}
+            value={
+              project?.area
+                ? formatSqmRange(summary.area_sqm_min, summary.area_sqm_max)
+                : formatTotalSqm(project?.totalAreaSqm)
+            }
           />
           <StatTile
-            label="Zimmer"
-            value={range(summary.rooms_min, summary.rooms_max, formatRooms)}
+            label={project?.rooms ? "Zimmer" : "Ø je Wohnung"}
+            value={
+              project?.rooms
+                ? range(summary.rooms_min, summary.rooms_max, formatRooms)
+                : project
+                  ? formatSqm(project.totalAreaSqm / project.units.total)
+                  : "Angabe folgt"
+            }
           />
           {/* Preiskachel nur, wenn Preise gepflegt sind – sonst stünde hier ein
               nichtssagendes „—“. Ohne Preise zeigen wir den Weg zum Angebot. */}

@@ -8,6 +8,7 @@ const euro0 = new Intl.NumberFormat("de-DE", {
 
 const int = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 });
 const dec1 = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 1 });
+const dec2 = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 2 });
 
 export function formatEuro(value: number | null | undefined): string {
   return value == null ? "—" : euro0.format(value);
@@ -15,6 +16,11 @@ export function formatEuro(value: number | null | undefined): string {
 
 export function formatSqm(value: number | null | undefined): string {
   return value == null ? "—" : `${dec1.format(value)} m²`;
+}
+
+/** Gesamtflächen: vorhandene Nachkommastellen bis auf zwei Stellen erhalten. */
+export function formatTotalSqm(value: number | null | undefined): string {
+  return value == null ? "—" : `${dec2.format(value)} m²`;
 }
 
 export function formatRooms(value: number | null | undefined): string {

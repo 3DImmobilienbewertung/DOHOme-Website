@@ -586,6 +586,8 @@ export function toSummary(p: PortfolioProject): ProjectSummary {
     available_for_rent: 0,
     area_sqm_min: p.area?.min ?? null,
     area_sqm_max: p.area?.max ?? null,
+    total_area_sqm: p.totalAreaSqm,
+    units_total: p.units.total,
     rooms_min: p.rooms?.min ?? null,
     rooms_max: p.rooms?.max ?? null,
     sale_price_min: null,
