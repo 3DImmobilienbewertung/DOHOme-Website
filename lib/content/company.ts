@@ -21,7 +21,7 @@ export const teamProfiles: TeamProfile[] = [
     name: "Tasso Donnarumma",
     initials: "TD",
     qualifications: [
-      "Holz- und Bautechniker",
+      "Holz- und Bautenschutztechniker",
       "Kaufmann",
       "Sachverständiger für Bauwerksabdichtung",
     ],
