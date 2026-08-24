@@ -29,21 +29,21 @@ const advantages = [
 ];
 
 const example = [
-  ["388.000 €", "Beispiel-Kaufpreis"],
-  ["77,67 m²", "Wohnfläche"],
-  ["1.087 €", "Kaltmiete bei 14 €/m²"],
-  ["329.800 €", "Gebäudeanteil bei 85 %"],
-  ["16.490 €", "AfA im ersten vollen Jahr"],
-  ["ca. 6.926 €", "AfA-Steuereffekt bei 42 %"],
+  ["319.191 €", "Gesamtkaufpreis inkl. Stellplatz"],
+  ["62,59 m²", "Wohnung 3 · Erdgeschoss"],
+  ["916,26 €", "kalkulierte Monatsmiete inkl. Stellplatz"],
+  ["310.796 €", "Gebäudeanteil laut Kalkulation"],
+  ["15.540 €", "5 % AfA im ersten vollen Jahr"],
+  ["7.546 €", "Steuererstattung inkl. Soli"],
 ] as const;
 
 const financingExample = [
-  ["38.800 €", "10 % Eigenkapital auf den Kaufpreis"],
-  ["27.160 €", "angenommene Kaufnebenkosten (7 %)"],
-  ["65.960 €", "gesamter anfänglicher Kapitalbedarf"],
-  ["349.200 €", "Bankdarlehen bei 90 % Finanzierung"],
-  ["13.048 €", "Kaltmiete pro Jahr"],
-  ["5.238 €", "anfängliche Tilgung pro Jahr bei 1,5 %"],
+  ["31.919 €", "10 % Eigenkapital auf den Kaufpreis"],
+  ["22.343 €", "Kaufnebenkosten (7 %)"],
+  ["54.262 €", "gesamter Eigenkapitaleinsatz"],
+  ["287.272 €", "Bankdarlehen bei 90 % Finanzierung"],
+  ["10.995 €", "kalkulierte Jahresmiete"],
+  ["4.309 €", "Tilgung im ersten Jahr"],
 ] as const;
 
 export default function SteuernSparenPage() {
@@ -68,7 +68,7 @@ export default function SteuernSparenPage() {
             </h1>
             <p className="mt-6 max-w-2xl text-lead text-beige-100/80">
               Seniorengerechte Eigentumswohnungen direkt vom Bauträger – mit
-              möglicher 5-%-AfA, modernem Gebäudestandard und klarer Kalkulation.
+              5 % degressiver AfA, modernem Gebäudestandard und klarer Kalkulation.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Button href="/steuern-sparen/erstgespraech">Kostenloses Erstgespräch</Button>
@@ -77,7 +77,7 @@ export default function SteuernSparenPage() {
           </Reveal>
           <dl className="mt-10 grid max-w-3xl grid-cols-3 gap-px overflow-hidden rounded-2xl bg-beige-100/15 backdrop-blur-sm">
             {[
-              ["5 %", "degressive Gebäude-AfA möglich*"],
+              ["5 %", "degressive Gebäude-AfA"],
               ["6", "Wohnungen aktuell verfügbar"],
               ["100 %", "seniorengerecht geplant"],
             ].map(([value, label]) => (
@@ -155,11 +155,12 @@ export default function SteuernSparenPage() {
 
       <section className="border-t border-beige-100/10 bg-beige-100 text-ink">
         <div className="mx-auto max-w-container px-6 py-14 md:py-20">
-          <p className="eyebrow text-green-700">Konkrete Musterrechnung</p>
-          <h2 className="mt-3 max-w-3xl text-display-lg">Was 5 % AfA im ersten vollen Jahr bedeuten können.</h2>
+          <p className="eyebrow text-green-700">Wohnung 3 · Rotkamp 1</p>
+          <h2 className="mt-3 max-w-3xl text-display-lg">Die konkrete Kalkulation für WE 3.</h2>
           <p className="mt-4 max-w-2xl text-sm text-ink/65">
-            Vereinfachtes Beispiel ohne Wertsteigerung. Die tatsächliche
-            Steuerwirkung hängt von der persönlichen Situation ab.
+            2 Zimmer, 62,59 m², Erdgeschoss, Terrasse, 28,10 m² Garten und
+            Außenstellplatz. Berechnet für das erste volle Vermietungsjahr ohne
+            angenommene Wertsteigerung.
           </p>
           <dl className="mt-9 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-green-900/15 md:grid-cols-3">
             {example.map(([value, label]) => (
@@ -187,8 +188,8 @@ export default function SteuernSparenPage() {
                 Im Beispiel werden 10 % des Kaufpreises selbst eingebracht und
                 90 % finanziert. Zusätzlich fallen die Kaufnebenkosten an. Die
                 Miete unterstützt den Kapitaldienst, die Tilgung reduziert die
-                Restschuld und die mögliche AfA kann die laufende Steuerlast
-                senken. So entsteht Vermögen nicht nur aus dem eigenen
+                Restschuld und die 5-%-AfA senkt in dieser Kalkulation die
+                Steuerlast. So entsteht Vermögen nicht nur aus dem eigenen
                 monatlichen Beitrag.
               </p>
             </div>
@@ -200,6 +201,19 @@ export default function SteuernSparenPage() {
                 </div>
               ))}
             </dl>
+          </div>
+
+          <div className="mt-8 grid gap-px overflow-hidden rounded-2xl bg-accent-500/30 md:grid-cols-2">
+            <div className="bg-green-900 p-6 md:p-8">
+              <p className="eyebrow text-sage-300">Netto-Cashflow · Jahr 1</p>
+              <p className="nums mt-3 text-4xl text-accent-500">+ 1.207 €</p>
+              <p className="mt-2 text-sm text-beige-100/65">nach Steuererstattung, Bankrate, Verwaltung und Rücklage</p>
+            </div>
+            <div className="bg-green-900 p-6 md:p-8">
+              <p className="eyebrow text-sage-300">Vermögenszuwachs · Jahr 1</p>
+              <p className="nums mt-3 text-4xl text-accent-500">+ 5.516 €</p>
+              <p className="mt-2 text-sm text-beige-100/65">Netto-Cashflow plus 4.309 € Tilgung – ohne Wertsteigerung</p>
+            </div>
           </div>
 
           <div className="mt-10 grid gap-6 rounded-2xl border border-accent-500/35 bg-accent-500/10 p-6 md:grid-cols-[1fr_auto] md:items-center md:p-8">
@@ -220,11 +234,12 @@ export default function SteuernSparenPage() {
           </div>
 
           <p className="mt-5 text-xs leading-relaxed text-beige-100/45">
-            Beispielannahmen: Kaufpreis 388.000 €, 90 % Kaufpreisfinanzierung,
-            7 % Kaufnebenkosten, Kaltmiete 14 €/m², anfängliche Tilgung 1,5 %.
-            Finanzierung, Zins, Miete, Steuerwirkung und Liquiditätsbedarf sind
-            individuell zu prüfen. Die Tilgung ist Vermögensbildung durch
-            Schuldabbau, jedoch kein frei verfügbarer Ertrag.
+            Daten aus der Wirtschaftlichkeits- und Steuerkalkulation für WE 3:
+            90 % Kaufpreisfinanzierung, 7 % Kaufnebenkosten, 4,20 % Sollzins,
+            1,50 % Anfangstilgung, 42 % Grenzsteuersatz zuzüglich Soli, 35 €
+            Verwaltung und 45 € Rücklage monatlich. Die Tilgung ist
+            Vermögensbildung durch Schuldabbau, jedoch kein frei verfügbarer
+            Ertrag. Persönliche Steuer- und Finanzierungssituation separat prüfen.
           </p>
         </div>
       </section>
@@ -236,7 +251,7 @@ export default function SteuernSparenPage() {
               <p className="eyebrow text-accent-400">Noch 6 Wohnungen verfügbar</p>
               <h2 className="mt-3 max-w-2xl text-display-lg">In 20 Minuten wissen Sie, ob das Modell zu Ihnen passt.</h2>
               <p className="mt-5 max-w-xl text-beige-100/70">
-                Verfügbare Wohnung, mögliche Miete, Finanzierung und steuerliche
+                Verfügbare Wohnung, kalkulierte Miete, Finanzierung und steuerliche
                 Wirkung – konkret anhand Ihrer Zahlen.
               </p>
               <div className="mt-8 flex flex-wrap gap-4">

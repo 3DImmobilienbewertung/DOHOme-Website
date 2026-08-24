@@ -26,8 +26,8 @@ export default function NeubauwohnungPage() {
           <p className="eyebrow text-sage-300">Neubau als Vermietungsobjekt</p>
           <h1 className="mt-3 text-display-xl">Nicht versprechen. Vollständig rechnen.</h1>
           <p className="mt-6 text-lead text-beige-100/75">
-            Eine hochwertige Neubauwohnung kann den technischen Startaufwand
-            reduzieren und steuerliche Möglichkeiten eröffnen. Entscheidend ist
+            Eine hochwertige Neubauwohnung reduziert den technischen Startaufwand
+            und nutzt bei WE 3 die degressive 5-%-Gebäude-AfA. Entscheidend ist
             aber die Gesamtrechnung aus Objekt, Miete, Finanzierung, Kosten und
             persönlicher Steuerwirkung.
           </p>
@@ -71,8 +71,8 @@ export default function NeubauwohnungPage() {
               <p className="eyebrow text-sage-300">Degressive Gebäude-AfA</p>
               <h2 className="mt-3 font-display text-3xl">5 % vom jeweiligen Restwert</h2>
               <p className="mt-4 text-sm leading-relaxed text-beige-100/70">
-                § 7 Abs. 5a EStG ermöglicht für bestimmte neue Wohngebäude eine
-                fallende Abschreibung von 5 % vom Restwert. Das ist keine
+                WE 3 wird nach § 7 Abs. 5a EStG mit einer fallenden Abschreibung
+                von 5 % vom Restwert kalkuliert. Das ist keine
                 pauschale Steuererstattung: Grundstücksanteil, Anschaffungsdatum,
                 Nutzung und persönliche Einkünfte beeinflussen das Ergebnis.
               </p>
