@@ -13,7 +13,7 @@ import { site } from "@/lib/content/site";
 //   RESEND_API_KEY    – API-Schlüssel von resend.com
 //   LEAD_NOTIFY_TO    – Empfängeradresse (Default: site.contact.email)
 //   LEAD_NOTIFY_FROM  – Absender, muss eine bei Resend verifizierte Domain sein
-//                       (z. B. "DOHOme Website <website@dohome.de>")
+//                       (z. B. "DOHOme Website <info@dohome-bau.de>")
 
 export function isMailConfigured(): boolean {
   return Boolean(process.env.RESEND_API_KEY && process.env.LEAD_NOTIFY_FROM);

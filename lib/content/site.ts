@@ -29,7 +29,7 @@ export const site = {
   },
 
   contact: {
-    email: "kontakt@dohome.de",
+    email: "info@dohome-bau.de",
     // Vom Kunden freigegebene Rufnummer (Stand: Juli 2026).
     phone: "0174 7445452" as string | null,
     /** E.164 für tel:-Links und Schema.org. */
