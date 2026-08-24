@@ -258,8 +258,29 @@ export const portfolio: PortfolioProject[] = [
     area: null,
     rooms: null,
     image: {
-      src: "/images/poststrasse-14/lageplan.png",
-      alt: "Lageplan Poststraße 14 in 30900 Wedemark-Elze mit Mehrfamilienhaus und Carports",
+      src: "/images/poststrasse-14/visualisierung-poster.jpg",
+      alt: "Außenvisualisierung Poststraße 14 in 30900 Wedemark-Elze mit Klinkerfassade und begrünten Carports",
+    },
+    gallery: [
+      {
+        src: "/images/poststrasse-14/visualisierung-poster.jpg",
+        category: "aussen",
+        caption: "Geplanter Entwurf mit Klinkerfassade und begrünten Carports",
+        width: 1280,
+        height: 720,
+      },
+      {
+        src: "/images/poststrasse-14/lageplan.png",
+        category: "grundriss",
+        caption: "Lageplan mit Wohngebäude, Carports und Nebenanlage",
+        width: 1840,
+        height: 1150,
+      },
+    ],
+    video: {
+      src: "/video/poststrasse-14/projektvisualisierung-720.mp4",
+      poster: "/images/poststrasse-14/visualisierung-poster.jpg",
+      caption: "Projektvisualisierung des aktuellen Planungsstands.",
     },
     story: {
       title: "Nächstes Projekt: Poststraße 14",

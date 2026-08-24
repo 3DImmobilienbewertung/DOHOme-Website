@@ -23,6 +23,7 @@ import type { PortfolioProject } from "@/lib/content/projects";
 export function ProjectSections({ project }: { project: PortfolioProject }) {
   const { story, facts, gallery, video, unitList, location, taxNote, calc } = project;
   const hasStoryBlock = Boolean(story || (facts && facts.length > 0));
+  const isPlannedVisualisation = project.phase === "zukuenftig";
   const hasUnitStatus = Boolean(unitList?.some((u) => u.status));
   const availableUnitIds =
     unitList?.filter((u) => u.status === "verfuegbar").map((u) => u.id) ?? [];
@@ -97,16 +98,24 @@ export function ProjectSections({ project }: { project: PortfolioProject }) {
         <section className="border-t border-beige-100/10">
           <div className="mx-auto max-w-container px-6 section-sm">
             <Reveal>
-              <p className="eyebrow text-sage-300">Aus der Luft</p>
+              <p className="eyebrow text-sage-300">
+                {isPlannedVisualisation ? "Projektvisualisierung" : "Aus der Luft"}
+              </p>
               <h2 className="mt-2 max-w-2xl text-display-lg">
-                {project.name} im Video
+                {isPlannedVisualisation
+                  ? `So ist ${project.name} geplant`
+                  : `${project.name} im Video`}
               </h2>
             </Reveal>
             <Reveal className="mt-8">
               <ProjectVideo
                 src={video.src}
                 poster={video.poster}
-                title={`Drohnenaufnahme ${project.name}`}
+                title={
+                  isPlannedVisualisation
+                    ? `Projektvisualisierung ${project.name}`
+                    : `Drohnenaufnahme ${project.name}`
+                }
                 caption={video.caption}
                 portrait={video.portrait}
               />
