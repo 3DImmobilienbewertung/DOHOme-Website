@@ -1,24 +1,24 @@
-// Projektdaten Holunderweg 4 – fertiggestelltes Wohnprojekt.
+// Projektdaten Holunderweg 4 a/b/c – fertiggestelltes Wohnprojekt.
 //
-// Quelle: Angaben des Kunden (16 Wohneinheiten, 1.300 m² Wohnfläche,
+// Quelle: Angaben des Kunden (17 Wohneinheiten, 1.743 m² Wohnfläche,
 // unterkellert) sowie Luftaufnahmen des Objekts.
 //
 // PRÜFEN (an den Kunden): Fertigstellungsjahr und Wohnungsspiegel.
 
 export const holunderweg4 = {
-  name: "Holunderweg 4",
-  shortName: "Holunderweg 4",
-  street: "Holunderweg 4",
+  name: "Holunderweg 4 a/b/c",
+  shortName: "Holunderweg 4 a/b/c",
+  street: "Holunderweg 4 a/b/c",
   city: "Wedemark",
   postalCode: "30900",
 
-  units: { total: 16, sold: 16 },
+  units: { total: 17, sold: 17 },
 
   facts: {
     buildings: 1,
     floors: ["Erdgeschoss", "1. Obergeschoss", "Dachgeschoss"],
     /** Gesamtwohnfläche laut Kundenangabe, in m². */
-    totalArea: 1300,
+    totalArea: 1743,
     basement: true,
   },
 
@@ -30,9 +30,9 @@ export const holunderweg4 = {
   },
 
   mapsUrl:
-    "https://www.google.com/maps/search/?api=1&query=Holunderweg+4%2C+30900+Wedemark",
+    "https://www.google.com/maps/search/?api=1&query=Holunderweg+4a%2Fb%2Fc%2C+30900+Wedemark",
   mapsEmbedUrl:
-    "https://www.google.com/maps?q=Holunderweg+4,+30900+Wedemark&output=embed",
+    "https://www.google.com/maps?q=Holunderweg+4a%2Fb%2Fc,+30900+Wedemark&output=embed",
 } as const;
 
 export const holunderweg4AvgArea =

@@ -1,14 +1,14 @@
-// Projektdaten Am Beekeufer 11 – fertiggestelltes Wohnprojekt.
+// Projektdaten Am Beekeufer 11 a/b – fertiggestelltes Wohnprojekt.
 //
-// Quelle: Angaben des Kunden (11 Wohneinheiten, 970 m² Wohnfläche,
+// Quelle: Angaben des Kunden (11 Wohneinheiten, 1.180 m² Wohnfläche,
 // unterkellert) sowie Luftaufnahmen des Objekts.
 //
 // PRÜFEN (an den Kunden): Fertigstellungsjahr und Wohnungsspiegel.
 
 export const beekeufer = {
-  name: "Am Beekeufer 11",
-  shortName: "Am Beekeufer",
-  street: "Am Beekeufer 11",
+  name: "Am Beekeufer 11 a/b",
+  shortName: "Am Beekeufer 11 a/b",
+  street: "Am Beekeufer 11 a/b",
   city: "Wedemark",
   postalCode: "30900",
 
@@ -18,7 +18,7 @@ export const beekeufer = {
     buildings: 1,
     floors: ["Erdgeschoss", "1. Obergeschoss", "Dachgeschoss"],
     /** Gesamtwohnfläche laut Kundenangabe, in m². */
-    totalArea: 970,
+    totalArea: 1180,
     basement: true,
   },
 
@@ -30,9 +30,9 @@ export const beekeufer = {
   },
 
   mapsUrl:
-    "https://www.google.com/maps/search/?api=1&query=Am+Beekeufer+11%2C+30900+Wedemark",
+    "https://www.google.com/maps/search/?api=1&query=Am+Beekeufer+11a%2Fb%2C+30900+Wedemark",
   mapsEmbedUrl:
-    "https://www.google.com/maps?q=Am+Beekeufer+11,+30900+Wedemark&output=embed",
+    "https://www.google.com/maps?q=Am+Beekeufer+11a%2Fb,+30900+Wedemark&output=embed",
 } as const;
 
 export const beekeuferAvgArea =

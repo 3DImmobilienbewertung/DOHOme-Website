@@ -32,12 +32,12 @@ export function FlagshipSpotlight() {
 
         <div className="mt-10 grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
           <Reveal className="overflow-hidden rounded-3xl">
-            {/* Innenmotiv: die Bühne oben zeigt bereits die Außenansicht –
-                hier führt der Blick nach innen, statt sich zu wiederholen. */}
+            {/* Dieselbe freigegebene Außenvisualisierung wie im Exposé: Die
+                Projektkarte zeigt damit sofort den architektonischen Entwurf. */}
             <div className="relative aspect-[4/3] w-full">
               <Image
-                src="/images/rotkamp-1/wohnraum-balkon.jpg"
-                alt={`Wohnraum mit bodentiefen Fenstern und Balkonzugang, ${rotkamp.name}, ${rotkamp.postalCode} ${rotkamp.city}`}
+                src="/images/rotkamp-1/visualisierung-aussen.jpg"
+                alt={`Außenvisualisierung ${rotkamp.name}, ${rotkamp.postalCode} ${rotkamp.city} – Klinkerfassade mit Satteldach und Stellplätzen`}
                 fill
                 sizes="(min-width: 1024px) 60vw, 100vw"
                 loading="lazy"

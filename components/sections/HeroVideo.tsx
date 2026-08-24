@@ -10,9 +10,9 @@ import { useEffect, useRef, useState } from "react";
 //     Kasten, kein Ruckeln beim ersten Frame.
 //   • Geladen wird erst nach dem Mount, damit das Video nicht mit dem
 //     LCP-Bild um Bandbreite konkurriert.
-//   • Zwei Fassungen: 720p für große Bildschirme, 540p fürs Handy. Auf einem
-//     Telefon ist der Unterschied nicht zu sehen, das Datenvolumen aber schon –
-//     deshalb bekommt dort niemand die große Datei.
+//   • Drei Fassungen: Full HD für große Bildschirme, 720p für Tablets und
+//     540p fürs Handy. So bleibt die Gebäudestruktur auf Desktop-Monitoren
+//     sichtbar, ohne Mobilgeräte mit der großen Datei zu belasten.
 //   • `prefers-reduced-motion` und der Datensparmodus unterdrücken das Video
 //     ganz. Wer Bewegung abbestellt hat, bekommt das ruhige Standbild.
 //   • Stumm, in Schleife, `playsInline` – sonst blockt iOS die Wiedergabe
@@ -20,8 +20,8 @@ import { useEffect, useRef, useState } from "react";
 //   • Rein dekorativ: aria-hidden, kein Bedienelement. Der Inhalt der Seite
 //     hängt nicht am Video.
 
-/** Ab dieser Breite lohnt die große Fassung. */
-const WIDE = "(min-width: 1024px)";
+const FULL_HD = "(min-width: 1280px)";
+const TABLET = "(min-width: 768px)";
 
 export function HeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
@@ -36,9 +36,11 @@ export function HeroVideo() {
     const conn = (navigator as { connection?: { saveData?: boolean } }).connection;
     if (conn?.saveData) return;
 
-    el.src = window.matchMedia(WIDE).matches
-      ? "/video/hero-720.mp4"
-      : "/video/hero-540.mp4";
+    el.src = window.matchMedia(FULL_HD).matches
+      ? "/video/hero-1080.mp4"
+      : window.matchMedia(TABLET).matches
+        ? "/video/hero-720.mp4"
+        : "/video/hero-540.mp4";
     el.load();
 
     const start = () => {

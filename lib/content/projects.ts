@@ -19,7 +19,7 @@ import {
   walsroderGallery,
   walsroder9Gallery,
   holunderwegGallery,
-  walsroder10bGallery,
+  halzroder32Gallery,
   holunderweg4Gallery,
   beekeuferGallery,
   rotkampCover,
@@ -54,10 +54,10 @@ import {
   holunderwegAvgArea,
 } from "@/lib/content/holunderweg";
 import {
-  walsroder10b,
-  walsroder10bStory,
-  walsroder10bAvgArea,
-} from "@/lib/content/walsroder10b";
+  halzroder32,
+  halzroder32Story,
+  halzroder32AvgArea,
+} from "@/lib/content/halzroder32";
 import {
   beekeufer,
   beekeuferStory,
@@ -157,7 +157,7 @@ const r = rotkamp.facts;
 const b = bissendorf.facts;
 const w = walsroder.facts;
 const w9 = walsroder9.facts;
-const w10 = walsroder10b.facts;
+const h32 = halzroder32.facts;
 const bk = beekeufer.facts;
 const h4 = holunderweg4.facts;
 const h = holunderweg.facts;
@@ -442,41 +442,41 @@ export const portfolio: PortfolioProject[] = [
     },
   },
   {
-    slug: "walsroder-strasse-10b",
-    name: walsroder10b.name,
+    slug: "halzroder-strasse-32-a-b",
+    name: halzroder32.name,
     phase: "abgeschlossen",
     isFlagship: false,
-    city: walsroder10b.city,
-    postalCode: walsroder10b.postalCode,
-    teaser: `${walsroder10b.units.total} Wohnungen auf ${dec(w10.totalArea)} m² Wohnfläche – zwei Vollgeschosse in Klinker, unterkellert, Gärten im Erdgeschoss.`,
-    units: { total: walsroder10b.units.total, sold: walsroder10b.units.sold, available: 0 },
-    totalAreaSqm: w10.totalArea,
+    city: halzroder32.city,
+    postalCode: halzroder32.postalCode,
+    teaser: `${halzroder32.units.total} Wohnungen auf ${dec(h32.totalArea)} m² Wohnfläche – zwei Vollgeschosse in Klinker, unterkellert, Gärten im Erdgeschoss.`,
+    units: { total: halzroder32.units.total, sold: halzroder32.units.sold, available: 0 },
+    totalAreaSqm: h32.totalArea,
     area: null,
     rooms: null,
     image: {
-      src: "/images/walsroder-strasse-10b/luftbild-zufahrt.jpg",
-      alt: `${walsroder10b.name}, ${walsroder10b.postalCode} ${walsroder10b.city} – Klinkerfassade mit Satteldach über zwei Vollgeschosse`,
+      src: "/images/halzroder-strasse-32-a-b/luftbild-zufahrt.jpg",
+      alt: `${halzroder32.name}, ${halzroder32.postalCode} ${halzroder32.city} – Klinkerfassade mit Satteldach über zwei Vollgeschosse`,
     },
-    gallery: walsroder10bGallery,
-    story: { title: "Bewusst niedrig gehalten", paragraphs: walsroder10bStory },
+    gallery: halzroder32Gallery,
+    story: { title: "Bewusst niedrig gehalten", paragraphs: halzroder32Story },
     facts: [
-      { k: "Wohneinheiten", v: `${walsroder10b.units.total} Wohnungen` },
-      { k: "Gesamtwohnfläche", v: `${dec(w10.totalArea)} m²` },
-      { k: "Wohnfläche je Wohnung", v: `im Mittel rund ${dec(walsroder10bAvgArea)} m²` },
-      { k: "Geschosse", v: `${w10.fullStoreys} Vollgeschosse` },
+      { k: "Wohneinheiten", v: `${halzroder32.units.total} Wohnungen` },
+      { k: "Gesamtwohnfläche", v: `${dec(h32.totalArea)} m²` },
+      { k: "Wohnfläche je Wohnung", v: `im Mittel rund ${dec(halzroder32AvgArea)} m²` },
+      { k: "Geschosse", v: `${h32.fullStoreys} Vollgeschosse` },
       { k: "Keller", v: "voll unterkellert" },
-      { k: "Fassade", v: walsroder10b.architecture.facade },
-      { k: "Freiflächen", v: walsroder10b.architecture.balconies },
-      { k: "Stellplätze", v: walsroder10b.architecture.parking },
+      { k: "Fassade", v: halzroder32.architecture.facade },
+      { k: "Freiflächen", v: halzroder32.architecture.balconies },
+      { k: "Stellplätze", v: halzroder32.architecture.parking },
     ],
     location: {
       copy: [
-        `${walsroder10b.name} liegt in einer gewachsenen Wohnstraße. Zwei Vollgeschosse statt drei: Das Haus bleibt auf Augenhöhe mit der Nachbarbebauung, statt sie zu überragen.`,
+        `${halzroder32.name} liegt in einer gewachsenen Wohnstraße. Zwei Vollgeschosse statt drei: Das Haus bleibt auf Augenhöhe mit der Nachbarbebauung, statt sie zu überragen.`,
       ],
       neighbourhood: [],
-      address: `${walsroder10b.street}, ${walsroder10b.postalCode} ${walsroder10b.city}`,
-      mapsUrl: walsroder10b.mapsUrl,
-      mapsEmbedUrl: walsroder10b.mapsEmbedUrl,
+      address: `${halzroder32.street}, ${halzroder32.postalCode} ${halzroder32.city}`,
+      mapsUrl: halzroder32.mapsUrl,
+      mapsEmbedUrl: halzroder32.mapsEmbedUrl,
     },
   },
   {
