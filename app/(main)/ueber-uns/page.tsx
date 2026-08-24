@@ -59,10 +59,12 @@ export default function UeberUnsPage() {
                 {storyLong.paragraphs.map((p) => (
                   <p key={p.slice(0, 32)}>{p}</p>
                 ))}
-                <p className="pt-1 text-sm text-muted-dark">
-                  Eine persönliche Anekdote der Gründer ergänzen wir, sobald sie
-                  vorliegt – der Text steht auch ohne sie.
-                </p>
+                <blockquote className="mt-7 border-l border-accent-500/70 pl-5 font-display text-xl leading-relaxed text-beige-100 md:text-2xl">
+                  „Ein gutes Bauprojekt misst sich nicht nur an der Substanz der
+                  Wände, sondern am Gefühl der Menschen darin. Wir pflegen
+                  langjährige Partnerschaften mit unseren Handwerkern – um für
+                  Sie und mit Ihnen ein Zuhause zu schaffen, das verbindet.“
+                </blockquote>
               </div>
             </Reveal>
           </div>
