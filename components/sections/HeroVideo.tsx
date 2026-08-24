@@ -10,10 +10,9 @@ import { useEffect, useRef, useState } from "react";
 //     Kasten, kein Ruckeln beim ersten Frame.
 //   • Geladen wird erst nach dem Mount, damit das Video nicht mit dem
 //     LCP-Bild um Bandbreite konkurriert.
-//   • Zwei kurze, hochwertig codierte Fassungen: Full HD ab Tabletbreite und
-//     720p fürs Handy. Die frühere 58-Sekunden-Fassung war trotz nomineller
-//     Auflösung sichtbar überkomprimiert; 20 Sekunden mit deutlich höherer
-//     Datenrate liefern die für die Bühne erforderliche Detailzeichnung.
+//   • Zwei kurze, hochwertig codierte Fassungen: QHD ab Tabletbreite und 720p
+//     fürs Handy. Die QHD-Fassung wird aus dem 1080p-Master mit Lanczos und
+//     dezenter Schärfung erzeugt; die hohe Datenrate erhält feine Strukturen.
 //   • `prefers-reduced-motion` und der Datensparmodus unterdrücken das Video
 //     ganz. Wer Bewegung abbestellt hat, bekommt das ruhige Standbild.
 //   • Stumm, in Schleife, `playsInline` – sonst blockt iOS die Wiedergabe
@@ -21,7 +20,7 @@ import { useEffect, useRef, useState } from "react";
 //   • Rein dekorativ: aria-hidden, kein Bedienelement. Der Inhalt der Seite
 //     hängt nicht am Video.
 
-const FULL_HD = "(min-width: 768px)";
+const USE_QHD = "(min-width: 768px)";
 
 export function HeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
@@ -36,9 +35,9 @@ export function HeroVideo() {
     const conn = (navigator as { connection?: { saveData?: boolean } }).connection;
     if (conn?.saveData) return;
 
-    el.src = window.matchMedia(FULL_HD).matches
-      ? "/video/hero-1080.mp4?v=2"
-      : "/video/hero-720.mp4?v=2";
+    el.src = window.matchMedia(USE_QHD).matches
+      ? "/video/hero-1440.mp4?v=3"
+      : "/video/hero-720.mp4?v=3";
     el.load();
 
     const start = () => {
