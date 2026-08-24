@@ -37,6 +37,15 @@ const example = [
   ["ca. 6.926 €", "AfA-Steuereffekt bei 42 %"],
 ] as const;
 
+const financingExample = [
+  ["38.800 €", "10 % Eigenkapital auf den Kaufpreis"],
+  ["27.160 €", "angenommene Kaufnebenkosten (7 %)"],
+  ["65.960 €", "gesamter anfänglicher Kapitalbedarf"],
+  ["349.200 €", "Bankdarlehen bei 90 % Finanzierung"],
+  ["13.048 €", "Kaltmiete pro Jahr"],
+  ["5.238 €", "anfängliche Tilgung pro Jahr bei 1,5 %"],
+] as const;
+
 export default function SteuernSparenPage() {
   return (
     <main className="bg-green-900 text-beige-100">
@@ -163,6 +172,60 @@ export default function SteuernSparenPage() {
           <div className="mt-8">
             <Button href="/steuern-sparen/erstgespraech">Meine Zahlen prüfen lassen</Button>
           </div>
+        </div>
+      </section>
+
+      <section className="border-t border-beige-100/10 bg-green-950 text-beige-100">
+        <div className="mx-auto max-w-container px-6 py-14 md:py-20">
+          <div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
+            <div>
+              <p className="eyebrow text-accent-400">Vermögensaufbau mit 10 % Eigenkapital</p>
+              <h2 className="mt-3 text-display-lg">
+                Ihr Einkommen trägt die Finanzierung. Miete, Tilgung und Steuerwirkung bauen mit auf.
+              </h2>
+              <p className="mt-5 text-sm leading-relaxed text-beige-100/70">
+                Im Beispiel werden 10 % des Kaufpreises selbst eingebracht und
+                90 % finanziert. Zusätzlich fallen die Kaufnebenkosten an. Die
+                Miete unterstützt den Kapitaldienst, die Tilgung reduziert die
+                Restschuld und die mögliche AfA kann die laufende Steuerlast
+                senken. So entsteht Vermögen nicht nur aus dem eigenen
+                monatlichen Beitrag.
+              </p>
+            </div>
+            <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-beige-100/15 md:grid-cols-3">
+              {financingExample.map(([value, label]) => (
+                <div key={label} className="bg-green-900 p-5 md:p-6">
+                  <dd className="nums text-2xl text-accent-500">{value}</dd>
+                  <dt className="mt-1 text-xs leading-snug text-beige-100/60">{label}</dt>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div className="mt-10 grid gap-6 rounded-2xl border border-accent-500/35 bg-accent-500/10 p-6 md:grid-cols-[1fr_auto] md:items-center md:p-8">
+            <div>
+              <p className="font-display text-2xl md:text-3xl">
+                Sie verdienen gut – nutzen Sie Ihr Einkommen bereits gezielt für den Vermögensaufbau?
+              </p>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-beige-100/70">
+                Besonders relevant für Menschen mit stabilem, überdurchschnittlichem
+                Einkommen, ausreichender Liquiditätsreserve und einem langfristigen
+                Anlagehorizont. Wir zeigen Ihnen in 20 Minuten, welche der sechs
+                Wohnungen rechnerisch zu Ihrem Budget passen kann.
+              </p>
+            </div>
+            <Button href="/steuern-sparen/erstgespraech" className="shrink-0">
+              Persönliche Rechnung anfordern
+            </Button>
+          </div>
+
+          <p className="mt-5 text-xs leading-relaxed text-beige-100/45">
+            Beispielannahmen: Kaufpreis 388.000 €, 90 % Kaufpreisfinanzierung,
+            7 % Kaufnebenkosten, Kaltmiete 14 €/m², anfängliche Tilgung 1,5 %.
+            Finanzierung, Zins, Miete, Steuerwirkung und Liquiditätsbedarf sind
+            individuell zu prüfen. Die Tilgung ist Vermögensbildung durch
+            Schuldabbau, jedoch kein frei verfügbarer Ertrag.
+          </p>
         </div>
       </section>
 

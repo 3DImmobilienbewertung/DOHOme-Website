@@ -22,6 +22,8 @@ const securityHeaders = [
 const nextConfig = {
   poweredByHeader: false,
   images: {
+    // Verwendete Qualitätsstufen explizit freigeben; ab Next.js 16 zwingend.
+    qualities: [75, 80, 84],
     // Platzhalter-Quelle bis eigenes /public/images-Material vorliegt.
     // Unsplash entfernt (wurde nie genutzt – Remote-Allowlist minimal halten).
     remotePatterns: [
