@@ -24,6 +24,8 @@ export function ProjectSections({ project }: { project: PortfolioProject }) {
   const { story, facts, gallery, video, unitList, location, taxNote, calc } = project;
   const hasStoryBlock = Boolean(story || (facts && facts.length > 0));
   const hasUnitStatus = Boolean(unitList?.some((u) => u.status));
+  const availableUnitIds =
+    unitList?.filter((u) => u.status === "verfuegbar").map((u) => u.id) ?? [];
 
   return (
     <>
@@ -129,6 +131,11 @@ export function ProjectSections({ project }: { project: PortfolioProject }) {
                     ? "Zimmerzahl, Wohnfläche und Zuschnitt jeder Einheit – die noch verfügbaren Wohnungen sind markiert. Preise besprechen wir persönlich."
                     : "Zimmerzahl, Wohnfläche und Zuschnitt jeder Einheit. Welche Wohnungen aktuell noch frei sind, besprechen wir persönlich – mit Grundriss, Ausstattung und Preis."}
               </p>
+              {availableUnitIds.length > 0 && (
+                <p className="mt-4 max-w-2xl text-sm font-medium text-accent-400">
+                  Aktuell verfügbar: {availableUnitIds.join(" · ")}
+                </p>
+              )}
             </Reveal>
             <Reveal className="mt-10">
               <UnitTable units={unitList} projectName={project.name} />

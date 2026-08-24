@@ -15,8 +15,8 @@ export function TrustBand() {
       pending: s.value == null,
     })),
     {
-      value: String(site.locations.length),
-      label: "Orte in der Region Hannover",
+      value: "30+",
+      label: "Jahre Bauerfahrung & Projektentwicklung",
       pending: false,
     },
   ];

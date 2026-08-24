@@ -24,13 +24,13 @@ export const rotkamp = {
   location: "Ecke Schaumburger Straße",
 
   /**
-   * Vom Kunden freigegebene Verkaufszahlen (Stand Juli 2026).
-   * Alle 17 verkauften Wohnungen werden derzeit bezogen – Käufer und Mieter
+   * Vom Kunden freigegebene Verkaufszahlen (Stand August 2026).
+   * Alle 16 verkauften Wohnungen werden derzeit bezogen – Käufer und Mieter
    * ziehen ein. Bewusst KEINE Zahl „bereits bewohnt“: Der Einzug läuft.
    */
   units: {
     total: 22,
-    sold: 17,
+    sold: 16,
   },
 
   /** Belegte Kennzahlen aus dem Wohnungsspiegel. */
@@ -142,12 +142,6 @@ export const locationCopy: string[] = [
   "Für Familien ist die kurze Wegekette entscheidend: Kita und IGS Wedemark sind so nah, dass Kinder sie selbstständig erreichen – ein Argument, das in Neubaugebieten am Ortsrand selten ist.",
 ];
 
-export const unitsAvailable = rotkamp.units.total - rotkamp.units.sold;
-
-export const soldPercent = Math.round(
-  (rotkamp.units.sold / rotkamp.units.total) * 100,
-);
-
 /** Gesamtzahl Stellplätze (Garagen + Carports + Außenstellplätze). */
 export const parkingTotal =
   rotkamp.parking.garages + rotkamp.parking.carports + rotkamp.parking.outdoor;
@@ -155,17 +149,17 @@ export const parkingTotal =
 // ------------------------------------------------------------ Wohnungsspiegel
 //
 // Vollständige Aufstellung aus dem Wohnungsspiegel. `status` gibt die
-// Verfügbarkeit an (Stand Juli 2026, vom Kunden bestätigt): frei sind WE 2, 3,
-// 5, 6 und 14 – alle übrigen verkauft. Sobald sich der Stand ändert, hier
+// Verfügbarkeit an (Stand August 2026, vom Kunden bestätigt): frei sind WE 3,
+// 4, 5, 6, 14 und 21 – alle übrigen verkauft. Sobald sich der Stand ändert, hier
 // pflegen; Tabelle, Zähler und Verkaufsstand ziehen automatisch nach.
 // Preise bleiben bewusst offen und werden im Gespräch besprochen.
 
 export const units: Unit[] = [
   // Erdgeschoss – mit Privatgarten
   { id: "WE 1", house: "A", floor: "EG", rooms: 2.5, areaSqm: 68.16, outdoor: "Garten 37,50 m²", accessible: true, status: "verkauft" },
-  { id: "WE 2", house: "A", floor: "EG", rooms: 2.5, areaSqm: 57.87, outdoor: "Garten 56,50 m²", status: "verfuegbar" },
+  { id: "WE 2", house: "A", floor: "EG", rooms: 2.5, areaSqm: 57.87, outdoor: "Garten 56,50 m²", status: "verkauft" },
   { id: "WE 3", house: "A", floor: "EG", rooms: 2, areaSqm: 62.59, outdoor: "Garten 28,10 m²", status: "verfuegbar" },
-  { id: "WE 4", house: "B", floor: "EG", rooms: 2.5, areaSqm: 64.39, outdoor: "Garten 38,20 m²", status: "verkauft" },
+  { id: "WE 4", house: "B", floor: "EG", rooms: 2.5, areaSqm: 64.39, outdoor: "Garten 38,20 m²", status: "verfuegbar" },
   { id: "WE 5", house: "B", floor: "EG", rooms: 2.5, areaSqm: 64.39, outdoor: "Garten 37,75 m²", status: "verfuegbar" },
   { id: "WE 6", house: "C", floor: "EG", rooms: 2.5, areaSqm: 77.67, outdoor: "Garten 142,10 m²", accessible: true, status: "verfuegbar" },
   { id: "WE 7", house: "C", floor: "EG", rooms: 2.5, areaSqm: 56.81, outdoor: "Garten 70,35 m²", status: "verkauft" },
@@ -184,7 +178,7 @@ export const units: Unit[] = [
   { id: "WE 18", house: "A", floor: "DG", rooms: 3, areaSqm: 73.65, outdoor: "Balkon", status: "verkauft" },
   { id: "WE 19", house: "B", floor: "DG", rooms: 2, areaSqm: 52.13, outdoor: "Balkon", status: "verkauft" },
   { id: "WE 20", house: "B", floor: "DG", rooms: 2, areaSqm: 52.16, outdoor: "Balkon", status: "verkauft" },
-  { id: "WE 21", house: "C", floor: "DG", rooms: 3.5, areaSqm: 89.35, outdoor: "Balkon", status: "verkauft" },
+  { id: "WE 21", house: "C", floor: "DG", rooms: 3.5, areaSqm: 89.35, outdoor: "Balkon", status: "verfuegbar" },
   { id: "WE 22", house: "C", floor: "DG", rooms: 3, areaSqm: 76.04, outdoor: "Balkon", status: "verkauft" },
 ];
 
@@ -193,6 +187,13 @@ export const accessibleUnits = units.filter((u) => u.accessible);
 
 /** Aktuell verfügbare Wohnungen – Grundlage für Tabelle und Zähler. */
 export const availableUnits = units.filter((u) => u.status === "verfuegbar");
+
+/** Verkaufsstand wird aus dem Wohnungsspiegel abgeleitet, nicht doppelt gepflegt. */
+export const unitsAvailable = availableUnits.length;
+
+export const soldPercent = Math.round(
+  ((rotkamp.units.total - unitsAvailable) / rotkamp.units.total) * 100,
+);
 
 /**
  * Zusammensetzung der noch freien Wohnungen. Wird für die Verkaufstexte
