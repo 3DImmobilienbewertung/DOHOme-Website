@@ -41,31 +41,25 @@ import {
 import {
   walsroder,
   walsroderStory,
-  walsroderAvgArea,
 } from "@/lib/content/walsroder";
 import {
   walsroder9,
   walsroder9Story,
-  walsroder9AvgArea,
 } from "@/lib/content/walsroder9";
 import {
   holunderweg,
-  holunderwegAvgArea,
 } from "@/lib/content/holunderweg";
 import {
   halzroder32,
   halzroder32Story,
-  halzroder32AvgArea,
 } from "@/lib/content/halzroder32";
 import {
   beekeufer,
   beekeuferStory,
-  beekeuferAvgArea,
 } from "@/lib/content/beekeufer";
 import {
   holunderweg4,
   holunderweg4Story,
-  holunderweg4AvgArea,
 } from "@/lib/content/holunderweg4";
 import {
   rotkampCalcDefaults,
@@ -96,10 +90,12 @@ export type PortfolioProject = {
   teaser: string;
   units: { total: number; sold: number; available: number };
   /** Gesamtwohnfläche des Projekts in m² – Grundlage der Unternehmenskennzahlen. */
-  totalAreaSqm: number;
+  totalAreaSqm: number | null;
   /** Wohnfläche je Einheit in m². */
   area: { min: number; max: number } | null;
   rooms: { min: number; max: number } | null;
+  /** Geplanter Projektstart bzw. Veröffentlichungszeitpunkt. */
+  targetYear?: number;
   image: { src: string; alt: string };
   /** Bildstrecke für den Slider auf der Projektseite. */
   gallery?: GalleryImage[];
@@ -184,7 +180,10 @@ export const portfolio: PortfolioProject[] = [
     totalAreaSqm: r.totalArea,
     area: { min: r.area.min, max: r.area.max },
     rooms: { min: r.rooms.min, max: r.rooms.max },
-    image: { src: rotkampCover.src, alt: rotkampCover.alt },
+    image: {
+      src: "/images/rotkamp-1/luftbild-projekt.jpg",
+      alt: `Luftbild ${rotkamp.name}, ${rotkamp.postalCode} ${rotkamp.city} – drei Wohngebäude mit Photovoltaik, Garagen und Stellplätzen`,
+    },
     gallery: rotkampGallery,
     video: {
       src: "/video/rotkamp-1.mp4",
@@ -242,6 +241,51 @@ export const portfolio: PortfolioProject[] = [
       mapsEmbedUrl: rotkamp.mapsEmbedUrl,
     },
     landingPage: "/rotkamp-1",
+  },
+  {
+    slug: "poststrasse-14",
+    name: "Poststraße 14",
+    phase: "zukuenftig",
+    isFlagship: false,
+    city: "Wedemark",
+    postalCode: "30900",
+    district: "Elze",
+    targetYear: 2027,
+    teaser:
+      "15 barrierefreie Miet- und Eigentumswohnungen mit begrünten Holzcarports – derzeit in Planung.",
+    units: { total: 15, sold: 0, available: 0 },
+    totalAreaSqm: null,
+    area: null,
+    rooms: null,
+    image: {
+      src: "/images/poststrasse-14/lageplan.png",
+      alt: "Lageplan Poststraße 14 in 30900 Wedemark-Elze mit Mehrfamilienhaus und Carports",
+    },
+    story: {
+      title: "Nächstes Projekt: Poststraße 14",
+      paragraphs: [
+        "Geplant ist ein Mehrfamilienhaus mit 15 barrierefreien Miet- und Eigentumswohnungen. Rotkamp 1 bleibt bis zum Vermarktungsstart das aktuelle Leuchtturmprojekt.",
+      ],
+    },
+    facts: [
+      { k: "Status", v: "Coming soon · geplant für 2027" },
+      { k: "Wohneinheiten", v: "15 barrierefreie Wohnungen" },
+      { k: "Geschosse", v: "2 Vollgeschosse + Dachgeschoss" },
+      { k: "Stellplätze", v: "12 extensiv begrünte Holzcarports" },
+      { k: "Rollstuhlgerecht", v: "2 Carport-Stellplätze" },
+      { k: "Nebenanlage", v: "Haustechnik- und Fahrradhaus" },
+      { k: "Grundstück", v: "1.228 m²" },
+      { k: "Wohnfläche", v: "Angabe folgt nach Planungsabschluss" },
+    ],
+    location: {
+      copy: ["Poststraße 14 im Ortsteil Elze, 30900 Wedemark."],
+      neighbourhood: [],
+      address: "Poststraße 14, 30900 Wedemark",
+      mapsUrl:
+        "https://www.google.com/maps/search/?api=1&query=Poststra%C3%9Fe%2014%2C%2030900%20Wedemark",
+      mapsEmbedUrl:
+        "https://www.google.com/maps?q=Poststra%C3%9Fe+14,+30900+Wedemark&output=embed",
+    },
   },
   {
     slug: "bissendorfer-strasse-11",
@@ -329,10 +373,6 @@ export const portfolio: PortfolioProject[] = [
     facts: [
       { k: "Wohneinheiten", v: `${walsroder.units.total} Wohnungen` },
       { k: "Gesamtwohnfläche", v: `${dec(w.totalArea)} m²` },
-      {
-        k: "Wohnfläche je Wohnung",
-        v: `im Mittel rund ${dec(walsroderAvgArea)} m²`,
-      },
       { k: "Fassade", v: walsroder.architecture.facade },
       { k: "Dach", v: walsroder.architecture.roof },
       { k: "Besonderheit", v: walsroder.architecture.detail },
@@ -383,10 +423,6 @@ export const portfolio: PortfolioProject[] = [
     facts: [
       { k: "Wohneinheiten", v: `${walsroder9.units.total} Wohnungen` },
       { k: "Gesamtwohnfläche", v: `${dec(w9.totalArea)} m²` },
-      {
-        k: "Wohnfläche je Wohnung",
-        v: `im Mittel rund ${dec(walsroder9AvgArea)} m²`,
-      },
       { k: "Fassade", v: walsroder9.architecture.facade },
       { k: "Dach", v: walsroder9.architecture.roof },
       { k: "Freiflächen", v: walsroder9.architecture.balconies },
@@ -423,10 +459,6 @@ export const portfolio: PortfolioProject[] = [
     facts: [
       { k: "Wohneinheiten", v: `${holunderweg.units.total} Wohnungen in zwei Hauseingängen` },
       { k: "Gesamtwohnfläche", v: `${dec2(h.totalArea)} m²` },
-      {
-        k: "Wohnfläche je Wohnung",
-        v: `im Mittel rund ${dec(holunderwegAvgArea)} m²`,
-      },
       { k: "Keller", v: "voll unterkellert" },
       { k: "Fassade", v: holunderweg.architecture.facade },
       { k: "Dach", v: holunderweg.architecture.roof },
@@ -464,7 +496,6 @@ export const portfolio: PortfolioProject[] = [
     facts: [
       { k: "Wohneinheiten", v: `${halzroder32.units.total} Wohnungen` },
       { k: "Gesamtwohnfläche", v: `${dec(h32.totalArea)} m²` },
-      { k: "Wohnfläche je Wohnung", v: `im Mittel rund ${dec(halzroder32AvgArea)} m²` },
       { k: "Geschosse", v: `${h32.fullStoreys} Vollgeschosse` },
       { k: "Keller", v: "voll unterkellert" },
       { k: "Fassade", v: halzroder32.architecture.facade },
@@ -502,7 +533,6 @@ export const portfolio: PortfolioProject[] = [
     facts: [
       { k: "Wohneinheiten", v: `${beekeufer.units.total} Wohnungen` },
       { k: "Gesamtwohnfläche", v: `${dec(bk.totalArea)} m²` },
-      { k: "Wohnfläche je Wohnung", v: `im Mittel rund ${dec(beekeuferAvgArea)} m²` },
       { k: "Dach", v: beekeufer.architecture.roof },
       { k: "Keller", v: "voll unterkellert" },
       { k: "Fassade", v: beekeufer.architecture.facade },
@@ -540,7 +570,6 @@ export const portfolio: PortfolioProject[] = [
     facts: [
       { k: "Wohneinheiten", v: `${holunderweg4.units.total} Wohnungen` },
       { k: "Gesamtwohnfläche", v: `${dec(h4.totalArea)} m²` },
-      { k: "Wohnfläche je Wohnung", v: `im Mittel rund ${dec(holunderweg4AvgArea)} m²` },
       { k: "Keller", v: "voll unterkellert" },
       { k: "Fassade", v: holunderweg4.architecture.facade },
       { k: "Dach", v: holunderweg4.architecture.roof },
@@ -586,7 +615,7 @@ export function toSummary(p: PortfolioProject): ProjectSummary {
     available_for_rent: 0,
     area_sqm_min: p.area?.min ?? null,
     area_sqm_max: p.area?.max ?? null,
-    total_area_sqm: p.totalAreaSqm,
+    total_area_sqm: p.totalAreaSqm ?? undefined,
     units_total: p.units.total,
     rooms_min: p.rooms?.min ?? null,
     rooms_max: p.rooms?.max ?? null,
@@ -617,8 +646,12 @@ export function portfolioSummaries(): ProjectSummary[] {
  * Startseite und Über-uns automatisch. Handgepflegte Zahlen laufen
  * erfahrungsgemäß irgendwann auseinander.
  */
+const deliveredAndCurrent = portfolio.filter((p) => p.phase !== "zukuenftig");
+
 export const portfolioTotals = {
-  projects: portfolio.length,
-  units: portfolio.reduce((s, p) => s + p.units.total, 0),
-  livingSpace: Math.round(portfolio.reduce((s, p) => s + p.totalAreaSqm, 0)),
+  projects: deliveredAndCurrent.length,
+  units: deliveredAndCurrent.reduce((s, p) => s + p.units.total, 0),
+  livingSpace: Math.round(
+    deliveredAndCurrent.reduce((s, p) => s + (p.totalAreaSqm ?? 0), 0),
+  ),
 };

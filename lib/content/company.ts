@@ -13,9 +13,7 @@ export type TeamProfile = {
   qualifications: string[];
 };
 
-// Die Qualifikationen stammen aus den Angaben des Unternehmens. Bei Vito
-// Donnarumma bleibt die Zertifizierungsstelle bewusst ungenannt, bis deren
-// exakte offizielle Bezeichnung bestätigt ist.
+// Die Qualifikationen stammen aus den bestätigten Angaben des Unternehmens.
 export const teamProfiles: TeamProfile[] = [
   {
     name: "Tasso Donnarumma",
@@ -37,7 +35,7 @@ export const teamProfiles: TeamProfile[] = [
     qualifications: [
       "Bachelor of Science Architektur",
       "Energieberater",
-      "Zertifizierter Immobilienbewerter",
+      "Immobilienbewerter – TA Bildungszentrum mit IHK-Prüfung",
     ],
   },
 ];
@@ -51,8 +49,8 @@ export type CompanyStat = {
 };
 
 export const companyStats: CompanyStat[] = [
-  { key: "projects", value: portfolioTotals.projects, label: "realisierte Projekte" },
-  { key: "units", value: portfolioTotals.units, label: "Wohneinheiten" },
+  { key: "projects", value: portfolioTotals.projects, label: "Projekte realisiert & aktuell" },
+  { key: "units", value: portfolioTotals.units, label: "Wohneinheiten realisiert & aktuell" },
   {
     key: "livingSpace",
     value: portfolioTotals.livingSpace,

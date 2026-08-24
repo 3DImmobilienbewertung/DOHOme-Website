@@ -11,8 +11,10 @@ import { useEffect, useRef, useState } from "react";
 //   • Geladen wird erst nach dem Mount, damit das Video nicht mit dem
 //     LCP-Bild um Bandbreite konkurriert.
 //   • Zwei kurze, hochwertig codierte Fassungen: QHD ab Tabletbreite und 720p
-//     fürs Handy. Die QHD-Fassung wird aus dem 1080p-Master mit Lanczos und
-//     dezenter Schärfung erzeugt; die hohe Datenrate erhält feine Strukturen.
+//     fürs Handy. Beide entstehen direkt aus den 35-Mbit-Drohnenoriginalen,
+//     nicht aus einem bereits komprimierten Zwischenexport.
+//   • Konstante 30 Bilder pro Sekunde und kurze Szenenwechsel verhindern das
+//     Ruckeln des früheren Clips mit variabler Bildrate.
 //   • `prefers-reduced-motion` und der Datensparmodus unterdrücken das Video
 //     ganz. Wer Bewegung abbestellt hat, bekommt das ruhige Standbild.
 //   • Stumm, in Schleife, `playsInline` – sonst blockt iOS die Wiedergabe
@@ -36,8 +38,8 @@ export function HeroVideo() {
     if (conn?.saveData) return;
 
     el.src = window.matchMedia(USE_QHD).matches
-      ? "/video/hero-1440.mp4?v=3"
-      : "/video/hero-720.mp4?v=3";
+      ? "/video/hero-1440.mp4?v=4"
+      : "/video/hero-720.mp4?v=4";
     el.load();
 
     const start = () => {

@@ -76,7 +76,6 @@ const FIELDS: { group: string; items: FieldDef[] }[] = [
       { key: "grenzsteuersatz", label: "Persönlicher Grenzsteuersatz", kind: "pct", step: 1, placeholder: "z. B. 42" },
       { key: "soliSatz", label: "Solidaritätszuschlag", kind: "pct", step: 0.5, hint: "auf die Steuerwirkung" },
       { key: "kostensteigerung", label: "Kostensteigerung p. a.", kind: "pct", step: 0.5 },
-      { key: "wertsteigerung", label: "Wertsteigerung p. a.", kind: "pct", step: 0.5, hint: "bewusst vorsichtig: 0 %" },
     ],
   },
 ];
@@ -201,7 +200,7 @@ export function Beispielrechnung({
               hint={`Restschuld ${eur.format(result.restschuldEnde)}`}
             />
             <Tile
-              label="Vermögenszuwachs"
+              label="Vermögenszuwachs ohne Wertänderung"
               value={eur.format(result.vermoegenszuwachs)}
               hint="Tilgung + Cashflow über 10 Jahre"
               emphasis
@@ -226,6 +225,28 @@ export function Beispielrechnung({
               Betriebskosten trägt der Mieter.
             </p>
           )}
+
+          <div className="mt-6 grid gap-5 rounded-2xl border border-accent-500/30 bg-accent-500/[0.08] p-6 md:grid-cols-[1fr_auto] md:items-center md:p-8">
+            <div>
+              <p className="eyebrow text-accent-400">Eventualposition · nicht eingerechnet</p>
+              <h4 className="mt-2 font-display text-2xl">
+                Historische GAG-Referenz: 1,88 % Wertentwicklung p. a.
+              </h4>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-beige-100/65">
+                Bei rein rechnerischer Fortschreibung über {input.jahre} Jahre
+                ergäbe sich zusätzlich {eur.format(result.eventualWertzuwachs)}.
+                Der reguläre Vermögenszuwachs oben enthält diesen Betrag nicht.
+              </p>
+            </div>
+            <dl className="min-w-[12rem] border-l border-beige-100/15 pl-6">
+              <dt className="text-xs uppercase tracking-wider text-beige-100/50">
+                Gesamt inkl. Szenario
+              </dt>
+              <dd className="nums mt-2 text-3xl text-accent-500">
+                {eur.format(result.eventualGesamt)}
+              </dd>
+            </dl>
+          </div>
         </>
       ) : (
         <div className="mt-8 rounded-2xl border border-dashed border-beige-100/25 bg-green-950/30 p-8 text-center">

@@ -60,8 +60,6 @@ export type CalcInput = {
   soliSatz: number;
   /** Steigerung der laufenden Kosten p. a. als Dezimalwert. */
   kostensteigerung: number;
-  /** Wertsteigerung der Immobilie p. a. – in der Grundrechnung 0. */
-  wertsteigerung: number;
   jahre: number;
 };
 
@@ -95,9 +93,11 @@ export type CalcResult = {
   summeCashflow: number;
   summeTilgung: number;
   restschuldEnde: number;
-  /** Vermögenszuwachs = kumulierter Cashflow + Tilgung (+ Wertzuwachs, falls > 0). */
-  wertzuwachs: number;
+  /** Vermögenszuwachs der Grundrechnung = Cashflow + Tilgung, ohne Marktwertänderung. */
   vermoegenszuwachs: number;
+  /** Separates Szenario mit 1,88 % p. a.; nicht in der Grundrechnung enthalten. */
+  eventualWertzuwachs: number;
+  eventualGesamt: number;
   /** Rechnerische Ø-Rendite p. a. auf das eingesetzte Eigenkapital (illustrativ). */
   eigenkapitalRenditePa: number;
 };
@@ -181,11 +181,13 @@ export function computeProjection(input: CalcInput): CalcResult {
   }
 
   const restschuldEnde = Math.max(0, restschuld);
-  const wertzuwachs =
-    input.wertsteigerung > 0
-      ? input.kaufpreis * (Math.pow(1 + input.wertsteigerung, input.jahre) - 1)
-      : 0;
-  const vermoegenszuwachs = summeCashflow + summeTilgung + wertzuwachs;
+  const vermoegenszuwachs = summeCashflow + summeTilgung;
+  // Historische Eventualposition aus der vorgelegten WE-3-Kalkulation:
+  // 1,88 % p. a. als fortgeschriebenes Szenario, bewusst nicht Bestandteil
+  // der Grundrechnung und ausdrücklich keine Prognose oder Garantie.
+  const eventualWertzuwachs =
+    input.kaufpreis * (Math.pow(1 + 0.0188, input.jahre) - 1);
+  const eventualGesamt = vermoegenszuwachs + eventualWertzuwachs;
   const eigenkapitalRenditePa =
     eigenkapitalGesamt > 0
       ? vermoegenszuwachs / eigenkapitalGesamt / input.jahre
@@ -202,8 +204,9 @@ export function computeProjection(input: CalcInput): CalcResult {
     summeCashflow: round2(summeCashflow),
     summeTilgung: round2(summeTilgung),
     restschuldEnde: round2(restschuldEnde),
-    wertzuwachs: round2(wertzuwachs),
     vermoegenszuwachs: round2(vermoegenszuwachs),
+    eventualWertzuwachs: round2(eventualWertzuwachs),
+    eventualGesamt: round2(eventualGesamt),
     eigenkapitalRenditePa,
   };
 }
@@ -231,7 +234,6 @@ export const rotkampCalcDefaults: CalcInput = {
   grenzsteuersatz: 0.42,
   soliSatz: 0.055,
   kostensteigerung: 0.02,
-  wertsteigerung: 0,
   jahre: 10,
 };
 

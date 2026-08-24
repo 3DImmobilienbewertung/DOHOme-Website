@@ -100,7 +100,7 @@ export async function generateMetadata({
       : "Referenzprojekt von DOHOme",
     project?.area
       ? `Wohnflächen ${formatSqmRange(summary.area_sqm_min, summary.area_sqm_max)}`
-      : project
+      : project?.totalAreaSqm != null
         ? `Gesamtwohnfläche ${formatTotalSqm(project.totalAreaSqm)}`
         : null,
     project?.rooms
@@ -145,10 +145,20 @@ export default async function ProjektDetailPage({ params }: PageProps) {
   const hasRent = summary.available_for_rent > 0;
   const isAvailable = summary.available_total > 0;
   const isReference = summary.phase === "abgeschlossen";
+  const isFuture = summary.phase === "zukuenftig";
 
   const project = findProject(summary.slug);
   const heroImage = projectImage(summary.slug, 2400, 1400);
   const heroAlt = project?.image.alt ?? summary.name;
+  const projectHighlight = project?.facts?.find(
+    ({ k }) =>
+      ![
+        "Wohneinheiten",
+        "Gesamtwohnfläche",
+        "Wohnfläche",
+        "Wohnfläche je Wohnung",
+      ].includes(k),
+  );
 
   return (
     <main className="bg-green-900 text-beige-100">
@@ -232,7 +242,7 @@ export default async function ProjektDetailPage({ params }: PageProps) {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="text-xs uppercase tracking-eyebrow text-sage-300">
-              {isReference ? "Fertiggestellt" : "Aktueller Stand"}
+              {isReference ? "Fertiggestellt" : isFuture ? "Ausblick" : "Aktueller Stand"}
             </p>
             {/* „Ausverkauft“ passt nur zu einem laufenden Vertrieb. Eine
                 abgeschlossene Referenz ist vollständig vermarktet – das ist
@@ -242,7 +252,9 @@ export default async function ProjektDetailPage({ params }: PageProps) {
                 ? `${summary.available_total} Wohnungen verfügbar`
                 : isReference
                   ? "Vollständig vermarktet"
-                  : "Aktuell ausverkauft"}
+                  : isFuture
+                    ? `Coming soon${project?.targetYear ? ` · ${project.targetYear}` : ""}`
+                    : "Aktuell ausverkauft"}
             </h2>
           </div>
           {summary.earliest_available_from && isAvailable && (
@@ -270,7 +282,9 @@ export default async function ProjektDetailPage({ params }: PageProps) {
                   ? "zum Kauf"
                   : hasRent
                     ? "zur Miete"
-                    : "gebaut und übergeben"
+                    : isFuture
+                      ? "in Planung"
+                      : "gebaut und übergeben"
             }
           />
           <StatTile
@@ -278,17 +292,17 @@ export default async function ProjektDetailPage({ params }: PageProps) {
             value={
               project?.area
                 ? formatSqmRange(summary.area_sqm_min, summary.area_sqm_max)
-                : formatTotalSqm(project?.totalAreaSqm)
+                : project?.totalAreaSqm != null
+                  ? formatTotalSqm(project.totalAreaSqm)
+                  : "Angabe folgt"
             }
           />
           <StatTile
-            label={project?.rooms ? "Zimmer" : "Ø je Wohnung"}
+            label={project?.rooms ? "Zimmer" : (projectHighlight?.k ?? "Projektart")}
             value={
               project?.rooms
                 ? range(summary.rooms_min, summary.rooms_max, formatRooms)
-                : project
-                  ? formatSqm(project.totalAreaSqm / project.units.total)
-                  : "Angabe folgt"
+                : (projectHighlight?.v ?? "Wohnungsbau")
             }
           />
           {/* Preiskachel nur, wenn Preise gepflegt sind – sonst stünde hier ein
@@ -314,6 +328,12 @@ export default async function ProjektDetailPage({ params }: PageProps) {
               label="Kaufpreis"
               value="Auf Anfrage"
               hint="im persönlichen Gespräch"
+            />
+          ) : isFuture ? (
+            <StatTile
+              label="Status"
+              value="In Planung"
+              hint={project?.targetYear ? `geplant für ${project.targetYear}` : "Vormerkung möglich"}
             />
           ) : (
             <StatTile label="Status" value="Abgeschlossen" hint="Referenzobjekt" />
@@ -392,16 +412,20 @@ export default async function ProjektDetailPage({ params }: PageProps) {
         <div className="mx-auto max-w-container px-6 py-20 md:py-28">
           <div className="rounded-3xl bg-beige-100 px-8 py-14 text-ink md:px-16 md:py-20">
             <p className="text-xs uppercase tracking-eyebrow text-green-500">
-              {isAvailable ? "Verfügbare Wohnungen" : "Bleiben Sie informiert"}
+              {isAvailable ? "Verfügbare Wohnungen" : isFuture ? "Frühzeitig vormerken" : "Bleiben Sie informiert"}
             </p>
             <h2 className="mt-3 max-w-2xl font-display text-3xl leading-tight md:text-5xl">
               {isAvailable
                 ? "Ihre Wohnung im Projekt " + summary.name
+                : isFuture
+                  ? `Projektstart ${summary.name} nicht verpassen`
                 : "Vormerken für das nächste DOHOme-Projekt"}
             </h2>
             <p className="mt-4 max-w-xl text-ink/70">
               {isAvailable
                 ? "Vereinbaren Sie ein unverbindliches Beratungsgespräch – wir zeigen Ihnen die verfügbaren Einheiten und Finanzierungsoptionen."
+                : isFuture
+                  ? "Lassen Sie sich vormerken. Wir informieren Sie, sobald Wohnungsgrößen, Grundrisse und der Vermarktungsstart feststehen."
                 : "Dieses Projekt ist vollständig vermarktet. Lassen Sie sich für kommende Bauvorhaben in der Region Hannover vormerken."}
             </p>
 

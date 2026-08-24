@@ -438,8 +438,8 @@ function FlagshipSpotlight({ p }: { p: ProjectSummary }) {
                 : formatTotalSqm(p.total_area_sqm)}
             </dd>
           </div>
-          {/* Ohne gepflegte Preise zeigt die dritte Kachel die Zimmerzahl –
-              eine echte Information statt einer leeren Preisangabe. */}
+          {/* Ohne gepflegte Preise zeigt die dritte Kachel Zimmer oder die
+              Projektgröße – belastbare Daten statt errechneter Mittelwerte. */}
           {p.price_per_sqm_from != null ? (
             <div>
               <dt className="text-xs uppercase tracking-wider text-beige-100/55">
@@ -450,14 +450,12 @@ function FlagshipSpotlight({ p }: { p: ProjectSummary }) {
           ) : (
             <div>
               <dt className="text-xs uppercase tracking-wider text-beige-100/55">
-                {p.rooms_min != null ? "Zimmer" : "Ø je Wohnung"}
+                {p.rooms_min != null ? "Zimmer" : "Wohneinheiten"}
               </dt>
               <dd className="mt-1 font-display text-2xl">
                 {p.rooms_min != null
                   ? range(p.rooms_min, p.rooms_max, formatRooms)
-                  : p.total_area_sqm != null && p.units_total != null
-                    ? formatSqm(p.total_area_sqm / p.units_total)
-                    : "siehe Projekt"}
+                  : (p.units_total ?? "siehe Projekt")}
               </dd>
             </div>
           )}

@@ -7,7 +7,8 @@
 
 /** Echte Motive, Schlüssel = Slug bzw. Seed. ERGÄNZEN je neuem Projekt. */
 const PROJECT_IMAGE: Record<string, string> = {
-  "rotkamp-1": "/images/rotkamp-1/visualisierung-aussen.jpg",
+  "rotkamp-1": "/images/rotkamp-1/luftbild-projekt.jpg",
+  "poststrasse-14": "/images/poststrasse-14/lageplan.png",
   "bissendorfer-strasse-11":
     "/images/bissendorfer-strasse-11/strassenansicht-sonne.jpg",
   "walsroder-strasse-7":

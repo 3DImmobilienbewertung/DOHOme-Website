@@ -5,24 +5,24 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/animation/Reveal";
 
 export const metadata: Metadata = {
-  title: "WE 3: Steuern sparen und Vermögen aufbauen",
+  title: "Mit Neubauwohnungen Steuern sparen und Vermögen aufbauen",
   description:
-    "WE 3 in Rotkamp 1: 5 % degressive AfA, 7.546 € kalkulierte Steuererstattung und 5.516 € Vermögenszuwachs im ersten Jahr.",
+    "DOHOme-Neubauwohnungen für langfristigen Vermögensaufbau: Mieteinnahmen, 5 % degressive AfA und laufende Tilgung – belegt an einer echten Referenzrechnung.",
   alternates: { canonical: "/steuern-sparen" },
 };
 
 const advantages = [
   {
-    title: "15.540 € AfA",
-    text: "5 % degressive Gebäude-AfA auf den kalkulierten Gebäudeanteil von 310.796 € im ersten vollen Vermietungsjahr.",
+    title: "Miete arbeitet mit",
+    text: "10.995 € kalkulierte Jahresmiete tragen einen wesentlichen Teil der Finanzierung.",
   },
   {
-    title: "10.995 € Jahresmiete",
-    text: "Kalkulierte Wohnungsmiete und Stellplatzmiete für die seniorengerechte Erdgeschosswohnung mit Terrasse und Garten.",
+    title: "Steuerlast sinkt",
+    text: "15.540 € degressive AfA erzeugen im Referenzjahr 7.546 € Steuererstattung.",
   },
   {
-    title: "4.309 € Tilgung",
-    text: "Der im ersten Jahr kalkulierte Schuldenabbau erhöht Ihr Eigentum – zusätzlich zum positiven Netto-Cashflow.",
+    title: "Restschuld fällt",
+    text: "4.309 € Tilgung erhöhen im Referenzjahr Ihren schuldenfreien Anteil.",
   },
 ];
 
@@ -60,25 +60,25 @@ export default function SteuernSparenPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-green-950 via-green-950/80 to-green-950/15" />
         <div className="relative mx-auto w-full max-w-container px-6 pb-16 pt-36 md:pb-24">
           <Reveal>
-            <p className="eyebrow text-accent-400">WE 3 · Rotkamp 1 · 6 Wohnungen verfügbar</p>
+            <p className="eyebrow text-accent-400">Neubauwohnungen direkt vom Bauträger</p>
             <h1 className="mt-4 max-w-4xl text-display-xl">
-              Miete und Steuererstattung finanzieren Ihr Wohneigentum mit.
+              Aus Steuerentlastung wird Eigentum.
             </h1>
             <p className="mt-6 max-w-2xl text-lead text-beige-100/80">
-              WE 3 zeigt es konkret: 54.262 € Eigenkapitaleinsatz, 7.546 €
-              kalkulierte Steuererstattung und 5.516 € Vermögenszuwachs im ersten
-              vollen Vermietungsjahr – ohne Wertsteigerung gerechnet.
+              5 % AfA, laufende Miete und Tilgung wirken zusammen. Unsere echte
+              Referenz zeigt 7.546 € Steuererstattung und 5.516 €
+              Vermögenszuwachs im ersten Jahr – ohne Wertsteigerung.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button href="/steuern-sparen/erstgespraech">WE-3-Kalkulation anfordern</Button>
-              <Button href="/projekte/rotkamp-1" variant="secondary">Wohnung 3 ansehen</Button>
+              <Button href="/steuern-sparen/erstgespraech">Meine Zahlen berechnen</Button>
+              <Button href="/projekte/rotkamp-1" variant="secondary">Wohnungen ansehen</Button>
             </div>
           </Reveal>
           <dl className="mt-10 grid max-w-3xl grid-cols-3 gap-px overflow-hidden rounded-2xl bg-beige-100/15 backdrop-blur-sm">
             {[
-              ["7.546 €", "Steuererstattung · Jahr 1"],
-              ["+ 5.516 €", "Vermögenszuwachs · Jahr 1"],
-              ["16 / 22", "Wohnungen bereits verkauft"],
+              ["5 %", "degressive Gebäude-AfA"],
+              ["+ 1.207 €", "Netto-Cashflow · Jahr 1"],
+              ["+ 4.309 €", "Tilgung · Jahr 1"],
             ].map(([value, label]) => (
               <div key={label} className="bg-green-950/75 p-4 md:p-5">
                 <dd className="nums text-2xl text-accent-500 md:text-4xl">{value}</dd>
@@ -92,7 +92,7 @@ export default function SteuernSparenPage() {
       <section className="border-t border-beige-100/10">
         <div className="mx-auto max-w-container px-6 py-16 md:py-24">
           <Reveal>
-            <p className="eyebrow text-sage-300">Die drei finanziellen Hebel</p>
+            <p className="eyebrow text-sage-300">Drei Hebel. Eine Wohnung.</p>
             <h2 className="mt-3 max-w-3xl text-display-lg">
               Miete. Steuerwirkung. Tilgung.
             </h2>
@@ -107,7 +107,7 @@ export default function SteuernSparenPage() {
           </div>
           <div className="mt-8">
             <Button href="/steuern-sparen/neubauwohnung" variant="secondary">
-              So wurde WE 3 berechnet
+              Referenzrechnung nachvollziehen
             </Button>
           </div>
         </div>
@@ -127,10 +127,7 @@ export default function SteuernSparenPage() {
           <div>
             <p className="eyebrow text-sage-300">Direkt vom Bauträger</p>
             <h2 className="mt-3 text-display-lg">Gebaut von uns. Verkauft von uns.</h2>
-            <p className="mt-5 text-beige-100/70">
-              Keine fremden Produkte, keine anonyme Vertriebskette. Sie sprechen
-              direkt mit dem Unternehmen, das Planung, Bau und Übergabe verantwortet.
-            </p>
+            <p className="mt-5 text-beige-100/70">Planung, Bau, Verkauf und Übergabe aus einer Hand.</p>
             <ul className="mt-7 space-y-3 text-sm text-beige-100/75">
               <li>138 Wohnungen im hinterlegten Projektportfolio</li>
               <li>Mehr als 11.200 m² realisierte und aktuelle Wohnfläche</li>
@@ -142,12 +139,11 @@ export default function SteuernSparenPage() {
 
       <section className="border-t border-beige-100/10 bg-beige-100 text-ink">
         <div className="mx-auto max-w-container px-6 py-14 md:py-20">
-          <p className="eyebrow text-green-700">Wohnung 3 · Rotkamp 1</p>
-          <h2 className="mt-3 max-w-3xl text-display-lg">Die konkrete Kalkulation für WE 3.</h2>
+          <p className="eyebrow text-green-700">Echte DOHOme-Referenz · Wohnung 3</p>
+          <h2 className="mt-3 max-w-3xl text-display-lg">Keine Theorie. Durchgerechnet.</h2>
           <p className="mt-4 max-w-2xl text-sm text-ink/65">
-            2 Zimmer, 62,59 m², Erdgeschoss, Terrasse, 28,10 m² Garten und
-            Außenstellplatz. Berechnet für das erste volle Vermietungsjahr ohne
-            angenommene Wertsteigerung.
+            62,59 m², Erdgeschoss, Garten und Stellplatz. Erstes volles
+            Vermietungsjahr, ohne Wertsteigerung.
           </p>
           <dl className="mt-9 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-green-900/15 md:grid-cols-3">
             {example.map(([value, label]) => (
@@ -158,7 +154,7 @@ export default function SteuernSparenPage() {
             ))}
           </dl>
           <div className="mt-8">
-            <Button href="/steuern-sparen/erstgespraech">Diese Kalkulation für mich prüfen</Button>
+            <Button href="/rechner">10 Jahre selbst berechnen</Button>
           </div>
         </div>
       </section>
@@ -169,15 +165,11 @@ export default function SteuernSparenPage() {
             <div>
               <p className="eyebrow text-accent-400">Vermögensaufbau mit 10 % Eigenkapital</p>
               <h2 className="mt-3 text-display-lg">
-                Ihr Einkommen trägt die Finanzierung. Miete, Tilgung und Steuerwirkung bauen mit auf.
+                10 % Eigenkapital. Drei Vermögenshebel.
               </h2>
               <p className="mt-5 text-sm leading-relaxed text-beige-100/70">
-                Im Beispiel werden 10 % des Kaufpreises selbst eingebracht und
-                90 % finanziert. Zusätzlich fallen die Kaufnebenkosten an. Die
-                Miete unterstützt den Kapitaldienst, die Tilgung reduziert die
-                Restschuld und die 5-%-AfA senkt in dieser Kalkulation die
-                Steuerlast. So entsteht Vermögen nicht nur aus dem eigenen
-                monatlichen Beitrag.
+                Die Referenz kombiniert Mieteinnahmen, Steuerwirkung und
+                Schuldabbau – bei 90 % Kaufpreisfinanzierung.
               </p>
             </div>
             <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-beige-100/15 md:grid-cols-3">
@@ -203,16 +195,27 @@ export default function SteuernSparenPage() {
             </div>
           </div>
 
+          <div className="mt-8 grid gap-px overflow-hidden rounded-2xl bg-beige-100/15 md:grid-cols-3">
+            {[
+              ["51.723 €", "10 Jahre · ohne Wertänderung"],
+              ["+ 65.348 €", "optional · 1,88 % p. a."],
+              ["117.071 €", "inklusive GAG-Szenario"],
+            ].map(([value, label]) => (
+              <div key={label} className="bg-green-900 p-6">
+                <p className="nums text-3xl text-accent-500">{value}</p>
+                <p className="mt-2 text-xs text-beige-100/60">{label}</p>
+              </div>
+            ))}
+          </div>
+
           <div className="mt-10 grid gap-6 rounded-2xl border border-accent-500/35 bg-accent-500/10 p-6 md:grid-cols-[1fr_auto] md:items-center md:p-8">
             <div>
               <p className="font-display text-2xl md:text-3xl">
                 Sie verdienen gut – nutzen Sie Ihr Einkommen bereits gezielt für den Vermögensaufbau?
               </p>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-beige-100/70">
-                Besonders relevant für Menschen mit stabilem, überdurchschnittlichem
-                Einkommen, ausreichender Liquiditätsreserve und einem langfristigen
-                Anlagehorizont. Wir zeigen Ihnen in 20 Minuten, welche der sechs
-                Wohnungen rechnerisch zu Ihrem Budget passen kann.
+                In 20 Minuten sehen Sie, welche verfügbare Wohnung rechnerisch
+                zu Einkommen, Eigenkapital und Finanzierung passt.
               </p>
             </div>
             <Button href="/steuern-sparen/erstgespraech" className="shrink-0">
@@ -221,12 +224,9 @@ export default function SteuernSparenPage() {
           </div>
 
           <p className="mt-5 text-xs leading-relaxed text-beige-100/45">
-            Daten aus der Wirtschaftlichkeits- und Steuerkalkulation für WE 3:
-            90 % Kaufpreisfinanzierung, 7 % Kaufnebenkosten, 4,20 % Sollzins,
-            1,50 % Anfangstilgung, 42 % Grenzsteuersatz zuzüglich Soli, 35 €
-            Verwaltung und 45 € Rücklage monatlich. Die Tilgung ist
-            Vermögensbildung durch Schuldabbau, jedoch kein frei verfügbarer
-            Ertrag. Persönliche Steuer- und Finanzierungssituation separat prüfen.
+            Referenz: 90 % Kaufpreisfinanzierung, 4,20 % Zins, 1,50 % Tilgung,
+            42 % Grenzsteuersatz plus Soli. Die 1,88 % sind ein separates
+            historisches GAG-Szenario und nicht Teil der Grundrechnung.
           </p>
         </div>
       </section>
@@ -234,14 +234,10 @@ export default function SteuernSparenPage() {
       <section className="border-t border-beige-100/10">
         <div className="mx-auto max-w-container px-6 py-16 md:py-24">
           <div className="max-w-3xl">
-              <p className="eyebrow text-accent-400">16 von 22 Wohnungen verkauft</p>
-              <h2 className="mt-3 max-w-2xl text-display-lg">Welche der sechs Wohnungen passt zu Ihrem Einkommen?</h2>
-              <p className="mt-5 max-w-xl text-beige-100/70">
-                In 20 Minuten erhalten Sie eine klare Vorauswahl mit Kaufpreis,
-                Eigenkapitalbedarf, Miete, Finanzierung und Steuerwirkung.
-              </p>
+              <p className="eyebrow text-accent-400">Aktuell 6 Wohnungen verfügbar</p>
+              <h2 className="mt-3 max-w-2xl text-display-lg">Welche DOHOme-Wohnung passt zu Ihrem Einkommen?</h2>
               <div className="mt-8 flex flex-wrap gap-4">
-                <Button href="/steuern-sparen/erstgespraech">Meine Wohnung berechnen lassen</Button>
+                <Button href="/steuern-sparen/erstgespraech">Jetzt berechnen lassen</Button>
                 <Link href="/projekte/rotkamp-1" className="self-center text-sm underline underline-offset-4">
                   Rotkamp 1 ansehen
                 </Link>

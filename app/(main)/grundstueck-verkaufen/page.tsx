@@ -7,7 +7,7 @@ import { Reveal } from "@/components/animation/Reveal";
 export const metadata: Metadata = {
   title: "Grundstück verkaufen",
   description:
-    "Grundstück verkaufen in der Region Hannover – diskret, ohne Makler, mit fairer Bewertung. DOHOme kauft und entwickelt selbst. Kostenlose Ersteinschätzung.",
+    "Grundstück verkaufen in der Wedemark und Umgebung – direkt an DOHOme, fair bewertet, diskret und ohne Maklerkette.",
   alternates: { canonical: "/grundstueck-verkaufen" },
 };
 
@@ -40,7 +40,7 @@ const REASONS: [string, string][] = [
   ],
   [
     "Faire Bewertung",
-    "Marktgerechte, nachvollziehbare Einschätzung mit geprüfter Sachkunde – ohne Lockzahlen.",
+    "Ein guter, nachvollziehbarer Preis mit geprüfter Sachkunde – ohne Lockzahlen und spätere Nachverhandlungen.",
   ],
   [
     "Absolut diskret",
@@ -56,12 +56,12 @@ export default function GrundstueckVerkaufenPage() {
         <Reveal>
           <p className="eyebrow text-sage-300">Für Grundstückseigentümer</p>
           <h1 className="mt-3 max-w-3xl text-display-xl">
-            Ihr Grundstück verdient die richtige Handschrift
+            Ein guter Preis. Eine verlässliche Entscheidung.
           </h1>
           <p className="mt-5 max-w-2xl text-lead text-beige-100/75">
-            Verkaufen oder gemeinsam entwickeln – wir machen aus Ihrem Grundstück
-            in der Region Hannover Lebensräume, die ein Leben lang halten. Diskret,
-            ohne Maklerkette.
+            Wir kaufen und entwickeln selbst. Deshalb bewerten wir Ihr Grundstück
+            nachvollziehbar, erklären unser Angebot offen und halten, was wir
+            zusagen – diskret und ohne Maklerkette.
           </p>
           <div className="mt-8">
             <Button href="#formular" variant="primary">

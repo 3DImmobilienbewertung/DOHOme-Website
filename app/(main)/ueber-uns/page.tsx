@@ -139,15 +139,17 @@ export default function UeberUnsPage() {
             <div>
               <p className="eyebrow text-sage-300">Nachweisbare Kompetenz</p>
               <h2 className="mt-2 max-w-md text-display-lg">
-                Bewertung mit Sachverstand
+                Fair bewerten. Verlässlich handeln.
               </h2>
               <p className="mt-4 max-w-md text-beige-100/75">
-                Gerade bei Grundstücken zählt eine marktgerechte, nachvollziehbare
-                Einschätzung – ohne Lockzahlen.
+                Unser Grundsatz ist einfach: Grundstückseigentümer sollen einen
+                guten, nachvollziehbaren Preis erhalten. Denn gute Projekte
+                beginnen mit Vertrauen – und funktionieren langfristig nur als
+                Geben und Nehmen.
               </p>
-              <div className="mt-2">
-                <Todo>Exakte Bezeichnung der IHK-Bewertungsqualifikation</Todo>
-              </div>
+              <p className="mt-5 inline-flex rounded-full border border-beige-100/20 px-4 py-2 text-sm text-beige-100/80">
+                Immobilienbewertung · TA Bildungszentrum · IHK-Prüfung
+              </p>
             </div>
             <dl className="grid grid-cols-3 gap-6 self-start">
               {companyStats.map((stat) => (
