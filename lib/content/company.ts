@@ -7,6 +7,41 @@
 
 import { portfolioTotals } from "@/lib/content/projects";
 
+export type TeamProfile = {
+  name: string;
+  initials: string;
+  qualifications: string[];
+};
+
+// Die Qualifikationen stammen aus den Angaben des Unternehmens. Bei Vito
+// Donnarumma bleibt die Zertifizierungsstelle bewusst ungenannt, bis deren
+// exakte offizielle Bezeichnung bestätigt ist.
+export const teamProfiles: TeamProfile[] = [
+  {
+    name: "Tasso Donnarumma",
+    initials: "TD",
+    qualifications: [
+      "Holz- und Bautechniker",
+      "Kaufmann",
+      "Sachverständiger für Bauwerksabdichtung",
+    ],
+  },
+  {
+    name: "Jens Horstmann",
+    initials: "JH",
+    qualifications: ["Architekt a. D.", "Tischler"],
+  },
+  {
+    name: "Vito Donnarumma",
+    initials: "VD",
+    qualifications: [
+      "Bachelor of Science Architektur",
+      "Energieberater",
+      "Zertifizierter Immobilienbewerter",
+    ],
+  },
+];
+
 export type CompanyStat = {
   key: string;
   value: number | null;

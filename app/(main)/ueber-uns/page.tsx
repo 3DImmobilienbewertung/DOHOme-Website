@@ -5,13 +5,14 @@ import {
   companyStats,
   formatStat,
   hasPendingStats,
+  teamProfiles,
 } from "@/lib/content/company";
 import { storyLong } from "@/lib/content/story";
 
 export const metadata: Metadata = {
   title: "Über uns",
   description:
-    "DOHOme – zwei Familien, ein Anspruch: Neubau in der Region Hannover, von Anfang an richtig gebaut. Donnarumma & Horstmann, familiengeführt seit 2012.",
+    "DOHOme – zwei Familien, ein Anspruch: hochwertige Wohnprojekte in der Wedemark und den Nachbarorten, entwickelt und gebaut von Donnarumma & Horstmann.",
   alternates: { canonical: "/ueber-uns" },
 };
 
@@ -94,9 +95,40 @@ export default function UeberUnsPage() {
         <div className="mx-auto max-w-container px-6 py-16 md:py-20">
           <p className="eyebrow text-sage-300">Die Menschen dahinter</p>
           <h2 className="mt-2 text-display-lg">Donnarumma &amp; Horstmann</h2>
-          <div className="mt-4">
-            <Todo>Porträtfotos + Kurzvorstellung der Gründer:innen</Todo>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {teamProfiles.map((person) => (
+              <article
+                key={person.name}
+                className="overflow-hidden rounded-2xl border border-beige-100/15 bg-green-950/35"
+              >
+                <div
+                  className="flex aspect-[4/5] items-center justify-center bg-gradient-to-br from-green-700 to-green-950"
+                  role="img"
+                  aria-label={`Porträtfoto von ${person.name} folgt`}
+                >
+                  <span className="font-display text-6xl text-beige-100/35" aria-hidden="true">
+                    {person.initials}
+                  </span>
+                </div>
+                <div className="p-6">
+                  <h3 className="font-display text-2xl text-beige-100">
+                    {person.name}
+                  </h3>
+                  <ul className="mt-4 space-y-2 text-sm leading-relaxed text-beige-100/70">
+                    {person.qualifications.map((qualification) => (
+                      <li key={qualification} className="flex gap-2">
+                        <span className="mt-[0.7em] h-px w-4 shrink-0 bg-accent-500/70" aria-hidden="true" />
+                        <span>{qualification}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            ))}
           </div>
+          <p className="mt-5 text-xs text-muted-dark">
+            Porträtfotos werden nachgereicht.
+          </p>
         </div>
       </section>
 
