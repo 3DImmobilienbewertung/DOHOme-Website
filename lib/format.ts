@@ -6,7 +6,6 @@ const euro0 = new Intl.NumberFormat("de-DE", {
   maximumFractionDigits: 0,
 });
 
-const int = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 });
 const dec1 = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 1 });
 const dec2 = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 2 });
 

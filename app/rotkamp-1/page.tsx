@@ -22,11 +22,6 @@ import {
   availableSummary,
   soldPercent,
 } from "@/lib/content/rotkamp";
-import {
-  testimonials,
-  testimonialsArePlaceholder,
-} from "@/lib/content/testimonials";
-import { formatSqm } from "@/lib/format";
 import { site } from "@/lib/content/site";
 
 export const metadata: Metadata = {
@@ -333,40 +328,6 @@ export default function RotkampLanding() {
                 />
               </Reveal>
             </div>
-          </div>
-        </section>
-
-        {/* -------------------------------------------------- KÄUFER-STIMMEN */}
-        <section className="bg-beige-100 text-ink">
-          <div className="mx-auto max-w-container px-6 section">
-            <Reveal>
-              <p className="eyebrow text-green-700">Das sagen Käufer</p>
-              <h2 className="mt-2 max-w-2xl text-display-lg text-green-900">
-                Menschen, die schon bei uns gekauft haben
-              </h2>
-            </Reveal>
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {testimonials.map((t, i) => (
-                <Reveal key={t.author} delay={i * 0.06}>
-                  <figure className="flex h-full flex-col rounded-3xl border border-green-900/10 bg-green-900/[0.03] p-8">
-                    <blockquote className="font-display text-lg leading-snug text-green-900">
-                      „{t.quote}&ldquo;
-                    </blockquote>
-                    <figcaption className="mt-4 text-sm text-green-900/70">
-                      {t.author}
-                      {t.context ? ` · ${t.context}` : ""}
-                    </figcaption>
-                  </figure>
-                </Reveal>
-              ))}
-            </div>
-            {testimonialsArePlaceholder && (
-              <div className="mt-6">
-                <PlaceholderTag>
-                  Beispieltexte – echte Stimmen mit Freigabe ersetzen
-                </PlaceholderTag>
-              </div>
-            )}
           </div>
         </section>
 

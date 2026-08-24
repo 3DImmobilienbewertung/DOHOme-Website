@@ -18,8 +18,8 @@ export const site = {
   // widersprüchlicher Wert). Sobald bestätigt: Zahl eintragen – alle Texte
   // blenden die Jahresangabe dann automatisch wieder ein.
   founded: null as number | null,
-  // Domain noch nicht final – aus Env, Platzhalter-Default bis zur Registrierung.
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.dohome.de",
+  // Produktionsdomain. Per Env überschreibbar, z. B. für eine Vorschau.
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://dohome-bau.de",
 
   address: {
     street: "Im Rotbusch 17",

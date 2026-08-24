@@ -1,9 +1,9 @@
 // Einzige Quelle der Bildpfade.
 //
-// Projekte mit echtem Bildmaterial werden in PROJECT_IMAGE gepflegt; nur für
-// Motive, die noch fehlen, greift ein externer Platzhalter. Ziel ist, dass vor
-// dem Livegang kein Platzhalter mehr ausgeliefert wird – `missingImages()`
-// listet auf, was dafür noch fehlt.
+// Projekte mit echtem Bildmaterial werden in PROJECT_IMAGE gepflegt. Für einen
+// unbekannten Schlüssel wird bewusst ein lokales Markenmotiv verwendet: So
+// lädt die Website weder fremde Tracking-/Platzhalterdienste noch bricht ein
+// neuer Entwurf ohne Bild.
 
 /** Echte Motive, Schlüssel = Slug bzw. Seed. ERGÄNZEN je neuem Projekt. */
 const PROJECT_IMAGE: Record<string, string> = {
@@ -30,9 +30,9 @@ export function hasRealImage(seed: string): boolean {
 export function projectImage(seed: string, width: number, height: number): string {
   const real = PROJECT_IMAGE[seed];
   if (real) return real;
-  // Platzhalter, bis Bildmaterial vorliegt – bewusst als externe Quelle
-  // erkennbar, damit er beim Launch-Check auffällt.
-  return `https://picsum.photos/seed/${seed}/${width}/${height}`;
+  void width;
+  void height;
+  return PROJECT_IMAGE[HERO_SEED];
 }
 
 /** Flagship/Marketing-Motiv für Rotkamp 1. */

@@ -7,7 +7,6 @@ import Image from "next/image";
 import type { ProjectSummary } from "@/lib/supabase/public";
 import {
   formatEuro,
-  formatSqm,
   formatSqmRange,
   formatTotalSqm,
   formatRooms,

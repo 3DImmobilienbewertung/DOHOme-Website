@@ -6,7 +6,9 @@ import { OrganizationJsonLd } from "@/components/seo/OrganizationJsonLd";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.dohome.de"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://dohome-bau.de",
+  ),
   title: {
     default: "DOHOme – Bauträger Region Hannover | wir schaffen Lebensräume",
     template: "%s · DOHOme",

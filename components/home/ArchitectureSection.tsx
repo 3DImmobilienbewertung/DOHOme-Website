@@ -39,16 +39,16 @@ export function ArchitectureSection() {
           </p>
         </Reveal>
 
-        <dl className="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2">
-          {PRINCIPLES.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.06}>
-              <div className="border-t border-green-900/15 pt-5">
+        <Reveal className="mt-12">
+          <dl className="grid gap-x-12 gap-y-10 sm:grid-cols-2">
+            {PRINCIPLES.map((p) => (
+              <div key={p.title} className="border-t border-green-900/15 pt-5">
                 <dt className="text-heading text-green-900">{p.title}</dt>
                 <dd className="mt-2 text-green-900/70">{p.text}</dd>
               </div>
-            </Reveal>
-          ))}
-        </dl>
+            ))}
+          </dl>
+        </Reveal>
       </div>
     </section>
   );

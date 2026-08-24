@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { ReactLenis, useLenis } from "lenis/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -18,15 +18,15 @@ function LenisScrollTriggerSync() {
 // Smooth-Scrolling komplett ausgelassen (der globale CSS-Kill-Switch greift nur
 // für CSS-Animationen). Reagiert auch auf Umschalten zur Laufzeit.
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
-  const [reduce, setReduce] = useState(false);
-
-  useEffect(() => {
+  const reduce = useSyncExternalStore(
+    (onStoreChange) => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduce(mq.matches);
-    const onChange = (e: MediaQueryListEvent) => setReduce(e.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
+      mq.addEventListener("change", onStoreChange);
+      return () => mq.removeEventListener("change", onStoreChange);
+    },
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    () => false,
+  );
 
   if (reduce) return <>{children}</>;
 

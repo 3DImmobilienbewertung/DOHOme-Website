@@ -294,7 +294,9 @@ export default async function ProjektDetailPage({ params }: PageProps) {
                 ? formatSqmRange(summary.area_sqm_min, summary.area_sqm_max)
                 : project?.totalAreaSqm != null
                   ? formatTotalSqm(project.totalAreaSqm)
-                  : "Angabe folgt"
+                  : isFuture
+                    ? "In Planung"
+                    : "Nicht veröffentlicht"
             }
           />
           <StatTile

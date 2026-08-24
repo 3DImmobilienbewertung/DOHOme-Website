@@ -45,10 +45,14 @@ type ButtonAsButton = SharedProps & {
 
 /** Rendert einen Next-Link, wenn `href` gesetzt ist, sonst ein <button>. */
 export function Button(props: ButtonAsLink | ButtonAsButton) {
-  const { variant = "primary", className, children } = props;
-
   if (props.href !== undefined) {
-    const { href, variant: _v, className: _c, children: _ch, ...rest } = props;
+    const {
+      href,
+      variant = "primary",
+      className,
+      children,
+      ...rest
+    } = props;
     return (
       <Link href={href} className={classes(variant, className)} {...rest}>
         {children}
@@ -56,7 +60,12 @@ export function Button(props: ButtonAsLink | ButtonAsButton) {
     );
   }
 
-  const { variant: _v, className: _c, children: _ch, ...rest } = props;
+  const {
+    variant = "primary",
+    className,
+    children,
+    ...rest
+  } = props;
   return (
     <button className={classes(variant, className)} {...rest}>
       {children}

@@ -22,7 +22,6 @@ import {
   halzroder32Gallery,
   holunderweg4Gallery,
   beekeuferGallery,
-  rotkampCover,
 } from "@/lib/content/gallery";
 import {
   rotkamp,
@@ -296,7 +295,7 @@ export const portfolio: PortfolioProject[] = [
       { k: "Rollstuhlgerecht", v: "2 Carport-Stellplätze" },
       { k: "Nebenanlage", v: "Haustechnik- und Fahrradhaus" },
       { k: "Grundstück", v: "1.228 m²" },
-      { k: "Wohnfläche", v: "Angabe folgt nach Planungsabschluss" },
+      { k: "Wohnfläche", v: "Wird in der laufenden Planung ermittelt" },
     ],
     location: {
       copy: ["Poststraße 14 im Ortsteil Elze, 30900 Wedemark."],
