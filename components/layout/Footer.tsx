@@ -11,6 +11,7 @@ const NAV_GROUPS: { title: string; links: { href: string; label: string }[] }[] 
       title: "Wohnen",
       links: [
         { href: "/projekte", label: "Projekte" },
+        { href: "/wohnung-mieten", label: "Mietwohnung gesucht" },
         { href: "/kontakt", label: "Beratung anfragen" },
       ],
     },

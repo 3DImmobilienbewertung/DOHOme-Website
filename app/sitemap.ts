@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     "",
     "/projekte",
+    "/wohnung-mieten",
     "/grundstueck-verkaufen",
     "/ueber-uns",
     "/kontakt",

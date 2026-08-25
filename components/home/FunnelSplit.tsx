@@ -10,7 +10,7 @@ const PATHS = [
     title: "Sie suchen ein Zuhause",
     text: "Eigentumswohnungen aus eigener Entwicklung: durchdachte Grundrisse, hochwertige Ausführung, ruhige Lagen in der Region Hannover.",
     primary: { href: "/projekte", label: "Projekte ansehen" },
-    secondary: { href: "/kontakt", label: "Beratung" },
+    secondary: { href: "/wohnung-mieten", label: "Wohnung mieten" },
   },
   {
     eyebrow: "Für Grundstückseigentümer",
