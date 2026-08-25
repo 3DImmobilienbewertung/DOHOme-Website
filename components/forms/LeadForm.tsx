@@ -82,29 +82,17 @@ export function LeadForm({
       <div className="grid gap-5 sm:grid-cols-2">
         <Field name="name" label="Name *" autoComplete="name" required error={fieldErrors.name} />
         <Field
-          name="email"
-          label="E-Mail *"
-          type="email"
-          autoComplete="email"
+          name="contact"
+          label="Telefon oder E-Mail *"
+          placeholder="0174 … oder name@beispiel.de"
           required
-          error={fieldErrors.email}
+          error={fieldErrors.contact}
         />
-        <Field name="phone" label="Telefon" type="tel" autoComplete="tel" error={fieldErrors.phone} />
-        {withPlotFields ? (
-          <Field
-            name="plot_size"
-            label="Grundstücksgröße (ca. m²)"
-            inputMode="numeric"
-            error={fieldErrors.plot_size}
-          />
-        ) : (
-          <Field name="topic" label="Betreff" error={fieldErrors.topic} />
-        )}
         {withPlotFields && (
           <div className="sm:col-span-2">
             <Field
               name="plot_address"
-              label="Adresse / Lage des Grundstücks"
+              label="Ort oder Lage (optional)"
               autoComplete="street-address"
               error={fieldErrors.plot_address}
             />
@@ -114,18 +102,18 @@ export function LeadForm({
 
       <div className="mt-5">
         <label htmlFor="message" className="block text-sm text-beige-100/80">
-          {withPlotFields ? "Weitere Angaben" : "Ihre Nachricht *"}
+          {withPlotFields ? "Kurz zum Grundstück (optional)" : "Worum geht es? (optional)"}
         </label>
         <textarea
           id="message"
           name="message"
-          rows={5}
+          rows={3}
           aria-invalid={fieldErrors.message ? true : undefined}
           aria-describedby={fieldErrors.message ? "message-error" : undefined}
           placeholder={
             withPlotFields
-              ? "Bebauung, Zeithorizont, Besonderheiten …"
-              : "Wie können wir Ihnen helfen?"
+              ? "z. B. Größe oder gewünschter Verkaufszeitpunkt"
+              : "Ein kurzer Satz genügt."
           }
           className="mt-2 w-full rounded-xl border border-beige-100/45 bg-green-900/40 px-4 py-3 text-beige-100 transition-colors placeholder:text-beige-100/60 focus:border-beige-100/70"
         />
@@ -144,9 +132,8 @@ export function LeadForm({
 
       <div className="mt-6 flex flex-wrap items-center gap-4">
         <SubmitButton label={submitLabel} />
-        <p className="max-w-xs text-sm text-beige-100/70">
-          Mit dem Absenden stimmen Sie der Verarbeitung Ihrer Angaben zur
-          Bearbeitung Ihrer Anfrage zu. Details in unserer{" "}
+        <p className="max-w-xs text-xs text-beige-100/60">
+          Vertraulich verarbeitet gemäß unserer{" "}
           <Link
             href="/datenschutz"
             className="underline underline-offset-2 hover:text-beige-100"
@@ -167,6 +154,7 @@ type FieldProps = {
   required?: boolean;
   autoComplete?: string;
   inputMode?: "numeric" | "tel" | "email" | "text";
+  placeholder?: string;
   error?: string;
 };
 
@@ -177,6 +165,7 @@ function Field({
   required = false,
   autoComplete,
   inputMode,
+  placeholder,
   error,
 }: FieldProps) {
   return (
@@ -191,6 +180,7 @@ function Field({
         required={required}
         autoComplete={autoComplete}
         inputMode={inputMode}
+        placeholder={placeholder}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${name}-error` : undefined}
         className="mt-2 w-full rounded-xl border border-beige-100/45 bg-green-900/40 px-4 py-3 text-beige-100 transition-colors placeholder:text-beige-100/60 focus:border-beige-100/70"

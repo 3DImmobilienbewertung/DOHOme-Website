@@ -8,13 +8,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const FIELDS = [
   "name",
-  "email",
-  "phone",
+  "contact",
   "rooms",
-  "household_size",
-  "move_in",
-  "max_rent",
-  "message",
 ] as const;
 
 export type RentalField = (typeof FIELDS)[number];
@@ -27,18 +22,12 @@ export type RentalState = {
 
 const rentalSchema = z.object({
   name: z.string().trim().min(2, "Bitte geben Sie Ihren Namen an.").max(100),
-  email: z
+  contact: z
     .string()
     .trim()
-    .min(1, "Bitte geben Sie Ihre E-Mail-Adresse an.")
-    .max(150)
-    .regex(EMAIL_RE, "Bitte geben Sie eine gültige E-Mail-Adresse an."),
-  phone: z.string().trim().max(50).optional(),
-  rooms: z.string().trim().min(1, "Bitte wählen Sie Ihre Wunschgröße.").max(30),
-  household_size: z.string().trim().max(30).optional(),
-  move_in: z.string().trim().max(80).optional(),
-  max_rent: z.string().trim().max(50).optional(),
-  message: z.string().trim().max(3000, "Die Nachricht ist zu lang.").optional(),
+    .min(5, "Bitte geben Sie eine Telefonnummer oder E-Mail-Adresse an.")
+    .max(150, "Die Angabe ist zu lang."),
+  rooms: z.string().trim().max(30).optional(),
 });
 
 export async function submitRentalInterest(
@@ -79,19 +68,15 @@ export async function submitRentalInterest(
   }
 
   const interest = parsed.data;
+  const replyTo = EMAIL_RE.test(interest.contact) ? interest.contact : undefined;
   const delivery = await sendNotification({
     subject: `Mietwohnung gesucht – ${interest.name}`,
     fields: [
       ["Name", interest.name],
-      ["E-Mail", interest.email],
-      ["Telefon", interest.phone],
+      ["Kontakt", interest.contact],
       ["Wunschgröße", interest.rooms],
-      ["Personen im Haushalt", interest.household_size],
-      ["Gewünschter Einzug", interest.move_in],
-      ["Maximale Kaltmiete", interest.max_rent],
-      ["Weitere Wünsche", interest.message],
     ],
-    replyTo: interest.email,
+    replyTo,
   });
 
   if (!delivery.ok) {
@@ -102,8 +87,7 @@ export async function submitRentalInterest(
   }
 
   console.info("[rental-interest] zugestellt", {
-    hasPhone: Boolean(interest.phone),
-    hasMoveIn: Boolean(interest.move_in),
+    contactType: replyTo ? "email" : "phone-or-other",
   });
 
   return { ok: true };

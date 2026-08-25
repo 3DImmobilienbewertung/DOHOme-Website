@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { LeadForm } from "@/components/forms/LeadForm";
+import { CallbackForm } from "@/components/forms/CallbackForm";
 import { site } from "@/lib/content/site";
 
 export const metadata: Metadata = {
@@ -41,11 +41,10 @@ export default function ErstgespraechPage() {
           <div className="rounded-2xl border border-beige-100/15 bg-green-950/35 p-6 md:p-9">
             <h2 className="font-display text-3xl">Gespräch anfragen</h2>
             <p className="mt-3 text-sm text-beige-100/65">
-              Nennen Sie uns kurz Ihr Anliegen. Wir melden uns werktags in der Regel innerhalb von 24 Stunden.
+              Name und Telefonnummer genügen. Wir melden uns werktags in der Regel innerhalb von 24 Stunden.
             </p>
-            <LeadForm
-              subject="Erstgespräch Neubauwohnung & Vermietung"
-              submitLabel="Erstgespräch anfragen"
+            <CallbackForm
+              source="erstgespraech-neubauwohnung"
               className="mt-8"
             />
           </div>

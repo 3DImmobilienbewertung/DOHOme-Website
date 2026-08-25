@@ -71,7 +71,7 @@ export default function KontaktPage() {
           <div className="rounded-3xl border border-beige-100/15 bg-beige-100/[0.03] p-8 md:p-10">
             <h2 className="text-display-lg">Nachricht senden</h2>
             <p className="mt-2 text-beige-100/75">
-              Pflichtfelder sind mit&nbsp;* markiert – wir antworten persönlich.
+              Name und eine Kontaktmöglichkeit genügen – wir antworten persönlich.
             </p>
             <LeadForm
               subject="Allgemeine Anfrage"

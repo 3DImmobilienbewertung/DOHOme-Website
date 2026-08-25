@@ -18,6 +18,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const FIELDS = [
   "name",
+  "contact",
   "email",
   "message",
   "phone",
@@ -39,12 +40,12 @@ const leadSchema = z.object({
     .trim()
     .min(2, "Bitte geben Sie Ihren Namen an.")
     .max(100, "Der Name ist zu lang."),
-  email: z
+  contact: z
     .string()
     .trim()
-    .min(1, "Bitte geben Sie eine E-Mail-Adresse an.")
-    .max(150, "Die E-Mail-Adresse ist zu lang.")
-    .regex(EMAIL_RE, "Bitte geben Sie eine gültige E-Mail-Adresse an."),
+    .min(5, "Bitte geben Sie eine Telefonnummer oder E-Mail-Adresse an.")
+    .max(150, "Die Angabe ist zu lang."),
+  email: z.string().trim().max(150).optional(),
   message: z.string().trim().max(5000, "Die Nachricht ist zu lang.").optional(),
   phone: z.string().trim().max(50, "Die Telefonnummer ist zu lang.").optional(),
   topic: z.string().trim().max(120).optional(),
@@ -90,36 +91,25 @@ export async function submitLead(
 
   const lead = parsed.data;
   const message = (lead.message ?? "").trim();
+  const contact = lead.contact.trim();
+  const replyTo = EMAIL_RE.test(contact) ? contact : undefined;
   const hasPlot = Boolean(
     (lead.plot_size ?? "").length || (lead.plot_address ?? "").length,
   );
-  const hasPhone = Boolean((lead.phone ?? "").length);
-
-  // Nachricht ist Pflicht – außer es liegen Grundstücksangaben ODER eine
-  // Telefonnummer (Rückruf) vor.
-  if (!hasPlot && !hasPhone && message.length < 5) {
-    return {
-      ok: false,
-      error: "Bitte prüfen Sie die markierten Felder.",
-      fieldErrors: { message: "Bitte hinterlassen Sie eine kurze Nachricht." },
-    };
-  }
-
   const subject = lead.subject ?? "Anfrage über die Website";
 
   const delivery = await sendNotification({
     subject: `${subject} – ${lead.name}`,
     fields: [
       ["Name", lead.name],
-      ["E-Mail", lead.email],
-      ["Telefon", lead.phone],
+      ["Kontakt", contact],
       ["Thema", lead.topic],
       ["Grundstücksgröße", lead.plot_size],
       ["Grundstücksadresse", lead.plot_address],
       ["Nachricht", message],
     ],
     // „Antworten“ im Postfach geht direkt an den Interessenten.
-    replyTo: lead.email,
+    replyTo,
   });
 
   if (!delivery.ok) {
@@ -135,7 +125,7 @@ export async function submitLead(
   console.info("[lead] zugestellt", {
     subject,
     messageLength: message.length,
-    hasPhone: Boolean((lead.phone ?? "").length),
+    contactType: replyTo ? "email" : "phone-or-other",
     hasPlot,
   });
 

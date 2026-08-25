@@ -121,9 +121,8 @@ export default function WohnungMietenPage() {
             <p className="eyebrow text-sage-300">Unverbindliches Suchprofil</p>
             <h2 className="mt-3 text-display-lg">Welche Wohnung suchen Sie?</h2>
             <p className="mt-5 text-beige-100/70">
-              Je genauer Ihre Angaben sind, desto gezielter können wir eine
-              passende Mietwohnung zuordnen. Das Suchprofil ist kostenlos und
-              verpflichtet zu nichts.
+              Name und eine Kontaktmöglichkeit genügen. Die Wunschgröße können
+              Sie optional angeben – alles Weitere klären wir persönlich.
             </p>
             <p className="mt-7 text-sm text-beige-100/55">
               Aktuell nichts Passendes dabei? Ihr Profil bleibt für künftige

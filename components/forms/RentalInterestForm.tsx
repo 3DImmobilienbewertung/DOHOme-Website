@@ -36,9 +36,7 @@ export function RentalInterestForm() {
       >
         <p className="font-display text-3xl">Suchprofil ist eingegangen.</p>
         <p className="mt-3 text-beige-100/75">
-          Sobald eine passende Wohnung verfügbar ist, können wir Sie gezielt
-          kontaktieren. Rückfragen beantworten wir werktags in der Regel
-          innerhalb von 24 Stunden.
+          Danke – wir melden uns persönlich, sobald wir Ihr Profil geprüft haben.
         </p>
       </div>
     );
@@ -66,26 +64,18 @@ export function RentalInterestForm() {
           error={errors.name}
         />
         <RentalFieldInput
-          name="email"
-          label="E-Mail *"
-          type="email"
-          autoComplete="email"
+          name="contact"
+          label="Telefon oder E-Mail *"
+          placeholder="0174 … oder name@beispiel.de"
           required
-          error={errors.email}
-        />
-        <RentalFieldInput
-          name="phone"
-          label="Telefon"
-          type="tel"
-          autoComplete="tel"
-          error={errors.phone}
+          error={errors.contact}
         />
         <RentalSelect
           name="rooms"
-          label="Wunschgröße *"
+          label="Wunschgröße (optional)"
           error={errors.rooms}
           options={[
-            ["", "Bitte auswählen"],
+            ["", "Offen / keine Angabe"],
             ["2 Zimmer", "2 Zimmer"],
             ["2,5 Zimmer", "2,5 Zimmer"],
             ["3 Zimmer", "3 Zimmer"],
@@ -93,43 +83,6 @@ export function RentalInterestForm() {
             ["Flexibel", "Flexibel"],
           ]}
         />
-        <RentalFieldInput
-          name="household_size"
-          label="Personen im Haushalt"
-          inputMode="numeric"
-          error={errors.household_size}
-        />
-        <RentalFieldInput
-          name="move_in"
-          label="Gewünschter Einzug"
-          placeholder="z. B. ab Oktober oder flexibel"
-          error={errors.move_in}
-        />
-        <div className="sm:col-span-2">
-          <RentalFieldInput
-            name="max_rent"
-            label="Maximale Kaltmiete pro Monat"
-            inputMode="numeric"
-            placeholder="z. B. 1.100 €"
-            error={errors.max_rent}
-          />
-        </div>
-      </div>
-
-      <div className="mt-5">
-        <label htmlFor="message" className="block text-sm text-beige-100/80">
-          Weitere Wünsche
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          rows={4}
-          placeholder="Erdgeschoss, Balkon, Stellplatz, Haustier …"
-          aria-invalid={errors.message ? true : undefined}
-          aria-describedby={errors.message ? "message-error" : undefined}
-          className="mt-2 w-full rounded-xl border border-beige-100/45 bg-green-900/40 px-4 py-3 text-beige-100 placeholder:text-beige-100/50 focus:border-beige-100/70"
-        />
-        {errors.message && <FieldError id="message-error" message={errors.message} />}
       </div>
 
       {state.error && (
@@ -141,8 +94,7 @@ export function RentalInterestForm() {
       <div className="mt-7 flex flex-wrap items-center gap-5">
         <RentalSubmitButton />
         <p className="max-w-sm text-xs leading-relaxed text-beige-100/60">
-          Wir verwenden Ihre Angaben ausschließlich zur Bearbeitung Ihres
-          Suchprofils. Details in unserer{" "}
+          Vertraulich verarbeitet gemäß unserer{" "}
           <Link href="/datenschutz" className="underline underline-offset-2">
             Datenschutzerklärung
           </Link>
@@ -215,7 +167,6 @@ function RentalSelect({
       <select
         id={name}
         name={name}
-        required
         defaultValue=""
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${name}-error` : undefined}
@@ -248,7 +199,7 @@ function RentalSubmitButton() {
       disabled={pending}
       className="rounded-full bg-accent-500 px-8 py-4 text-sm font-medium text-green-950 transition-colors hover:bg-accent-400 disabled:cursor-not-allowed disabled:opacity-60"
     >
-      {pending ? "Wird gesendet …" : "Suchprofil senden"}
+      {pending ? "Wird gesendet …" : "Wohnung vormerken"}
     </button>
   );
 }

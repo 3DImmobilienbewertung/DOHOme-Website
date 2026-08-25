@@ -72,17 +72,6 @@ export function CallbackForm({
         />
       </div>
 
-      <div className="mt-4">
-        <label htmlFor="cb-note" className="block text-sm text-beige-100/80">
-          Ihre Frage (optional)
-        </label>
-        <input
-          id="cb-note"
-          name="note"
-          className="mt-2 w-full rounded-xl border border-beige-100/45 bg-green-900/40 px-4 py-3 text-beige-100 transition-colors placeholder:text-beige-100/60 focus:border-beige-100/70"
-        />
-      </div>
-
       {state.error && (
         <p className="mt-3 text-sm text-danger-300" role="alert">
           {state.error}
@@ -92,7 +81,7 @@ export function CallbackForm({
       <div className="mt-5 flex flex-wrap items-center gap-4">
         <SubmitButton />
         <p className="max-w-xs text-xs text-beige-100/70">
-          Mit dem Absenden stimmen Sie der Verarbeitung zu. Details in unserer{" "}
+          Vertraulich verarbeitet gemäß unserer{" "}
           <Link href="/datenschutz" className="underline underline-offset-2 hover:text-beige-100">
             Datenschutzerklärung
           </Link>

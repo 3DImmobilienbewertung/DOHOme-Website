@@ -134,8 +134,8 @@ export default function GrundstueckVerkaufenPage() {
               Erzählen Sie uns von Ihrem Grundstück
             </h2>
             <p className="mt-3 text-beige-100/75">
-              Je mehr wir wissen, desto konkreter die erste Einschätzung.
-              Vertraulich behandelt. Pflichtfelder sind mit&nbsp;* markiert.
+              Name und eine Kontaktmöglichkeit genügen. Alles Weitere klären wir
+              persönlich und vertraulich.
             </p>
             <LeadForm
               subject="Grundstück verkaufen"
