@@ -6,6 +6,7 @@ import { Wordmark } from "@/components/brand/Wordmark";
 
 const NAV = [
   { href: "/projekte", label: "Projekte" },
+  { href: "/wohnung-mieten", label: "Wohnung mieten" },
   { href: "/steuern-sparen", label: "Steuern & Vermietung" },
   { href: "/ueber-uns", label: "Über uns" },
   { href: "/kontakt", label: "Kontakt" },
@@ -74,7 +75,7 @@ export function Header() {
           </Link>
 
           {/* Desktop-Navigation */}
-          <nav aria-label="Hauptnavigation" className="hidden items-center gap-8 md:flex">
+          <nav aria-label="Hauptnavigation" className="hidden items-center gap-6 lg:flex">
             {NAV.map((n) => (
               <Link
                 key={n.href}
@@ -100,7 +101,7 @@ export function Header() {
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Menü schließen" : "Menü öffnen"}
-            className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
+            className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 lg:hidden"
           >
             <span
               className={`block h-px w-6 bg-beige-100 transition-transform duration-300 ${
@@ -118,7 +119,7 @@ export function Header() {
 
       {/* Mobile-Sheet mit Scrim */}
       {open && (
-        <div className="fixed inset-0 top-0 z-overlay md:hidden">
+        <div className="fixed inset-0 top-0 z-overlay lg:hidden">
           <button
             type="button"
             aria-label="Menü schließen"
