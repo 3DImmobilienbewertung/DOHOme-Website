@@ -32,7 +32,7 @@ export default function NeubauwohnungPage() {
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Button href="/steuern-sparen/erstgespraech">Erstgespräch anfragen</Button>
-            <Button href="/rechner" variant="secondary">Selbst kalkulieren</Button>
+            <Button href="/projekte/rotkamp-1" variant="secondary">Wohnungen ansehen</Button>
           </div>
         </div>
         <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">

@@ -16,7 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/grundstueck-verkaufen",
     "/ueber-uns",
     "/kontakt",
-    "/rechner",
     "/steuern-sparen",
     "/steuern-sparen/neubauwohnung",
     "/steuern-sparen/erstgespraech",
