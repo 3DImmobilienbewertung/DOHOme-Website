@@ -1,82 +1,40 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-
 // Hintergrundvideo der Startseite: Drohnenflug über die realisierten Projekte.
 //
 // Grundsätze:
-//   • Das Standbild darunter bleibt sichtbar, bis das Video wirklich läuft.
-//     Es wird erst eingeblendet, wenn `playing` gesetzt ist – kein schwarzer
-//     Kasten, kein Ruckeln beim ersten Frame.
-//   • Geladen wird erst nach dem Mount, damit das Video nicht mit dem
-//     LCP-Bild um Bandbreite konkurriert.
+//   • Natives HTML-Autoplay statt einer nachträglich per JavaScript gesetzten
+//     Quelle. So funktioniert der Film auch dann, wenn React erst später
+//     hydratisiert; das Standbild darunter verhindert trotzdem einen leeren
+//     oder schwarzen ersten Frame.
 //   • Zwei kurze, hochwertig codierte Fassungen: QHD ab Tabletbreite und 720p
 //     fürs Handy. Beide entstehen direkt aus den 35-Mbit-Drohnenoriginalen,
 //     nicht aus einem bereits komprimierten Zwischenexport.
 //   • Konstante 30 Bilder pro Sekunde und kurze Szenenwechsel verhindern das
 //     Ruckeln des früheren Clips mit variabler Bildrate.
-//   • `prefers-reduced-motion` und der Datensparmodus unterdrücken das Video
-//     ganz. Wer Bewegung abbestellt hat, bekommt das ruhige Standbild.
+//   • `prefers-reduced-motion` unterdrückt das Video per CSS. Wer Bewegung
+//     abbestellt hat, bekommt das ruhige Standbild.
 //   • Stumm, in Schleife, `playsInline` – sonst blockt iOS die Wiedergabe
 //     oder erzwingt Vollbild.
 //   • Rein dekorativ: aria-hidden, kein Bedienelement. Der Inhalt der Seite
 //     hängt nicht am Video.
 
-const USE_QHD = "(min-width: 768px)";
-
 export function HeroVideo() {
-  const ref = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    // Datensparmodus respektieren, wo der Browser ihn meldet.
-    const conn = (navigator as { connection?: { saveData?: boolean } }).connection;
-    if (conn?.saveData) return;
-
-    el.src = window.matchMedia(USE_QHD).matches
-      ? "/video/hero-1440.mp4?v=4"
-      : "/video/hero-720.mp4?v=4";
-    el.load();
-
-    const start = () => {
-      el.play().then(() => setPlaying(true)).catch(() => {
-        // Autoplay verweigert – Standbild bleibt stehen. Kein Fehler für den
-        // Besucher, die Bühne sieht trotzdem vollständig aus.
-      });
-    };
-    if (el.readyState >= 3) start();
-    else el.addEventListener("canplay", start, { once: true });
-
-    // Wird die Seite in einem Hintergrund-Tab geöffnet, verschiebt der Browser
-    // die Wiedergabe. Ohne diesen zweiten Versuch bliebe das Video für den
-    // Rest des Besuchs unsichtbar, sobald der Tab in den Vordergrund kommt.
-    const onVisible = () => {
-      if (document.visibilityState === "visible" && el.paused) start();
-    };
-    document.addEventListener("visibilitychange", onVisible);
-
-    return () => {
-      el.removeEventListener("canplay", start);
-      document.removeEventListener("visibilitychange", onVisible);
-    };
-  }, []);
-
   return (
     <video
-      ref={ref}
+      autoPlay
       muted
       loop
       playsInline
-      preload="none"
+      preload="metadata"
       aria-hidden="true"
       tabIndex={-1}
-      className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 ${
-        playing ? "opacity-100" : "opacity-0"
-      }`}
-    />
+      className="hero-video absolute inset-0 h-full w-full object-cover object-center"
+    >
+      <source
+        src="/video/hero-1440.mp4"
+        type="video/mp4"
+        media="(min-width: 768px)"
+      />
+      <source src="/video/hero-720.mp4" type="video/mp4" />
+    </video>
   );
 }
