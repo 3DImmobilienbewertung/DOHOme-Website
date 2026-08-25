@@ -44,6 +44,12 @@ const nextConfig = {
         destination: "/projekte/bissendorfer-strasse-11",
         permanent: true,
       },
+      // Frühere Vorschau-URL mit falsch übermitteltem Straßennamen.
+      {
+        source: "/projekte/halzroder-strasse-32-a-b",
+        destination: "/projekte/walsroder-strasse-32-a-b",
+        permanent: true,
+      },
     ];
   },
 };

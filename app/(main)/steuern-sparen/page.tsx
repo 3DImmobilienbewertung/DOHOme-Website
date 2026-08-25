@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { CompactTaxLanding } from "@/components/investment/CompactTaxLanding";
 
 export const metadata: Metadata = {
-  title: "Mit Neubauwohnungen Steuern sparen und Vermögen aufbauen",
+  title: "Steuern reduzieren und Immobilienvermögen aufbauen",
   description:
-    "Eine kompakte DOHOme-Referenz: 5 % degressive Gebäude-AfA, Tilgung und langfristiger Vermögensaufbau mit einer Neubauwohnung.",
+    "Bis zu 22 % Eigenkapitaleffekt im Referenzjahr: 5 % degressive Gebäude-AfA, Miete und Tilgung mit einer DOHOme-Neubauwohnung verbinden.",
   alternates: { canonical: "/steuern-sparen" },
 };
 

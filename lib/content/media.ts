@@ -16,8 +16,8 @@ const PROJECT_IMAGE: Record<string, string> = {
   "walsroder-strasse-9":
     "/images/walsroder-strasse-9/carports-innenhof.jpg",
   "holunderweg-2": "/images/holunderweg-2/luftbild-balkone.jpg",
-  "halzroder-strasse-32-a-b":
-    "/images/halzroder-strasse-32-a-b/luftbild-zufahrt.jpg",
+  "walsroder-strasse-32-a-b":
+    "/images/walsroder-strasse-32-a-b/luftbild-zufahrt.jpg",
   "am-beekeufer-11": "/images/am-beekeufer-11/luftbild-photovoltaik.jpg",
   "holunderweg-4": "/images/holunderweg-4/luftbild-bahnseite.jpg",
 };

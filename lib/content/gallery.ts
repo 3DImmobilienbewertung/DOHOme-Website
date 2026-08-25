@@ -295,24 +295,24 @@ export const holunderwegGallery: GalleryImage[] = [
   },
 ];
 
-/** Bildmaterial Halzroder Straße 32 a/b (fertiggestellt). */
-export const halzroder32Gallery: GalleryImage[] = [
+/** Bildmaterial Walsroder Straße 32 a/b (fertiggestellt). */
+export const walsroder32Gallery: GalleryImage[] = [
   {
-    src: "/images/halzroder-strasse-32-a-b/luftbild-zufahrt.jpg",
+    src: "/images/walsroder-strasse-32-a-b/luftbild-zufahrt.jpg",
     category: "aussen",
     width: 2000,
     height: 1125,
     caption: "Zufahrt und Stellplätze, zwei Vollgeschosse in Klinker",
   },
   {
-    src: "/images/halzroder-strasse-32-a-b/giebelseite.jpg",
+    src: "/images/walsroder-strasse-32-a-b/giebelseite.jpg",
     category: "aussen",
     width: 2000,
     height: 1125,
     caption: "Giebelseite mit Satteldach",
   },
   {
-    src: "/images/halzroder-strasse-32-a-b/gartenseite.jpg",
+    src: "/images/walsroder-strasse-32-a-b/gartenseite.jpg",
     category: "aussen",
     width: 2000,
     height: 1125,

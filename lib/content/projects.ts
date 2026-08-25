@@ -19,7 +19,7 @@ import {
   walsroderGallery,
   walsroder9Gallery,
   holunderwegGallery,
-  halzroder32Gallery,
+  walsroder32Gallery,
   holunderweg4Gallery,
   beekeuferGallery,
 } from "@/lib/content/gallery";
@@ -49,9 +49,9 @@ import {
   holunderweg,
 } from "@/lib/content/holunderweg";
 import {
-  halzroder32,
-  halzroder32Story,
-} from "@/lib/content/halzroder32";
+  walsroder32,
+  walsroder32Story,
+} from "@/lib/content/walsroder32";
 import {
   beekeufer,
   beekeuferStory,
@@ -156,7 +156,7 @@ const r = rotkamp.facts;
 const b = bissendorf.facts;
 const w = walsroder.facts;
 const w9 = walsroder9.facts;
-const h32 = halzroder32.facts;
+const w32 = walsroder32.facts;
 const bk = beekeufer.facts;
 const h4 = holunderweg4.facts;
 const h = holunderweg.facts;
@@ -496,40 +496,40 @@ export const portfolio: PortfolioProject[] = [
     },
   },
   {
-    slug: "halzroder-strasse-32-a-b",
-    name: halzroder32.name,
+    slug: "walsroder-strasse-32-a-b",
+    name: walsroder32.name,
     phase: "abgeschlossen",
     isFlagship: false,
-    city: halzroder32.city,
-    postalCode: halzroder32.postalCode,
-    teaser: `${halzroder32.units.total} Wohnungen auf ${dec(h32.totalArea)} m² Wohnfläche – zwei Vollgeschosse in Klinker, unterkellert, Gärten im Erdgeschoss.`,
-    units: { total: halzroder32.units.total, sold: halzroder32.units.sold, available: 0 },
-    totalAreaSqm: h32.totalArea,
+    city: walsroder32.city,
+    postalCode: walsroder32.postalCode,
+    teaser: `${walsroder32.units.total} Wohnungen auf ${dec(w32.totalArea)} m² Wohnfläche – zwei Vollgeschosse in Klinker, unterkellert, Gärten im Erdgeschoss.`,
+    units: { total: walsroder32.units.total, sold: walsroder32.units.sold, available: 0 },
+    totalAreaSqm: w32.totalArea,
     area: null,
     rooms: null,
     image: {
-      src: "/images/halzroder-strasse-32-a-b/luftbild-zufahrt.jpg",
-      alt: `${halzroder32.name}, ${halzroder32.postalCode} ${halzroder32.city} – Klinkerfassade mit Satteldach über zwei Vollgeschosse`,
+      src: "/images/walsroder-strasse-32-a-b/luftbild-zufahrt.jpg",
+      alt: `${walsroder32.name}, ${walsroder32.postalCode} ${walsroder32.city} – Klinkerfassade mit Satteldach über zwei Vollgeschosse`,
     },
-    gallery: halzroder32Gallery,
-    story: { title: "Bewusst niedrig gehalten", paragraphs: halzroder32Story },
+    gallery: walsroder32Gallery,
+    story: { title: "Bewusst niedrig gehalten", paragraphs: walsroder32Story },
     facts: [
-      { k: "Wohneinheiten", v: `${halzroder32.units.total} Wohnungen` },
-      { k: "Gesamtwohnfläche", v: `${dec(h32.totalArea)} m²` },
-      { k: "Geschosse", v: `${h32.fullStoreys} Vollgeschosse` },
+      { k: "Wohneinheiten", v: `${walsroder32.units.total} Wohnungen` },
+      { k: "Gesamtwohnfläche", v: `${dec(w32.totalArea)} m²` },
+      { k: "Geschosse", v: `${w32.fullStoreys} Vollgeschosse` },
       { k: "Keller", v: "voll unterkellert" },
-      { k: "Fassade", v: halzroder32.architecture.facade },
-      { k: "Freiflächen", v: halzroder32.architecture.balconies },
-      { k: "Stellplätze", v: halzroder32.architecture.parking },
+      { k: "Fassade", v: walsroder32.architecture.facade },
+      { k: "Freiflächen", v: walsroder32.architecture.balconies },
+      { k: "Stellplätze", v: walsroder32.architecture.parking },
     ],
     location: {
       copy: [
-        `${halzroder32.name} liegt in einer gewachsenen Wohnstraße. Zwei Vollgeschosse statt drei: Das Haus bleibt auf Augenhöhe mit der Nachbarbebauung, statt sie zu überragen.`,
+        `${walsroder32.name} liegt in einer gewachsenen Wohnstraße. Zwei Vollgeschosse statt drei: Das Haus bleibt auf Augenhöhe mit der Nachbarbebauung, statt sie zu überragen.`,
       ],
       neighbourhood: [],
-      address: `${halzroder32.street}, ${halzroder32.postalCode} ${halzroder32.city}`,
-      mapsUrl: halzroder32.mapsUrl,
-      mapsEmbedUrl: halzroder32.mapsEmbedUrl,
+      address: `${walsroder32.street}, ${walsroder32.postalCode} ${walsroder32.city}`,
+      mapsUrl: walsroder32.mapsUrl,
+      mapsEmbedUrl: walsroder32.mapsEmbedUrl,
     },
   },
   {
