@@ -6,7 +6,6 @@ import { ConsentMap } from "@/components/projekte/ConsentMap";
 import { UnitTable } from "@/components/projekte/UnitTable";
 import { ProjectVideo } from "@/components/projekte/ProjectVideo";
 import { NeighbourhoodPanel } from "@/components/projekte/NeighbourhoodPanel";
-import { Beispielrechnung } from "@/components/projekte/Beispielrechnung";
 import type { PortfolioProject } from "@/lib/content/projects";
 
 // Inhaltliche Tiefe der Projektdetailseite – vollständig datengetrieben.
@@ -21,7 +20,7 @@ import type { PortfolioProject } from "@/lib/content/projects";
 // kurz und auf den Anruf ausgerichtet.
 
 export function ProjectSections({ project }: { project: PortfolioProject }) {
-  const { story, facts, gallery, video, unitList, location, taxNote, calc } = project;
+  const { story, facts, gallery, video, unitList, location, taxNote } = project;
   const hasStoryBlock = Boolean(story || (facts && facts.length > 0));
   const isPlannedVisualisation = project.phase === "zukuenftig";
   const hasUnitStatus = Boolean(unitList?.some((u) => u.status));
@@ -175,31 +174,13 @@ export function ProjectSections({ project }: { project: PortfolioProject }) {
                 <p className="mt-5 border-t border-beige-100/10 pt-4 text-sm text-muted-dark">
                   {taxNote.disclaimer}
                 </p>
-              </div>
-            </Reveal>
-          </div>
-        </section>
-      )}
-
-      {/* ---------------------------------------------------- BEISPIELRECHNUNG */}
-      {calc && (
-        <section className="border-t border-beige-100/10 bg-green-950">
-          <div className="mx-auto max-w-container px-6 section-sm">
-            <Reveal>
-              <Beispielrechnung
-                defaults={calc.defaults}
-                projectName={project.name}
-                unitNote={calc.unitNote}
-              />
-              <p className="mt-5 text-sm text-beige-100/70">
-                Sie möchten mit ganz eigenen Zahlen rechnen?{" "}
                 <Link
-                  href="/rechner"
-                  className="underline underline-offset-4 transition-colors hover:text-beige-100"
+                  href="/steuern-sparen/neubauwohnung"
+                  className="mt-7 inline-flex min-h-12 items-center justify-center rounded-full bg-accent-500 px-7 py-3 text-sm font-medium text-green-950 transition-colors hover:bg-accent-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-400"
                 >
-                  Zum leeren Rechner
+                  Vermietung &amp; Abschreibung
                 </Link>
-              </p>
+              </div>
             </Reveal>
           </div>
         </section>

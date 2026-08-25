@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
-import { TaxNotice } from "@/components/investment/TaxNotice";
 
 export const metadata: Metadata = {
   title: "Neubauwohnung als Vermietungsobjekt",
@@ -15,7 +14,7 @@ const checks = [
   ["Vermietbarkeit", "Zielgruppen, ortsübliche Miete, Infrastruktur und realistische Nachfrage ohne Vollvermietungsgarantie bewerten."],
   ["Laufende Kosten", "Nicht umlagefähiges Hausgeld, Verwaltung und Instandhaltungsrücklage von Beginn an berücksichtigen."],
   ["Finanzierung", "Zins, Tilgung, Eigenkapital und Liquiditätsreserve auch bei veränderten Kosten belastbar kalkulieren."],
-  ["Steuer", "Gebäudeanteil, Nutzungsbeginn und Voraussetzungen der degressiven AfA durch Steuerberatung bestätigen lassen."],
+  ["Abschreibung", "Gebäudeanteil, Nutzungsbeginn und degressive AfA in der Gesamtplanung berücksichtigen."],
 ] as const;
 
 export default function NeubauwohnungPage() {
@@ -66,30 +65,17 @@ export default function NeubauwohnungPage() {
 
       <section className="border-t border-beige-100/10">
         <div className="mx-auto max-w-container px-6 py-16 md:py-24">
-          <div className="grid gap-8 md:grid-cols-2">
-            <article className="rounded-2xl border border-beige-100/15 p-7 md:p-9">
+          <div className="max-w-3xl rounded-2xl border border-beige-100/15 p-7 md:p-9">
+            <article>
               <p className="eyebrow text-sage-300">Degressive Gebäude-AfA</p>
               <h2 className="mt-3 font-display text-3xl">5 % vom jeweiligen Restwert</h2>
               <p className="mt-4 text-sm leading-relaxed text-beige-100/70">
-                WE 3 wird nach § 7 Abs. 5a EStG mit einer fallenden Abschreibung
-                von 5 % vom Restwert kalkuliert. Das ist keine
-                pauschale Steuererstattung: Grundstücksanteil, Anschaffungsdatum,
-                Nutzung und persönliche Einkünfte beeinflussen das Ergebnis.
-              </p>
-            </article>
-            <article className="rounded-2xl border border-beige-100/15 p-7 md:p-9">
-              <p className="eyebrow text-sage-300">§ 7b Sonderabschreibung</p>
-              <h2 className="mt-3 font-display text-3xl">Nur bei zusätzlichen Voraussetzungen</h2>
-              <p className="mt-4 text-sm leading-relaxed text-beige-100/70">
-                Die zusätzliche Sonderabschreibung für Mietwohnungsneubau ist an
-                eigene gesetzliche Bedingungen gebunden, unter anderem an
-                Bauantragszeitraum, Kostenobergrenzen und bei neueren Fällen an
-                Effizienzhaus 40 mit Nachhaltigkeits-Klasse. Sie wird deshalb
-                nicht pauschal für jedes DOHOme-Projekt beworben.
+                Für begünstigte vermietete Neubauwohnungen beträgt die
+                degressive Gebäude-AfA 5 % vom jeweiligen Restwert. Dadurch
+                fällt ein größerer Teil der Abschreibung in die ersten Jahre.
               </p>
             </article>
           </div>
-          <div className="mt-8"><TaxNotice /></div>
         </div>
       </section>
     </main>

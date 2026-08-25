@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { LeadForm } from "@/components/forms/LeadForm";
-import { TaxNotice } from "@/components/investment/TaxNotice";
 import { site } from "@/lib/content/site";
 
 export const metadata: Metadata = {
@@ -51,7 +50,6 @@ export default function ErstgespraechPage() {
             />
           </div>
         </div>
-        <div className="mt-10"><TaxNotice /></div>
       </section>
     </main>
   );
