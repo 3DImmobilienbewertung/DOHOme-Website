@@ -71,7 +71,7 @@ export function Header() {
           }`}
         >
           <Link href="/" aria-label="DOHOme – Startseite" className="shrink-0">
-            <Wordmark className="text-[1.35rem]" decorative />
+            <Wordmark className="text-[1.35rem] sm:text-[1.5rem]" tagline decorative />
           </Link>
 
           {/* Desktop-Navigation */}

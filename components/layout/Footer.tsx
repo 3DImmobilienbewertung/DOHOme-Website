@@ -44,7 +44,7 @@ export function Footer() {
               aria-label={`${site.brand} – Startseite`}
               className="inline-flex"
             >
-              <Wordmark className="text-2xl text-beige-100" decorative />
+              <Wordmark className="text-2xl text-beige-100" tagline decorative />
             </Link>
             <p className="mt-5 max-w-xs font-display text-xl leading-snug">
               {site.claim}

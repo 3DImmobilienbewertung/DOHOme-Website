@@ -15,6 +15,13 @@ export const metadata: Metadata = {
   },
   description:
     "Bauträger in der Region Hannover: Wir entwickeln, planen und bauen eigene Wohnprojekte – durchdachte Grundrisse, langlebige Bauweise, ruhige Lagen.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "64x64", type: "image/x-icon" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   openGraph: {
     type: "website",
     locale: "de_DE",
