@@ -1,6 +1,7 @@
 import { Reveal } from "@/components/animation/Reveal";
+import { AnimatedStat } from "@/components/animation/AnimatedStat";
 import { PlaceholderTag } from "@/components/ui/PlaceholderTag";
-import { companyStats, formatStat, hasPendingStats } from "@/lib/content/company";
+import { companyStats, hasPendingStats } from "@/lib/content/company";
 import { site } from "@/lib/content/site";
 
 // Vertrauensband unter dem Hero. Zeigt belegbare Kennzahlen; solange Zahlen
@@ -10,12 +11,16 @@ import { site } from "@/lib/content/site";
 export function TrustBand() {
   const stats = [
     ...companyStats.map((s) => ({
-      value: formatStat(s),
+      value: s.value,
+      unit: s.unit,
+      suffix: undefined,
       label: s.label,
       pending: s.value == null,
     })),
     {
-      value: "30+",
+      value: 30,
+      unit: undefined,
+      suffix: "+",
       label: "Jahre Bauerfahrung & Projektentwicklung",
       pending: false,
     },
@@ -28,7 +33,9 @@ export function TrustBand() {
           <dl className="grid gap-8 border-y border-beige-100/10 py-10 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((s) => (
               <div key={s.label}>
-                <dd className="nums text-display-lg text-accent-500">{s.value}</dd>
+                <dd className="nums text-display-lg text-accent-500">
+                  <AnimatedStat value={s.value} unit={s.unit} suffix={s.suffix} />
+                </dd>
                 <dt className="mt-1 text-sm text-muted-dark">{s.label}</dt>
               </div>
             ))}

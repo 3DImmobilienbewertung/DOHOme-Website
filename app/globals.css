@@ -71,10 +71,10 @@
 }
 
 /* Failsafe: sollte JS laden, aber vor dem Aufdecken abbrechen, blendet sich der
-   Preloader nach 1,7 s per CSS aus (bei funktionierendem JS längst weg). Für
+   Preloader nach 2,8 s per CSS aus (bei funktionierendem JS längst weg). Für
    komplett deaktiviertes JS greift zusätzlich das <noscript> im Layout. */
 .preloader {
-  animation: preloader-failsafe 0.2s ease 1.7s forwards;
+  animation: preloader-failsafe 0.2s ease 2.8s forwards;
 }
 @keyframes preloader-failsafe {
   to {
