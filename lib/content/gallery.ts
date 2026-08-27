@@ -323,11 +323,11 @@ export const walsroder32Gallery: GalleryImage[] = [
 /** Bildmaterial Am Beekeufer 11 (fertiggestellt). */
 export const beekeuferGallery: GalleryImage[] = [
   {
-    src: "/images/am-beekeufer-11/luftbild-photovoltaik.jpg",
+    src: "/images/am-beekeufer-11/luftbild-wohnanlage.jpg",
     category: "aussen",
     width: 2000,
     height: 1125,
-    caption: "Klinkerfassade mit Photovoltaik auf dem Satteldach",
+    caption: "Klinkerfassade und Satteldach aus der Vogelperspektive",
   },
   {
     src: "/images/am-beekeufer-11/gaerten-obenansicht.jpg",

@@ -46,12 +46,8 @@ export const walsroder9 = {
     "https://www.google.com/maps?q=Walsroder+Stra%C3%9Fe+9,+30900+Wedemark&output=embed",
 } as const;
 
-/** Durchschnittliche Wohnfläche je Wohnung, in m². */
-export const walsroder9AvgArea =
-  walsroder9.facts.totalArea / walsroder9.units.total;
-
 export const walsroder9Story: string[] = [
-  `${walsroder9.units.total} Wohnungen auf ${walsroder9.facts.totalArea.toLocaleString("de-DE")} m² Wohnfläche – der größere der beiden Baukörper an der Walsroder Straße, in ${walsroder9.architecture.facade} ausgeführt und mit ${walsroder9.architecture.roof} gedeckt.`,
-  "Gemeinsam mit der Nummer 7 fasst das Gebäude einen ruhigen Innenhof: Carports und Stellplätze liegen dort geschützt, die Wohnungen orientieren sich nach außen ins Grüne. Zu jeder Wohnung gehört ein Balkon, im Erdgeschoss eine Terrasse.",
-  "Das Projekt ist fertiggestellt und bezogen. Es steht hier als Referenz – dieselbe Handschrift, die auch unsere laufenden Vorhaben trägt.",
+  `${walsroder9.units.total} Wohnungen auf ${walsroder9.facts.totalArea.toLocaleString("de-DE")} m² Wohnfläche bilden den größeren Baukörper des Ensembles an der Walsroder Straße. Ausgeführt wurde das Gebäude mit Klinkerfassade und Satteldach.`,
+  "Gemeinsam mit der Nummer 7 fasst es einen geschützten Innenhof mit Carports und Stellplätzen. Balkone sowie Terrassen im Erdgeschoss öffnen die Wohnungen zu den Außenbereichen.",
+  "Das fertiggestellte und bezogene Projekt zeigt, wie mehrere Wohngebäude als zusammenhängendes Ensemble organisiert werden können.",
 ];

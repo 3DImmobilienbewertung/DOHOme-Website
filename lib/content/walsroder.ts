@@ -46,13 +46,9 @@ export const walsroder = {
     "https://www.google.com/maps?q=Walsroder+Stra%C3%9Fe+7,+30900+Wedemark&output=embed",
 } as const;
 
-/** Durchschnittliche Wohnfläche je Wohnung, in m². */
-export const walsroderAvgArea =
-  walsroder.facts.totalArea / walsroder.units.total;
-
 /** Fließtext zur Ausführung – belegt durch Kundenangaben und Aufnahmen. */
 export const walsroderStory: string[] = [
-  `${walsroder.units.total} Wohnungen auf ${walsroder.facts.totalArea.toLocaleString("de-DE")} m² Wohnfläche, in ${walsroder.architecture.facade} ausgeführt und mit ${walsroder.architecture.roof} gedeckt. Ein über die volle Gebäudehöhe verglastes Treppenhaus teilt die Straßenfassade und bringt Tageslicht in jedes Geschoss.`,
-  "Zu den Wohnungen gehören Balkone mit Glasbrüstungen, im Erdgeschoss Terrassen zum Garten. Geparkt wird auf dem eigenen Grundstück – überdachte Carports und Stellplätze direkt am Haus.",
-  "Das Projekt ist fertiggestellt und bezogen. Es steht hier als Referenz: dieselbe Handschrift, die auch unsere laufenden Vorhaben trägt.",
+  `${walsroder.units.total} Wohnungen auf ${walsroder.facts.totalArea.toLocaleString("de-DE")} m² Wohnfläche: Klinkerfassade, Satteldach und ein über die volle Gebäudehöhe verglastes Treppenhaus.`,
+  "Balkone mit Glasbrüstungen und Terrassen im Erdgeschoss erweitern die Wohnungen nach außen. Carports und weitere Stellplätze befinden sich direkt auf dem Grundstück.",
+  "Das Projekt ist fertiggestellt und bezogen. Robuste Materialien und klar nutzbare Außenbereiche machen es zu einer belastbaren Referenz unserer Arbeit.",
 ];

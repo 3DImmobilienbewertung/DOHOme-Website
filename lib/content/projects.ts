@@ -47,6 +47,7 @@ import {
 } from "@/lib/content/walsroder9";
 import {
   holunderweg,
+  holunderwegStory,
 } from "@/lib/content/holunderweg";
 import {
   walsroder32,
@@ -314,7 +315,7 @@ export const portfolio: PortfolioProject[] = [
     isFlagship: false,
     city: bissendorf.city,
     postalCode: bissendorf.postalCode,
-    teaser: `${bissendorf.units.total} seniorengerechte Wohnungen über drei Vollgeschosse – Klinkerfassade, verglastes Treppenhaus, Tiefgarage und ein eigener Abstellraum je Wohnung.`,
+    teaser: `${bissendorf.units.total} seniorengerechte Wohnungen – mit verglastem Treppenhaus, Tiefgarage und eigenem Abstellraum je Einheit.`,
     units: {
       total: bissendorf.units.total,
       sold: bissendorf.units.sold,
@@ -336,7 +337,7 @@ export const portfolio: PortfolioProject[] = [
     ],
     gallery: bissendorfGallery,
     story: {
-      title: "Eine Adresse, die sich einfügt",
+      title: "Seniorengerecht und klar gegliedert",
       paragraphs: bissendorfStory,
     },
     facts: [
@@ -361,8 +362,8 @@ export const portfolio: PortfolioProject[] = [
     accessibilityNote: bissendorf.accessibility,
     location: {
       copy: [
-        `${bissendorf.name} liegt an einer gewachsenen Ortsdurchfahrt – Nachbarschaft statt Neubaugebiet am Feldrand. Das Gebäude nimmt mit Klinker und Satteldach die Bauweise der Umgebung auf und fügt sich in die Zeile ein, statt sich davor zu stellen.`,
-        "Stellplätze liegen ebenerdig direkt am Haus, der Eingang ist von der Straße aus einsehbar und über das verglaste Treppenhaus tageslichtdurchflutet.",
+        `${bissendorf.name} liegt an einer gewachsenen Ortsdurchfahrt. Klinker und Satteldach greifen die Bauweise der Umgebung auf.`,
+        "Der Eingang ist klar zur Straße orientiert; das verglaste Treppenhaus bringt Tageslicht in die Erschließung.",
       ],
       neighbourhood: [],
       address: `${bissendorf.street}, ${bissendorf.postalCode} ${bissendorf.city}`,
@@ -377,7 +378,7 @@ export const portfolio: PortfolioProject[] = [
     isFlagship: false,
     city: walsroder.city,
     postalCode: walsroder.postalCode,
-    teaser: `${walsroder.units.total} Wohnungen auf ${dec(w.totalArea)} m² Wohnfläche – Klinkerfassade, verglastes Treppenhaus, Carports auf dem Grundstück.`,
+    teaser: `${walsroder.units.total} Wohnungen – mit verglastem Treppenhaus, Balkonen, Erdgeschossterrassen und Carports.`,
     units: { total: walsroder.units.total, sold: walsroder.units.sold, available: 0 },
     totalAreaSqm: w.totalArea,
     // Wohnungsspiegel liegt noch nicht vor – deshalb keine Spanne je Wohnung,
@@ -389,7 +390,7 @@ export const portfolio: PortfolioProject[] = [
       alt: `${walsroder.name}, ${walsroder.postalCode} ${walsroder.city} – Klinkerfassade mit Satteldach, verglastes Treppenhaus und Carports`,
     },
     gallery: walsroderGallery,
-    story: { title: "Wohnen am Ortsrand", paragraphs: walsroderStory },
+    story: { title: "Licht, Freiraum und klare Wege", paragraphs: walsroderStory },
     facts: [
       { k: "Wohneinheiten", v: `${walsroder.units.total} Wohnungen` },
       { k: "Gesamtwohnfläche", v: `${dec(w.totalArea)} m²` },
@@ -401,8 +402,8 @@ export const portfolio: PortfolioProject[] = [
     ],
     location: {
       copy: [
-        `${walsroder.name} liegt am Ortsrand: vorne die Straße mit kurzer Anbindung, hinten offene Feldflur. Diese Lage verbindet Erreichbarkeit mit Ruhe – der Blick aus den rückwärtigen Wohnungen geht ins Grüne statt auf die nächste Fassade.`,
-        "Die Stellplätze liegen auf dem eigenen Grundstück, überdacht als Carport oder ebenerdig direkt am Haus.",
+        `${walsroder.name} liegt am Ortsrand zwischen Straße und offener Feldflur. Die rückwärtigen Wohnungen orientieren sich ins Grüne.`,
+        "Carports und Stellplätze liegen direkt auf dem eigenen Grundstück.",
       ],
       neighbourhood: [],
       address: `${walsroder.street}, ${walsroder.postalCode} ${walsroder.city}`,
@@ -417,7 +418,7 @@ export const portfolio: PortfolioProject[] = [
     isFlagship: false,
     city: walsroder9.city,
     postalCode: walsroder9.postalCode,
-    teaser: `${walsroder9.units.total} Wohnungen auf ${dec(w9.totalArea)} m² Wohnfläche – Klinkerfassade, Balkone zum Grünen, Carports im gemeinsamen Innenhof.`,
+    teaser: `${walsroder9.units.total} Wohnungen – mit Balkonen, Erdgeschossterrassen und geschütztem Innenhof mit Carports.`,
     units: { total: walsroder9.units.total, sold: walsroder9.units.sold, available: 0 },
     totalAreaSqm: w9.totalArea,
     area: null,
@@ -427,7 +428,7 @@ export const portfolio: PortfolioProject[] = [
       alt: `${walsroder9.name}, ${walsroder9.postalCode} ${walsroder9.city} – Klinkerfassade mit Satteldach und Carports im Innenhof`,
     },
     gallery: walsroder9Gallery,
-    story: { title: "Der größere Nachbar", paragraphs: walsroder9Story },
+    story: { title: "Ein geschützter gemeinsamer Hof", paragraphs: walsroder9Story },
     press: [
       {
         outlet: "Hannoversche Allgemeine Zeitung",
@@ -450,8 +451,8 @@ export const portfolio: PortfolioProject[] = [
     ],
     location: {
       copy: [
-        `${walsroder9.name} steht direkt neben der Nummer 7. Beide Gebäude fassen einen gemeinsamen Innenhof – die Stellplätze liegen dort geschützt, die Wohnungen orientieren sich nach außen.`,
-        "Vorne die Straße mit kurzer Anbindung, hinten offene Feldflur: eine Lage, die Erreichbarkeit und Ruhe verbindet.",
+        `${walsroder9.name} steht direkt neben der Nummer 7. Beide Gebäude fassen einen gemeinsamen Innenhof mit Carports und Stellplätzen.`,
+        "Zur Rückseite öffnen sich Balkone und Erdgeschossterrassen in Richtung der Außenbereiche.",
       ],
       neighbourhood: [],
       address: `${walsroder9.street}, ${walsroder9.postalCode} ${walsroder9.city}`,
@@ -466,7 +467,7 @@ export const portfolio: PortfolioProject[] = [
     isFlagship: false,
     city: holunderweg.city,
     postalCode: holunderweg.postalCode,
-    teaser: `${holunderweg.units.total} Wohnungen auf ${dec2(h.totalArea)} m² Wohnfläche – Klinkerfassade, Balkone und Dachterrassen, voll unterkellert.`,
+    teaser: `${holunderweg.units.total} Wohnungen in zwei Hauseingängen – mit Balkonen, Dachterrassen, Erdgeschossgärten und Keller.`,
     units: { total: holunderweg.units.total, sold: holunderweg.units.sold, available: 0 },
     totalAreaSqm: h.totalArea,
     area: null,
@@ -476,6 +477,10 @@ export const portfolio: PortfolioProject[] = [
       alt: `${holunderweg.name}, ${holunderweg.postalCode} ${holunderweg.city} – Klinkerfassade mit Satteldach, Balkone und Dachterrassen`,
     },
     gallery: holunderwegGallery,
+    story: {
+      title: "Zwei Eingänge, ein ruhiges Wohnensemble",
+      paragraphs: holunderwegStory,
+    },
     facts: [
       { k: "Wohneinheiten", v: `${holunderweg.units.total} Wohnungen in zwei Hauseingängen` },
       { k: "Gesamtwohnfläche", v: `${dec2(h.totalArea)} m²` },
@@ -487,7 +492,7 @@ export const portfolio: PortfolioProject[] = [
     ],
     location: {
       copy: [
-        `Standort: ${holunderweg.street}, ${holunderweg.postalCode} ${holunderweg.city}.`,
+        `${holunderweg.name} ist in zwei überschaubare Hauseingänge gegliedert. Garagen und Stellplätze liegen direkt auf dem Grundstück.`,
       ],
       neighbourhood: [],
       address: `${holunderweg.street}, ${holunderweg.postalCode} ${holunderweg.city}`,
@@ -502,7 +507,7 @@ export const portfolio: PortfolioProject[] = [
     isFlagship: false,
     city: walsroder32.city,
     postalCode: walsroder32.postalCode,
-    teaser: `${walsroder32.units.total} Wohnungen auf ${dec(w32.totalArea)} m² Wohnfläche – zwei Vollgeschosse in Klinker, unterkellert, Gärten im Erdgeschoss.`,
+    teaser: `${walsroder32.units.total} Wohnungen auf zwei Vollgeschossen – mit Balkonen, Terrassen, Gartenanteilen und Keller.`,
     units: { total: walsroder32.units.total, sold: walsroder32.units.sold, available: 0 },
     totalAreaSqm: w32.totalArea,
     area: null,
@@ -512,7 +517,7 @@ export const portfolio: PortfolioProject[] = [
       alt: `${walsroder32.name}, ${walsroder32.postalCode} ${walsroder32.city} – Klinkerfassade mit Satteldach über zwei Vollgeschosse`,
     },
     gallery: walsroder32Gallery,
-    story: { title: "Bewusst niedrig gehalten", paragraphs: walsroder32Story },
+    story: { title: "Zwei Geschosse, bewusst kompakt", paragraphs: walsroder32Story },
     facts: [
       { k: "Wohneinheiten", v: `${walsroder32.units.total} Wohnungen` },
       { k: "Gesamtwohnfläche", v: `${dec(w32.totalArea)} m²` },
@@ -524,7 +529,7 @@ export const portfolio: PortfolioProject[] = [
     ],
     location: {
       copy: [
-        `${walsroder32.name} liegt in einer gewachsenen Wohnstraße. Zwei Vollgeschosse statt drei: Das Haus bleibt auf Augenhöhe mit der Nachbarbebauung, statt sie zu überragen.`,
+        `${walsroder32.name} liegt in einer gewachsenen Wohnstraße. Die zwei Vollgeschosse nehmen den Maßstab der umgebenden Bebauung auf.`,
       ],
       neighbourhood: [],
       address: `${walsroder32.street}, ${walsroder32.postalCode} ${walsroder32.city}`,
@@ -539,17 +544,17 @@ export const portfolio: PortfolioProject[] = [
     isFlagship: false,
     city: beekeufer.city,
     postalCode: beekeufer.postalCode,
-    teaser: `${beekeufer.units.total} Wohnungen auf ${dec(bk.totalArea)} m² Wohnfläche – Klinker mit Photovoltaik auf dem Dach, unterkellert, Gärten im Erdgeschoss.`,
+    teaser: `${beekeufer.units.total} Wohnungen – mit Balkonen, Dachterrassen, Erdgeschossgärten und Keller.`,
     units: { total: beekeufer.units.total, sold: beekeufer.units.sold, available: 0 },
     totalAreaSqm: bk.totalArea,
     area: null,
     rooms: null,
     image: {
-      src: "/images/am-beekeufer-11/luftbild-photovoltaik.jpg",
-      alt: `${beekeufer.name}, ${beekeufer.postalCode} ${beekeufer.city} – Klinkerfassade mit Photovoltaik auf dem Satteldach`,
+      src: "/images/am-beekeufer-11/luftbild-wohnanlage.jpg",
+      alt: `${beekeufer.name}, ${beekeufer.postalCode} ${beekeufer.city} – Wohnanlage mit Klinkerfassade und Satteldach`,
     },
     gallery: beekeuferGallery,
-    story: { title: "Strom vom eigenen Dach", paragraphs: beekeuferStory },
+    story: { title: "Wohnraum mit großzügigen Freiflächen", paragraphs: beekeuferStory },
     facts: [
       { k: "Wohneinheiten", v: `${beekeufer.units.total} Wohnungen` },
       { k: "Gesamtwohnfläche", v: `${dec(bk.totalArea)} m²` },
@@ -561,7 +566,7 @@ export const portfolio: PortfolioProject[] = [
     ],
     location: {
       copy: [
-        `${beekeufer.name} liegt in ruhiger Wohnlage abseits der Durchgangsstraßen. Die Photovoltaikanlage auf dem Satteldach erzeugt Strom dort, wo er gebraucht wird.`,
+        `${beekeufer.name} liegt in ruhiger Wohnlage abseits der Durchgangsstraßen. Garagen und Stellplätze befinden sich direkt auf dem Grundstück.`,
       ],
       neighbourhood: [],
       address: `${beekeufer.street}, ${beekeufer.postalCode} ${beekeufer.city}`,
@@ -576,7 +581,7 @@ export const portfolio: PortfolioProject[] = [
     isFlagship: false,
     city: holunderweg4.city,
     postalCode: holunderweg4.postalCode,
-    teaser: `${holunderweg4.units.total} Wohnungen auf ${dec(h4.totalArea)} m² Wohnfläche – Klinker mit Satteldach, unterkellert, Gärten im Erdgeschoss.`,
+    teaser: `${holunderweg4.units.total} Wohnungen – mit Balkonen, Dachterrassen, Erdgeschossgärten und Keller.`,
     units: { total: holunderweg4.units.total, sold: holunderweg4.units.sold, available: 0 },
     totalAreaSqm: h4.totalArea,
     area: null,
@@ -586,7 +591,7 @@ export const portfolio: PortfolioProject[] = [
       alt: `${holunderweg4.name}, ${holunderweg4.postalCode} ${holunderweg4.city} – Klinkerfassade mit Satteldach`,
     },
     gallery: holunderweg4Gallery,
-    story: { title: "Ruhig am Ortsrand", paragraphs: holunderweg4Story },
+    story: { title: "Drei Eingänge, großzügige Freiflächen", paragraphs: holunderweg4Story },
     facts: [
       { k: "Wohneinheiten", v: `${holunderweg4.units.total} Wohnungen` },
       { k: "Gesamtwohnfläche", v: `${dec(h4.totalArea)} m²` },
@@ -598,7 +603,7 @@ export const portfolio: PortfolioProject[] = [
     ],
     location: {
       copy: [
-        `${holunderweg4.name} liegt am Ortsrand: vorne eine ruhige Wohnstraße, hinter dem Haus die Bahnstrecke mit schneller Anbindung. Klinker und Satteldach nehmen die Bauweise der Nachbarschaft auf.`,
+        `${holunderweg4.name} liegt am Ortsrand in einer gewachsenen Wohnlage. Klinkerfassade und Satteldach orientieren sich an der umgebenden Bebauung.`,
       ],
       neighbourhood: [],
       address: `${holunderweg4.street}, ${holunderweg4.postalCode} ${holunderweg4.city}`,

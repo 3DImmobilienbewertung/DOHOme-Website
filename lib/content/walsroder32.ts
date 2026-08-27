@@ -37,11 +37,8 @@ export const walsroder32 = {
     "https://www.google.com/maps?q=Walsroder+Stra%C3%9Fe+32a%2Fb,+30900+Wedemark&output=embed",
 } as const;
 
-export const walsroder32AvgArea =
-  walsroder32.facts.totalArea / walsroder32.units.total;
-
 export const walsroder32Story: string[] = [
-  `${walsroder32.units.total} Wohnungen auf ${walsroder32.facts.totalArea.toLocaleString("de-DE")} m² Wohnfläche – bewusst nur zwei Vollgeschosse, damit sich das Haus in die Zeile der Nachbarbebauung einfügt und niemandem die Sonne nimmt.`,
-  `Im Mittel rund ${Math.round(walsroder32AvgArea)} m² je Wohnung, dazu Balkone und im Erdgeschoss Terrassen mit eigenem Gartenanteil. Das Gebäude ist unterkellert – Stauraum, der in vielen Neubauten fehlt.`,
-  "Das Projekt ist fertiggestellt und bezogen. Es steht hier als Referenz – dieselbe Handschrift, die auch unsere laufenden Vorhaben trägt.",
+  `${walsroder32.units.total} Wohnungen auf ${walsroder32.facts.totalArea.toLocaleString("de-DE")} m² Wohnfläche sind auf zwei Vollgeschosse verteilt. Klinkerfassade und Satteldach orientieren sich an der Maßstäblichkeit der Wohnstraße.`,
+  "Balkone sowie Terrassen mit eigenen Gartenanteilen ergänzen die Wohnungen um private Freiflächen. Das Gebäude ist vollständig unterkellert.",
+  "Garagen und Stellplätze liegen auf dem Grundstück. Das Projekt ist fertiggestellt und bezogen.",
 ];

@@ -108,8 +108,7 @@ export const bissendorfUnits: Unit[] = [
 
 /** Fließtext zur Ausführung – belegt durch Wohnungsspiegel und Aufnahme. */
 export const bissendorfStory: string[] = [
-  `Ein Baukörper mit ${bissendorf.units.total} Wohnungen über drei Geschosse, in ${bissendorf.architecture.facade} ausgeführt und mit ${bissendorf.architecture.roof} gedeckt. Ein über zwei Geschosse verglastes Treppenhaus gliedert die Straßenfassade und bringt Tageslicht bis in den Eingangsbereich.`,
-  `Die Wohnungen reichen von ${bissendorf.facts.rooms.min} bis ${bissendorf.facts.rooms.max} Zimmern – von der kompakten Zweizimmerwohnung bis zur Vierzimmerwohnung mit rund 97 m². Zu jeder Einheit gehört ein eigener Abstellraum im Dachgeschoss; zusammen ergeben sie gut 180 m² Nutzfläche zusätzlich zur Wohnfläche. Geparkt wird in der Tiefgarage – die Stellplätze liegen unter dem Haus statt auf dem Grundstück.`,
-  "Alle Wohnungen sind seniorengerecht ausgeführt – nicht als Sonderfall für einzelne Einheiten, sondern durchgängig. Wer hier einzieht, muss die Wohnung im Alter nicht wieder verlassen.",
-  "Das Projekt ist fertiggestellt und vollständig vermarktet. Es steht hier als Referenz – für die Handschrift, die auch unsere laufenden Vorhaben trägt.",
+  `${bissendorf.units.total} seniorengerechte Wohnungen verteilen sich auf drei Geschosse. Klinkerfassade, Satteldach und das verglaste Treppenhaus prägen die klare Straßenansicht.`,
+  `Die Grundrisse reichen von ${bissendorf.facts.rooms.min} bis ${bissendorf.facts.rooms.max} Zimmern und von ${bissendorf.facts.area.min.toLocaleString("de-DE")} bis ${bissendorf.facts.area.max.toLocaleString("de-DE")} m². Zu jeder Wohnung gehört ein eigener Abstellraum im Dachgeschoss.`,
+  "Die Tiefgarage hält einen großen Teil des ruhenden Verkehrs aus dem Außenbereich heraus. Das Projekt ist fertiggestellt und vollständig vermarktet.",
 ];

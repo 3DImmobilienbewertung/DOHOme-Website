@@ -35,11 +35,8 @@ export const holunderweg4 = {
     "https://www.google.com/maps?q=Holunderweg+4a%2Fb%2Fc,+30900+Wedemark&output=embed",
 } as const;
 
-export const holunderweg4AvgArea =
-  holunderweg4.facts.totalArea / holunderweg4.units.total;
-
 export const holunderweg4Story: string[] = [
-  `${holunderweg4.units.total} Wohnungen auf ${holunderweg4.facts.totalArea.toLocaleString("de-DE")} m² Wohnfläche in ruhiger Wohnlage am Ortsrand – hinter dem Haus verläuft die Bahnstrecke, davor eine gewachsene Nachbarschaft. Klinkerfassade, Satteldach, die Handschrift der Region.`,
-  `Im Mittel rund ${Math.round(holunderweg4AvgArea)} m² je Wohnung, mit Balkonen, Dachterrassen und eigenen Gartenanteilen im Erdgeschoss. Das Gebäude ist unterkellert – zusätzlicher Stauraum, der in vielen Neubauten fehlt.`,
-  "Das Projekt ist fertiggestellt und bezogen. Es steht hier als Referenz – dieselbe Handschrift, die auch unsere laufenden Vorhaben trägt.",
+  `${holunderweg4.units.total} Wohnungen auf ${holunderweg4.facts.totalArea.toLocaleString("de-DE")} m² Wohnfläche wurden mit Klinkerfassade und Satteldach realisiert. Die drei Adressen gliedern das Wohngebäude in überschaubare Eingangsbereiche.`,
+  "Balkone, Dachterrassen und Gärten im Erdgeschoss schaffen private Freiräume. Das Gebäude ist vollständig unterkellert.",
+  "Garagen und Stellplätze sind auf dem Grundstück angeordnet. Das Projekt ist fertiggestellt und bezogen.",
 ];

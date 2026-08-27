@@ -45,6 +45,8 @@ export const holunderweg = {
     "https://www.google.com/maps?q=Holunderweg+2a%2Fb,+30900+Wedemark&output=embed",
 } as const;
 
-/** Durchschnittliche Wohnfläche je Wohnung, in m². */
-export const holunderwegAvgArea =
-  holunderweg.facts.totalArea / holunderweg.units.total;
+export const holunderwegStory: string[] = [
+  `${holunderweg.units.total} Wohnungen verteilen sich auf zwei Hauseingänge und ${holunderweg.facts.totalArea.toLocaleString("de-DE")} m² Gesamtwohnfläche. Klinkerfassade und Satteldach geben dem Gebäude eine ruhige, klare Gliederung.`,
+  "Balkone, Dachterrassen und Gärten im Erdgeschoss schaffen private Außenbereiche. Das Gebäude ist vollständig unterkellert und bietet damit zusätzliche Nebenflächen.",
+  "Garagen und Stellplätze befinden sich direkt auf dem Grundstück. Das Projekt ist fertiggestellt und bezogen.",
+];

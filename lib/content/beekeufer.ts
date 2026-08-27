@@ -24,7 +24,7 @@ export const beekeufer = {
 
   architecture: {
     facade: "Klinker",
-    roof: "Satteldach mit Photovoltaik",
+    roof: "Satteldach",
     balconies: "Balkone und Dachterrassen, Gärten im Erdgeschoss",
     parking: "Garagen und Stellplätze auf dem Grundstück",
   },
@@ -35,11 +35,8 @@ export const beekeufer = {
     "https://www.google.com/maps?q=Am+Beekeufer+11a%2Fb,+30900+Wedemark&output=embed",
 } as const;
 
-export const beekeuferAvgArea =
-  beekeufer.facts.totalArea / beekeufer.units.total;
-
 export const beekeuferStory: string[] = [
-  `${beekeufer.units.total} Wohnungen auf ${beekeufer.facts.totalArea.toLocaleString("de-DE")} m² Wohnfläche in ruhiger Wohnlage. Klinkerfassade, Satteldach, dazu eine Photovoltaikanlage auf dem Dach – der Strom entsteht dort, wo er gebraucht wird.`,
-  `Im Mittel rund ${Math.round(beekeuferAvgArea)} m² je Wohnung, mit Balkonen, Dachterrassen und eigenen Gartenanteilen im Erdgeschoss. Das Gebäude ist unterkellert.`,
-  "Das Projekt ist fertiggestellt und bezogen. Es steht hier als Referenz – dieselbe Handschrift, die auch unsere laufenden Vorhaben trägt.",
+  `${beekeufer.units.total} Wohnungen verteilen sich auf ${beekeufer.facts.totalArea.toLocaleString("de-DE")} m² Wohnfläche. Klinkerfassade und Satteldach geben dem fertiggestellten Gebäude eine klare, langlebige Erscheinung.`,
+  "Balkone und Dachterrassen schaffen private Außenbereiche; die Erdgeschosswohnungen verfügen über eigene Gartenanteile. Das Gebäude ist vollständig unterkellert.",
+  "Garagen und Stellplätze liegen direkt auf dem Grundstück. Das Projekt ist fertiggestellt, bezogen und Teil unseres gebauten Portfolios in der Wedemark.",
 ];
