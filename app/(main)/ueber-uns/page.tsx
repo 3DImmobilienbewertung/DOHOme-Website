@@ -157,7 +157,7 @@ export default function UeberUnsPage() {
                   <dd
                     className={`nums whitespace-nowrap text-accent-500 ${
                       stat.unit
-                        ? "text-[clamp(1.75rem,3vw,2.75rem)] leading-[1.1]"
+                        ? "text-[clamp(1.75rem,2.8vw,2.5rem)] leading-[1.1]"
                         : "text-display-lg"
                     }`}
                   >
