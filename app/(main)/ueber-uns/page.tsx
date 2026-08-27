@@ -154,7 +154,13 @@ export default function UeberUnsPage() {
             <dl className="grid grid-cols-3 gap-6 self-start">
               {companyStats.map((stat) => (
                 <div key={stat.key}>
-                  <dd className="nums text-display-lg text-accent-500">
+                  <dd
+                    className={`nums whitespace-nowrap text-accent-500 ${
+                      stat.unit
+                        ? "text-[clamp(1.75rem,3vw,2.75rem)] leading-[1.1]"
+                        : "text-display-lg"
+                    }`}
+                  >
                     {formatStat(stat)}
                   </dd>
                   <dt className="eyebrow mt-1 text-muted-dark">{stat.label}</dt>

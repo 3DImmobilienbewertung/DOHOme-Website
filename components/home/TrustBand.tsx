@@ -33,7 +33,7 @@ export function TrustBand() {
           <dl className="grid gap-8 border-y border-beige-100/10 py-10 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((s) => (
               <div key={s.label}>
-                <dd className="nums text-display-lg text-accent-500">
+                <dd className="nums whitespace-nowrap text-display-lg text-accent-500">
                   <AnimatedStat value={s.value} unit={s.unit} suffix={s.suffix} />
                 </dd>
                 <dt className="mt-1 text-sm text-muted-dark">{s.label}</dt>
