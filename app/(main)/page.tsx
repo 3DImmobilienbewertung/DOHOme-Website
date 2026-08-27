@@ -8,7 +8,22 @@ import { ArchitectureSection } from "@/components/home/ArchitectureSection";
 import { PressSection } from "@/components/sections/PressSection";
 import { ClosingCta } from "@/components/home/ClosingCta";
 
-export const metadata: Metadata = { alternates: { canonical: "/" } };
+const title = "DOHOme – Donnarumma / Horstmann GmbH | Immobilien Wedemark";
+const description =
+  "DOHOme ist die Marke der Donnarumma / Horstmann GmbH in 30900 Wedemark – für Projektentwicklung, Wohnungsbau, Vermietung und Immobilienbewertung.";
+
+export const metadata: Metadata = {
+  title: { absolute: title },
+  description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    title,
+    description,
+    url: "/",
+    type: "website",
+  },
+  twitter: { title, description },
+};
 
 export default function Home() {
   return (

@@ -30,6 +30,14 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // Eine einzige indexierbare Host-Variante: verhindert doppelte URLs und
+      // bündelt alle externen Signale auf der kanonischen Domain ohne www.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.dohome-bau.de" }],
+        destination: "https://dohome-bau.de/:path*",
+        permanent: true,
+      },
       // Route umbenannt (SEO: „verkaufen“ trifft die Suchintention).
       {
         source: "/grundstueck-anbieten",

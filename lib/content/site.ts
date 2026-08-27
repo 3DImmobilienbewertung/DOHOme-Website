@@ -11,6 +11,14 @@ export const site = {
   claim: "wir schaffen Lebensräume",
   // Exakte Handelsregister-Firmierung (Amtsgericht Hannover, HRB 210402).
   legalName: "Donnarumma/Horstmann GmbH",
+  // Lesefassung für Markenkommunikation und Suchvarianten. Die rechtlich
+  // verbindliche Firmierung bleibt `legalName` ohne Leerzeichen am Schrägstrich.
+  legalNameDisplay: "Donnarumma / Horstmann GmbH",
+  alternateNames: [
+    "DOHOme",
+    "Donnarumma / Horstmann GmbH",
+    "Donnarumma & Horstmann GmbH",
+  ],
   // Rein gestalterische Stilisierung – nur außerhalb rechtlicher Pflichtangaben.
   brandStylized: "Donnarumma · Horstmann",
   // Gründungsjahr: Website nannte 2012, Handelsregister-Eintragung 05.11.2013.
@@ -32,6 +40,7 @@ export const site = {
     email: "info@dohome-bau.de",
     // Vom Kunden freigegebene Rufnummer (Stand: Juli 2026).
     phone: "0174 7445452" as string | null,
+    phoneE164: "+491747445452",
     /** E.164 für tel:-Links und Schema.org. */
     phoneHref: "tel:+491747445452",
   },

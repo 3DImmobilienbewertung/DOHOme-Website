@@ -13,7 +13,7 @@
 /** Kurzform für den Anriss auf der Startseite. */
 export const storyTeaser = {
   eyebrow: "Unsere Geschichte",
-  heading: "Zwei Familien, ein Anspruch: Häuser, die ein Leben lang halten.",
+  heading: "DOHOme: zwei Familien, ein Anspruch.",
   paragraphs: [
     "Der Kern von DOHOme ist Handwerk, nicht Vertrieb. Donnarumma und Horstmann entwickeln eigene Wohnprojekte in der Wedemark und den Nachbarorten – mit einem Handwerker-Netzwerk, das teils seit 30 Jahren zusammensteht.",
     "Weil wir selbst bauen und selbst verantworten, entscheidet bei uns die Qualität – nicht die schnellste Marge.",

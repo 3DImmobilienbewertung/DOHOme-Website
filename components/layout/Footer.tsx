@@ -49,6 +49,9 @@ export function Footer() {
             <p className="mt-5 max-w-xs font-display text-xl leading-snug">
               {site.claim}
             </p>
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-dark">
+              {site.brand} ist die Marke der {site.legalNameDisplay}.
+            </p>
             <address className="mt-6 not-italic text-sm text-muted-dark">
               {addressLines.map((line) => (
                 <span key={line} className="block">
