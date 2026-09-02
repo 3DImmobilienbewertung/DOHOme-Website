@@ -61,7 +61,7 @@ export const site = {
 
   // Nur tatsächlich verifizierte Unternehmensprofile ergänzen. Dieselbe Liste
   // wird automatisch als `sameAs` im Organization-Schema ausgegeben.
-  socialProfiles: [] as string[],
+  socialProfiles: ["https://www.instagram.com/dohome.de/"],
 
   services: [
     {
