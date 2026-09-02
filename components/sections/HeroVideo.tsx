@@ -1,16 +1,16 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
 // Hintergrundvideo der Startseite: Drohnenflug über die realisierten Projekte.
 //
 // Grundsätze:
-//   • Natives HTML-Autoplay statt einer nachträglich per JavaScript gesetzten
-//     Quelle. So funktioniert der Film auch dann, wenn React erst später
-//     hydratisiert; das Standbild darunter verhindert trotzdem einen leeren
-//     oder schwarzen ersten Frame.
-//   • Vier passend zugeschnittene Fassungen: QHD bereits ab Tabletbreite,
-//     damit Desktop- und Retina-Displays nicht auf eine weichere 1080p-
-//     Fassung zurückfallen. 1080p und 720p bleiben für kleinere Viewports,
-//     540p fürs Handy. Alle entstehen
-//     direkt aus den 35-Mbit-Drohnenoriginalen,
-//     nicht aus einem bereits komprimierten Zwischenexport.
+//   • Das sofort sichtbare Standbild und die Website laden zuerst. Erst nach
+//     dem Window-Load wird die passende Filmfassung angefordert. Dadurch
+//     konkurriert die bis zu 37 MB große QHD-Datei nicht mehr mit LCP, Schriften
+//     und Navigation.
+//   • Retina-Desktop bekommt weiterhin QHD. Langsame bzw. datensparende
+//     Verbindungen erhalten automatisch eine kleinere Fassung.
 //   • Konstante 30 Bilder pro Sekunde und kurze Szenenwechsel verhindern das
 //     Ruckeln des früheren Clips mit variabler Bildrate.
 //   • `prefers-reduced-motion` unterdrückt das Video per CSS. Wer Bewegung
@@ -21,33 +21,94 @@
 //     hängt nicht am Video.
 
 export function HeroVideo() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [src, setSrc] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) return;
+
+    const selectSource = () => {
+      const connection = (
+        navigator as Navigator & {
+          connection?: { effectiveType?: string; saveData?: boolean };
+        }
+      ).connection;
+      const slowConnection =
+        connection?.saveData ||
+        connection?.effectiveType === "slow-2g" ||
+        connection?.effectiveType === "2g" ||
+        connection?.effectiveType === "3g";
+
+      if (slowConnection) {
+        setSrc(window.innerWidth >= 768 ? "/video/hero-720.mp4" : "/video/hero-540.mp4");
+        return;
+      }
+
+      const retinaDesktop = window.innerWidth >= 1200 && window.devicePixelRatio >= 1.5;
+      if (retinaDesktop || window.innerWidth >= 1800) {
+        setSrc("/video/hero-1440.mp4");
+      } else if (window.innerWidth >= 900) {
+        setSrc("/video/hero-1080.mp4");
+      } else if (window.innerWidth >= 560) {
+        setSrc("/video/hero-720.mp4");
+      } else {
+        setSrc("/video/hero-540.mp4");
+      }
+    };
+
+    if (document.readyState === "complete") {
+      const timeout = window.setTimeout(selectSource, 180);
+      return () => window.clearTimeout(timeout);
+    }
+
+    window.addEventListener("load", selectSource, { once: true });
+    return () => window.removeEventListener("load", selectSource);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !src) return;
+
+    const play = () => {
+      video.muted = true;
+      void video.play().catch(() => {
+        // Das Standbild bleibt sichtbar; ein erneuter Versuch folgt, sobald der
+        // Tab wieder aktiv wird oder genügend Daten vorhanden sind.
+      });
+    };
+    const onVisibilityChange = () => {
+      if (!document.hidden) play();
+    };
+
+    play();
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
+  }, [src]);
+
   return (
     <video
+      ref={videoRef}
+      src={src ?? undefined}
       autoPlay
       muted
       loop
       playsInline
-      preload="metadata"
+      preload={src ? "auto" : "none"}
       aria-hidden="true"
       tabIndex={-1}
-      className="hero-video absolute inset-0 h-full w-full object-cover object-center"
-    >
-      <source
-        src="/video/hero-1440.mp4"
-        type="video/mp4"
-        media="(min-width: 768px)"
-      />
-      <source
-        src="/video/hero-1080.mp4"
-        type="video/mp4"
-        media="(min-width: 640px)"
-      />
-      <source
-        src="/video/hero-720.mp4"
-        type="video/mp4"
-        media="(min-width: 480px)"
-      />
-      <source src="/video/hero-540.mp4" type="video/mp4" />
-    </video>
+      onCanPlay={() => {
+        const video = videoRef.current;
+        if (video) void video.play().catch(() => undefined);
+      }}
+      onPlay={() => setIsPlaying(true)}
+      onError={() => {
+        if (src !== "/video/hero-540.mp4") setSrc("/video/hero-540.mp4");
+      }}
+      className={`hero-video absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 ${
+        isPlaying ? "opacity-100" : "opacity-0"
+      }`}
+    />
   );
 }

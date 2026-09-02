@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/Button";
+import Image from "next/image";
 import { Reveal } from "@/components/animation/Reveal";
 import {
   companyStats,
@@ -104,15 +105,28 @@ export default function UeberUnsPage() {
                 key={person.name}
                 className="overflow-hidden rounded-2xl border border-beige-100/15 bg-green-950/35"
               >
-                <div
-                  className="flex aspect-[4/5] items-center justify-center bg-gradient-to-br from-green-700 to-green-950"
-                  role="img"
-                  aria-label={`Initialen von ${person.name}`}
-                >
-                  <span className="font-display text-6xl text-beige-100/35" aria-hidden="true">
-                    {person.initials}
-                  </span>
-                </div>
+                {person.image ? (
+                  <div className="relative aspect-[4/5] overflow-hidden bg-white">
+                    <Image
+                      src={person.image.src}
+                      alt={person.image.alt}
+                      fill
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                      className="object-cover"
+                      style={{ objectPosition: person.image.objectPosition ?? "center" }}
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="flex aspect-[4/5] items-center justify-center bg-gradient-to-br from-green-700 to-green-950"
+                    role="img"
+                    aria-label={`Initialen von ${person.name}`}
+                  >
+                    <span className="font-display text-6xl text-beige-100/35" aria-hidden="true">
+                      {person.initials}
+                    </span>
+                  </div>
+                )}
                 <div className="p-6">
                   <h3 className="font-display text-2xl text-beige-100">
                     {person.name}
@@ -171,7 +185,7 @@ export default function UeberUnsPage() {
           {hasPendingStats && (
             <div className="mt-6">
               <Todo>
-                Belegbare Kennzahlen: Anzahl Projekte, Wohneinheiten,
+                Belegbare Kennzahlen: Kundenzahl, Wohneinheiten und
                 Gesamtwohnfläche
               </Todo>
             </div>
