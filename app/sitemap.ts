@@ -10,13 +10,24 @@ import { portfolio } from "@/lib/content/projects";
 // Anzeigen-Landingpage /rotkamp-1 (noindex, damit sie nicht mit der
 // Projektseite um dasselbe Keyword konkurriert).
 export default function sitemap(): MetadataRoute.Sitemap {
+  const lastUpdated = new Date("2026-09-02T00:00:00+02:00");
   const staticRoutes = [
     "",
     "/projekte",
+    "/leistungen",
+    "/projektentwicklung-wedemark",
+    "/wohnungsbau-region-hannover",
+    "/immobilienbewertung-wedemark",
+    "/seniorengerechtes-wohnen",
     "/wohnung-mieten",
     "/grundstueck-verkaufen",
     "/ueber-uns",
     "/kontakt",
+    "/ratgeber",
+    "/ratgeber/grundstueck-an-bautraeger-verkaufen",
+    "/ratgeber/neubauwohnung-kaufen-wedemark",
+    "/ratgeber/seniorengerecht-barrierefrei",
+    "/ratgeber/projektentwicklung-ablauf",
     "/steuern-sparen",
     "/steuern-sparen/neubauwohnung",
     "/steuern-sparen/erstgespraech",
@@ -24,10 +35,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const projectRoutes = portfolio.map((p) => `/projekte/${p.slug}`);
 
-  return [...staticRoutes, ...projectRoutes].map((path) => ({
-    url: `${site.url}${path}`,
-    changeFrequency: "weekly",
-    // Projektdetailseiten sind die Verkaufsseiten – hoch priorisiert.
-    priority: path === "" ? 1 : path.startsWith("/projekte/") ? 0.9 : 0.8,
-  }));
+  return [
+    ...staticRoutes.map((path) => ({
+      url: `${site.url}${path}`,
+      lastModified: lastUpdated,
+    })),
+    ...projectRoutes.map((path) => ({ url: `${site.url}${path}` })),
+  ];
 }

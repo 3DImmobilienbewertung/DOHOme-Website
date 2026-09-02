@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
 import { CallbackForm } from "@/components/forms/CallbackForm";
 import { site } from "@/lib/content/site";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Erstgespräch zur Neubauwohnung",
   description:
     "Unverbindliches Erstgespräch zu verfügbaren DOHOme-Neubauwohnungen, Vermietung und individueller Kalkulation anfragen.",
-  alternates: { canonical: "/steuern-sparen/erstgespraech" },
-};
+  path: "/steuern-sparen/erstgespraech",
+});
 
 export default function ErstgespraechPage() {
   return (

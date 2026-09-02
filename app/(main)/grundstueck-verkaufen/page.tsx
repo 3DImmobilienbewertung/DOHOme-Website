@@ -1,15 +1,14 @@
-import type { Metadata } from "next";
-
 import { LeadForm } from "@/components/forms/LeadForm";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/animation/Reveal";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Grundstück verkaufen",
+export const metadata = pageMetadata({
+  title: "Grundstück verkaufen in der Wedemark",
   description:
     "Grundstück verkaufen in der Wedemark und Umgebung – direkt an DOHOme, fair bewertet, diskret und ohne Maklerkette.",
-  alternates: { canonical: "/grundstueck-verkaufen" },
-};
+  path: "/grundstueck-verkaufen",
+});
 
 const STEPS: { n: string; title: string; text: string }[] = [
   {
@@ -56,8 +55,11 @@ export default function GrundstueckVerkaufenPage() {
         <Reveal>
           <p className="eyebrow text-sage-300">Für Grundstückseigentümer</p>
           <h1 className="mt-3 max-w-3xl text-display-xl">
-            Ein guter Preis. Eine verlässliche Entscheidung.
+            Grundstück in der Wedemark verkaufen
           </h1>
+          <p className="mt-4 font-display text-2xl text-accent-500 md:text-3xl">
+            Ein guter Preis. Eine verlässliche Entscheidung.
+          </p>
           <p className="mt-5 max-w-2xl text-lead text-beige-100/75">
             Wir kaufen und entwickeln selbst. Deshalb bewerten wir Ihr Grundstück
             nachvollziehbar, erklären unser Angebot offen und halten, was wir

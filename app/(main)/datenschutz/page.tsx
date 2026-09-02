@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
 import { site } from "@/lib/content/site";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Datenschutzerklärung",
   description: "Informationen zur Verarbeitung personenbezogener Daten bei DOHOme.",
-  alternates: { canonical: "/datenschutz" },
-  robots: { index: false, follow: true },
-};
+  path: "/datenschutz",
+  noIndex: true,
+});
 
 // Struktur nach Art. 13/14 DSGVO, abgestimmt auf die tatsächlich eingesetzte
 // Technik: statisches Hosting, self-hosted Schriften, keine Analyse-Cookies,
@@ -40,11 +40,6 @@ export default function DatenschutzPage() {
       <div className="mx-auto max-w-3xl px-6 pt-32 pb-24 md:pt-40">
         <p className="eyebrow text-sage-300">Rechtliches</p>
         <h1 className="mt-3 text-display-xl">Datenschutzerklärung</h1>
-
-        <p className="mt-6 rounded-xl border border-accent-500/30 bg-accent-500/[0.06] p-4 text-sm text-beige-100/80">
-          Diese Erklärung ist auf den aktuellen Stand der Website abgestimmt.
-          Vor dem Livegang erfolgt eine abschließende anwaltliche Prüfung.
-        </p>
 
         <div className="mt-10 space-y-9 text-beige-100/80">
           <Section n={1} title="Verantwortlicher">
@@ -183,11 +178,13 @@ export default function DatenschutzPage() {
           <Section n={8} title="Empfänger und Auftragsverarbeitung">
             <p>
               Zur Bereitstellung der Website und zur Bearbeitung von Anfragen
-              setzen wir sorgfältig ausgewählte Dienstleister ein (insbesondere
-              Hosting und E-Mail). Diese verarbeiten Daten ausschließlich
-              weisungsgebunden auf Grundlage eines Vertrags zur
-              Auftragsverarbeitung nach Art. 28 DSGVO. Eine Übermittlung in
-              Drittländer außerhalb der EU/des EWR findet nicht statt.
+              setzen wir Dienstleister für Hosting und E-Mail-Versand ein. Diese
+              verarbeiten Daten im Rahmen der vereinbarten Leistungen und auf
+              Grundlage der jeweils erforderlichen Datenschutzvereinbarungen.
+              Eine Verarbeitung außerhalb der EU oder des EWR kann je nach
+              technischer Bereitstellung nicht ausgeschlossen werden. In diesem
+              Fall erfolgt sie nur unter den Voraussetzungen der Art. 44 ff.
+              DSGVO.
             </p>
           </Section>
 

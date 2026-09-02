@@ -9,6 +9,7 @@ import {
   type RentalField,
   type RentalState,
 } from "@/app/actions/rental";
+import { trackEvent } from "@/lib/analytics";
 
 const INITIAL: RentalState = { ok: false };
 
@@ -16,9 +17,15 @@ export function RentalInterestForm() {
   const [state, formAction] = useActionState(submitRentalInterest, INITIAL);
   const [timestamp] = useState(() => Date.now());
   const successRef = useRef<HTMLDivElement>(null);
+  const trackedSuccess = useRef(false);
 
   useEffect(() => {
-    if (state.ok) successRef.current?.focus();
+    if (!state.ok) return;
+    successRef.current?.focus();
+    if (!trackedSuccess.current) {
+      trackedSuccess.current = true;
+      trackEvent("generate_lead", { lead_type: "wohnung_mieten" });
+    }
   }, [state.ok]);
 
   useEffect(() => {

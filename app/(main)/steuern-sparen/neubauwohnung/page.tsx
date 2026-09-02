@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Neubauwohnung als Vermietungsobjekt",
   description:
     "Was eine seniorengerechte Neubauwohnung für Vermietung, laufende Kosten und steuerliche Abschreibung bedeuten kann.",
-  alternates: { canonical: "/steuern-sparen/neubauwohnung" },
-};
+  path: "/steuern-sparen/neubauwohnung",
+});
 
 const checks = [
   ["Objektqualität", "Grundriss, Bauweise, energetischer Standard, Gemeinschaftseigentum und Ausstattung prüfen."],

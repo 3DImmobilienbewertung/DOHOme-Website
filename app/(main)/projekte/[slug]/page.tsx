@@ -108,17 +108,30 @@ export async function generateMetadata({
       : null,
     "aus eigener Entwicklung",
   ].filter(Boolean);
+  const description = `${summary.name} in ${summary.postal_code ?? ""} ${place}: ${parts.join(", ")}.`
+    .replace(/\s+/g, " ")
+    .trim();
+  const socialTitle = `${title} · DOHOme`;
+  const socialImage = project ? `${site.url}${project.image.src}` : undefined;
 
   return {
     title,
-    description: `${summary.name} in ${summary.postal_code ?? ""} ${place}: ${parts.join(", ")}.`
-      .replace(/\s+/g, " ")
-      .trim(),
+    description,
     alternates: { canonical: `/projekte/${summary.slug}` },
     openGraph: {
-      title,
+      title: socialTitle,
+      description,
       url: `${site.url}/projekte/${summary.slug}`,
-      images: project ? [{ url: `${site.url}${project.image.src}` }] : undefined,
+      type: "website",
+      siteName: site.brand,
+      locale: "de_DE",
+      images: socialImage ? [{ url: socialImage, alt: project?.image.alt ?? title }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: socialTitle,
+      description,
+      images: socialImage ? [socialImage] : undefined,
     },
   };
 }

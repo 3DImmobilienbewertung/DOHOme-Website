@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { submitCallback, type CallbackState } from "@/app/actions/callback";
+import { trackEvent } from "@/lib/analytics";
 
 const INITIAL: CallbackState = { ok: false };
 
@@ -19,10 +20,16 @@ export function CallbackForm({
   const [state, action] = useActionState(submitCallback, INITIAL);
   const [ts] = useState(() => Date.now());
   const okRef = useRef<HTMLDivElement>(null);
+  const trackedSuccess = useRef(false);
 
   useEffect(() => {
-    if (state.ok) okRef.current?.focus();
-  }, [state.ok]);
+    if (!state.ok) return;
+    okRef.current?.focus();
+    if (!trackedSuccess.current) {
+      trackedSuccess.current = true;
+      trackEvent("generate_lead", { lead_type: "rueckruf", source });
+    }
+  }, [source, state.ok]);
   useEffect(() => {
     const first = state.fieldErrors && Object.keys(state.fieldErrors)[0];
     if (first) document.getElementById(`cb-${first}`)?.focus();

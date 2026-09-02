@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { submitLead, type LeadState } from "@/app/actions/lead";
+import { trackEvent } from "@/lib/analytics";
 
 const INITIAL: LeadState = { ok: false };
 
@@ -26,11 +27,17 @@ export function LeadForm({
   // Zeitstempel beim Aufbau – Grundlage der serverseitigen Zeitfalle gegen Bots.
   const [ts] = useState(() => Date.now());
   const successRef = useRef<HTMLDivElement>(null);
+  const trackedSuccess = useRef(false);
 
   // Erfolg: Fokus auf die Bestätigung (Ansage via role="status").
   useEffect(() => {
-    if (state.ok) successRef.current?.focus();
-  }, [state.ok]);
+    if (!state.ok) return;
+    successRef.current?.focus();
+    if (!trackedSuccess.current) {
+      trackedSuccess.current = true;
+      trackEvent("generate_lead", { lead_type: subject });
+    }
+  }, [state.ok, subject]);
 
   // Fehler: Fokus auf das erste beanstandete Feld.
   useEffect(() => {

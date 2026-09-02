@@ -53,10 +53,28 @@ export function OrganizationJsonLd() {
       propertyID: site.legal.registerCourt ?? "Handelsregister",
       value: site.legal.registerNumber,
     },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Leistungen von DOHOme",
+      itemListElement: site.services.map((service) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: service.name,
+          description: service.description,
+          url: `${site.url}${service.path}`,
+          provider: { "@id": organizationId },
+          areaServed: { "@type": "AdministrativeArea", name: site.region },
+        },
+      })),
+    },
   };
 
   // Nur belegte Felder ausgeben – kein "null" im strukturierten Datenmarkup.
   if (site.founded) organization.foundingDate = String(site.founded);
+  if (site.socialProfiles.length > 0) {
+    organization.sameAs = site.socialProfiles;
+  }
 
   const data = {
     "@context": "https://schema.org",

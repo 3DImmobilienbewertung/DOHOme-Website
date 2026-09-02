@@ -12,8 +12,15 @@ const homeTitle =
 const homeDescription =
   "DOHOme ist die Marke der Donnarumma / Horstmann GmbH in 30900 Wedemark – für Projektentwicklung, Wohnungsbau, Vermietung und Immobilienbewertung.";
 
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const bingVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
+  applicationName: site.brand,
+  creator: site.legalNameDisplay,
+  publisher: site.legalNameDisplay,
+  category: "Bauwesen und Immobilien",
   title: {
     default: homeTitle,
     template: "%s · DOHOme",
@@ -48,6 +55,15 @@ export const metadata: Metadata = {
     description: homeDescription,
     images: ["/opengraph-image"],
   },
+  verification:
+    googleVerification || bingVerification
+      ? {
+          ...(googleVerification ? { google: googleVerification } : {}),
+          ...(bingVerification
+            ? { other: { "msvalidate.01": bingVerification } }
+            : {}),
+        }
+      : undefined,
 };
 
 export default function RootLayout({

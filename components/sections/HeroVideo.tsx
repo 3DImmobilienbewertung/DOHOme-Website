@@ -5,8 +5,9 @@
 //     Quelle. So funktioniert der Film auch dann, wenn React erst später
 //     hydratisiert; das Standbild darunter verhindert trotzdem einen leeren
 //     oder schwarzen ersten Frame.
-//   • Zwei kurze, hochwertig codierte Fassungen: QHD ab Tabletbreite und 720p
-//     fürs Handy. Beide entstehen direkt aus den 35-Mbit-Drohnenoriginalen,
+//   • Vier passend zugeschnittene Fassungen: QHD nur für große Displays,
+//     1080p für Desktop, 720p für Tablet und 540p fürs Handy. Alle entstehen
+//     direkt aus den 35-Mbit-Drohnenoriginalen,
 //     nicht aus einem bereits komprimierten Zwischenexport.
 //   • Konstante 30 Bilder pro Sekunde und kurze Szenenwechsel verhindern das
 //     Ruckeln des früheren Clips mit variabler Bildrate.
@@ -32,9 +33,19 @@ export function HeroVideo() {
       <source
         src="/video/hero-1440.mp4"
         type="video/mp4"
-        media="(min-width: 768px)"
+        media="(min-width: 1600px)"
       />
-      <source src="/video/hero-720.mp4" type="video/mp4" />
+      <source
+        src="/video/hero-1080.mp4"
+        type="video/mp4"
+        media="(min-width: 1024px)"
+      />
+      <source
+        src="/video/hero-720.mp4"
+        type="video/mp4"
+        media="(min-width: 480px)"
+      />
+      <source src="/video/hero-540.mp4" type="video/mp4" />
     </video>
   );
 }

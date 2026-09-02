@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 
 import { Reveal } from "@/components/animation/Reveal";
 import { RentalInterestForm } from "@/components/forms/RentalInterestForm";
 import { Button } from "@/components/ui/Button";
 import { site } from "@/lib/content/site";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Mietwohnung in Wedemark gesucht?",
   description:
     "Mietwohnung in Wedemark und Umgebung gesucht? Hinterlegen Sie Ihr Suchprofil für seniorengerechte Wohnungen aus DOHOme-Wohnprojekten.",
-  alternates: { canonical: "/wohnung-mieten" },
-};
+  path: "/wohnung-mieten",
+});
 
 const housingFacts = [
   ["2–3,5", "Zimmer"],
@@ -43,7 +43,9 @@ export default function WohnungMietenPage() {
         <div className="relative mx-auto w-full max-w-container px-6 pb-14 pt-36 md:pb-20">
           <Reveal>
             <p className="eyebrow text-accent-400">Mietwohnung in der Wedemark</p>
-            <h1 className="mt-4 max-w-3xl text-display-xl">Wohnung gesucht?</h1>
+            <h1 className="mt-4 max-w-3xl text-display-xl">
+              Mietwohnung in der Wedemark gesucht?
+            </h1>
             <p className="mt-6 max-w-2xl text-lead text-beige-100/80">
               Hinterlegen Sie einmal Ihr Suchprofil. Wenn eine passende Wohnung
               aus unseren Projekten zur Vermietung steht, können wir Sie gezielt

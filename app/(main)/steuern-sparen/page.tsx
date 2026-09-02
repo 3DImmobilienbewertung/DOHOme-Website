@@ -1,13 +1,12 @@
-import type { Metadata } from "next";
-
 import { CompactTaxLanding } from "@/components/investment/CompactTaxLanding";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Steuern reduzieren und Immobilienvermögen aufbauen",
   description:
     "Bis zu 22 % Eigenkapitaleffekt im Referenzjahr: 5 % degressive Gebäude-AfA, Miete und Tilgung mit einer DOHOme-Neubauwohnung verbinden.",
-  alternates: { canonical: "/steuern-sparen" },
-};
+  path: "/steuern-sparen",
+});
 
 export default function SteuernSparenPage() {
   return <CompactTaxLanding />;

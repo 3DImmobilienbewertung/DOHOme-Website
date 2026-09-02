@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Wordmark } from "@/components/brand/Wordmark";
+import { TrackedContactLink } from "@/components/analytics/TrackedContactLink";
 import { site, addressLines } from "@/lib/content/site";
 
 // Globaler Footer: sitewide NAP-Block (Local-SEO + Vertrauen), Silo-Navigation,
@@ -12,12 +13,16 @@ const NAV_GROUPS: { title: string; links: { href: string; label: string }[] }[] 
       links: [
         { href: "/projekte", label: "Projekte" },
         { href: "/wohnung-mieten", label: "Mietwohnung gesucht" },
-        { href: "/kontakt", label: "Beratung anfragen" },
+        { href: "/seniorengerechtes-wohnen", label: "Seniorengerechtes Wohnen" },
       ],
     },
     {
-      title: "Grundstück",
+      title: "Leistungen",
       links: [
+        { href: "/leistungen", label: "Alle Leistungen" },
+        { href: "/projektentwicklung-wedemark", label: "Projektentwicklung" },
+        { href: "/wohnungsbau-region-hannover", label: "Wohnungsbau" },
+        { href: "/immobilienbewertung-wedemark", label: "Immobilienbewertung" },
         { href: "/grundstueck-verkaufen", label: "Grundstück verkaufen" },
       ],
     },
@@ -25,6 +30,7 @@ const NAV_GROUPS: { title: string; links: { href: string; label: string }[] }[] 
       title: "Unternehmen",
       links: [
         { href: "/ueber-uns", label: "Über uns" },
+        { href: "/ratgeber", label: "Ratgeber" },
         { href: "/kontakt", label: "Kontakt" },
       ],
     },
@@ -58,19 +64,23 @@ export function Footer() {
                   {line}
                 </span>
               ))}
-              <a
+              <TrackedContactLink
                 href={`mailto:${site.contact.email}`}
+                method="email"
+                placement="footer"
                 className="mt-3 inline-block text-beige-100/80 transition-colors hover:text-beige-100"
               >
                 {site.contact.email}
-              </a>
+              </TrackedContactLink>
               {site.contact.phone && (
-                <a
+                <TrackedContactLink
                   href={site.contact.phoneHref}
+                  method="phone"
+                  placement="footer"
                   className="mt-1 block text-beige-100/80 transition-colors hover:text-beige-100"
                 >
                   {site.contact.phone}
-                </a>
+                </TrackedContactLink>
               )}
             </address>
           </div>

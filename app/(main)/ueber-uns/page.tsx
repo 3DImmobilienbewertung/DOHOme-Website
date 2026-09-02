@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/animation/Reveal";
 import {
@@ -8,13 +7,14 @@ import {
   teamProfiles,
 } from "@/lib/content/company";
 import { storyLong } from "@/lib/content/story";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Über uns",
+export const metadata = pageMetadata({
+  title: "Donnarumma / Horstmann GmbH – Über uns",
   description:
     "DOHOme – zwei Familien, ein Anspruch: hochwertige Wohnprojekte in der Wedemark und den Nachbarorten, entwickelt und gebaut von Donnarumma & Horstmann.",
-  alternates: { canonical: "/ueber-uns" },
-};
+  path: "/ueber-uns",
+});
 
 // Platzhalter-Marker: markiert Sektionen, die vor dem Launch echten Kundeninput
 // (Fotos, Zahlen, Zertifikate) brauchen – nie versehentlich „fertig“ wirken.
@@ -34,8 +34,11 @@ export default function UeberUnsPage() {
         <Reveal>
           <p className="eyebrow text-sage-300">Über uns</p>
           <h1 className="mt-3 max-w-3xl text-display-xl">
-            Zwei Familien, ein Anspruch
+            DOHOme – Donnarumma / Horstmann GmbH
           </h1>
+          <p className="mt-4 font-display text-2xl text-accent-500 md:text-3xl">
+            Zwei Familien, ein Anspruch
+          </p>
           <p className="mt-5 max-w-2xl text-lead text-beige-100/75">
             Wohnungen, die ein Leben lang tragen. Donnarumma und Horstmann
             entwickeln, planen und bauen eigene Wohnprojekte in der Wedemark und
@@ -104,7 +107,7 @@ export default function UeberUnsPage() {
                 <div
                   className="flex aspect-[4/5] items-center justify-center bg-gradient-to-br from-green-700 to-green-950"
                   role="img"
-                  aria-label={`Porträtfoto von ${person.name} folgt`}
+                  aria-label={`Initialen von ${person.name}`}
                 >
                   <span className="font-display text-6xl text-beige-100/35" aria-hidden="true">
                     {person.initials}
@@ -126,9 +129,6 @@ export default function UeberUnsPage() {
               </article>
             ))}
           </div>
-          <p className="mt-5 text-xs text-muted-dark">
-            Porträtfotos werden nachgereicht.
-          </p>
         </div>
       </section>
 

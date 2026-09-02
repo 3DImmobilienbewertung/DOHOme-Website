@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-
 import {
   createPublicClient,
   isSupabaseConfigured,
@@ -8,18 +6,19 @@ import {
 import { portfolioSummaries } from "@/lib/content/projects";
 import { ProjectFinder } from "@/components/projekte/ProjectFinder";
 import { Button } from "@/components/ui/Button";
+import { pageMetadata } from "@/lib/metadata";
 
 // Aggregate alle 5 Minuten neu (ISR).
 export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   // Titel trägt das Suchwort, nicht nur die Rubrik: lokal wird nach
   // „Eigentumswohnung Wedemark / Region Hannover“ gesucht, nicht nach „Projekte“.
   title: "Eigentumswohnungen in der Region Hannover",
   description:
     "Wohnprojekte von DOHOme in Wedemark und der Region Hannover: Eigentumswohnungen aus eigener Entwicklung – geplant, gebaut und verkauft aus einer Hand.",
-  alternates: { canonical: "/projekte" },
-};
+  path: "/projekte",
+});
 
 async function getAllProjects(): Promise<ProjectSummary[]> {
   // Ohne angebundene Datenbank liefert die gepflegte Portfolio-Registry die
@@ -54,7 +53,9 @@ export default async function ProjekteOverviewPage() {
       {/* HEADER */}
       <section className="mx-auto max-w-container px-6 pt-32 pb-12 md:pt-40 md:pb-16">
         <p className="eyebrow text-sage-300">Portfolio</p>
-        <h1 className="mt-3 max-w-3xl text-display-xl">Unsere Projekte</h1>
+        <h1 className="mt-3 max-w-4xl text-display-xl">
+          Wohnprojekte und Eigentumswohnungen in der Wedemark
+        </h1>
         <p className="mt-5 max-w-xl text-lead text-beige-100/75">
           Vom Leuchtturmprojekt bis zur fertiggestellten Referenz – ein
           Überblick über alle Bauvorhaben von DOHOme.

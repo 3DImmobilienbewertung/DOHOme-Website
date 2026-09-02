@@ -59,6 +59,37 @@ export const site = {
     "Lindwedel",
   ],
 
+  // Nur tatsächlich verifizierte Unternehmensprofile ergänzen. Dieselbe Liste
+  // wird automatisch als `sameAs` im Organization-Schema ausgegeben.
+  socialProfiles: [] as string[],
+
+  services: [
+    {
+      name: "Projektentwicklung",
+      path: "/projektentwicklung-wedemark",
+      description:
+        "Entwicklung eigener Wohnprojekte von der Grundstücksprüfung bis zur Übergabe.",
+    },
+    {
+      name: "Wohnungsbau",
+      path: "/wohnungsbau-region-hannover",
+      description:
+        "Hochwertiger Wohnungsbau in der Wedemark und der Region Hannover.",
+    },
+    {
+      name: "Immobilienbewertung",
+      path: "/immobilienbewertung-wedemark",
+      description:
+        "Nachvollziehbare Bewertung von Immobilien und Grundstücken in der Wedemark.",
+    },
+    {
+      name: "Seniorengerechtes Wohnen",
+      path: "/seniorengerechtes-wohnen",
+      description:
+        "Alltagstaugliche Wohnkonzepte mit langfristig nutzbaren Grundrissen.",
+    },
+  ],
+
   // Handelsregister-/Vertretungsangaben fürs Impressum.
   // Quelle: Handelsregister-Eintrag (Amtsgericht Hannover, HRB 210402,
   // eingetragen 05.11.2013). TODO(Vito): vor Livegang gegenprüfen.

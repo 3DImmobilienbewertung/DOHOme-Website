@@ -1,16 +1,17 @@
-import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 import { LeadForm } from "@/components/forms/LeadForm";
+import { TrackedContactLink } from "@/components/analytics/TrackedContactLink";
 import { Reveal } from "@/components/animation/Reveal";
 import { site, addressLines } from "@/lib/content/site";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Kontakt",
   description:
     "Sprechen Sie mit DOHOme – Bauträger in der Region Hannover. Persönliche Beratung zu unseren Wohnprojekten und zu Grundstücken in der Wedemark.",
-  alternates: { canonical: "/kontakt" },
-};
+  path: "/kontakt",
+});
 
 export default function KontaktPage() {
   return (
@@ -36,21 +37,25 @@ export default function KontaktPage() {
           {/* Direkte Kanäle */}
           <div className="flex flex-col gap-8">
             <ContactBlock label="E-Mail">
-              <a
+              <TrackedContactLink
                 href={`mailto:${site.contact.email}`}
+                method="email"
+                placement="kontaktseite"
                 className="transition-colors hover:text-sage-300"
               >
                 {site.contact.email}
-              </a>
+              </TrackedContactLink>
             </ContactBlock>
             {site.contact.phone && (
               <ContactBlock label="Telefon">
-                <a
+                <TrackedContactLink
                   href={site.contact.phoneHref}
+                  method="phone"
+                  placement="kontaktseite"
                   className="transition-colors hover:text-sage-300"
                 >
                   {site.contact.phone}
-                </a>
+                </TrackedContactLink>
               </ContactBlock>
             )}
             <ContactBlock label="Büro">

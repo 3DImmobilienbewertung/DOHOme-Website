@@ -31,10 +31,14 @@ export function Hero() {
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-container px-6 pb-16 [text-shadow:0_1px_18px_rgba(15,36,26,0.6)] md:pb-24">
+        <p className="eyebrow text-beige-100/80">
+          DOHOme · Donnarumma / Horstmann GmbH
+        </p>
         <h1 className="mt-6 text-[clamp(2.8rem,7vw,5.5rem)] font-light leading-[1.02]">
           <span className="mb-6 block font-sans text-[0.24em] font-medium uppercase tracking-[0.16em] text-beige-100/85">
-            DOHOme · Donnarumma / Horstmann GmbH
+            Bauträger &amp; Projektentwickler in der Wedemark
           </span>
+          {" "}
           <span className="block">wir schaffen </span>
           <span className="block">Lebensräume</span>
         </h1>
