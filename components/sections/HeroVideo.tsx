@@ -5,8 +5,10 @@
 //     Quelle. So funktioniert der Film auch dann, wenn React erst später
 //     hydratisiert; das Standbild darunter verhindert trotzdem einen leeren
 //     oder schwarzen ersten Frame.
-//   • Vier passend zugeschnittene Fassungen: QHD nur für große Displays,
-//     1080p für Desktop, 720p für Tablet und 540p fürs Handy. Alle entstehen
+//   • Vier passend zugeschnittene Fassungen: QHD bereits ab Tabletbreite,
+//     damit Desktop- und Retina-Displays nicht auf eine weichere 1080p-
+//     Fassung zurückfallen. 1080p und 720p bleiben für kleinere Viewports,
+//     540p fürs Handy. Alle entstehen
 //     direkt aus den 35-Mbit-Drohnenoriginalen,
 //     nicht aus einem bereits komprimierten Zwischenexport.
 //   • Konstante 30 Bilder pro Sekunde und kurze Szenenwechsel verhindern das
@@ -33,12 +35,12 @@ export function HeroVideo() {
       <source
         src="/video/hero-1440.mp4"
         type="video/mp4"
-        media="(min-width: 1600px)"
+        media="(min-width: 768px)"
       />
       <source
         src="/video/hero-1080.mp4"
         type="video/mp4"
-        media="(min-width: 1024px)"
+        media="(min-width: 640px)"
       />
       <source
         src="/video/hero-720.mp4"
