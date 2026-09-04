@@ -41,15 +41,21 @@ export function HeroVideo() {
         connection?.effectiveType === "2g" ||
         connection?.effectiveType === "3g";
 
+      // Auf großen Retina-Flächen hat die sichtbare Bildqualität Vorrang.
+      // Weil der Film erst nach dem Seitenaufbau lädt, bremst QHD den ersten
+      // Eindruck und die Bedienbarkeit trotzdem nicht mehr aus.
+      const retinaDesktop = window.innerWidth >= 1200 && window.devicePixelRatio >= 1.5;
+      if (retinaDesktop || window.innerWidth >= 1800) {
+        setSrc("/video/hero-1440.mp4");
+        return;
+      }
+
       if (slowConnection) {
         setSrc(window.innerWidth >= 768 ? "/video/hero-720.mp4" : "/video/hero-540.mp4");
         return;
       }
 
-      const retinaDesktop = window.innerWidth >= 1200 && window.devicePixelRatio >= 1.5;
-      if (retinaDesktop || window.innerWidth >= 1800) {
-        setSrc("/video/hero-1440.mp4");
-      } else if (window.innerWidth >= 900) {
+      if (window.innerWidth >= 900) {
         setSrc("/video/hero-1080.mp4");
       } else if (window.innerWidth >= 560) {
         setSrc("/video/hero-720.mp4");
