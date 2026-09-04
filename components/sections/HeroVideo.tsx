@@ -9,8 +9,10 @@ import { useEffect, useRef, useState } from "react";
 //     dem Window-Load wird die passende Filmfassung angefordert. Dadurch
 //     konkurriert die bis zu 37 MB große QHD-Datei nicht mehr mit LCP, Schriften
 //     und Navigation.
-//   • Retina-Desktop bekommt weiterhin QHD. Langsame bzw. datensparende
-//     Verbindungen erhalten automatisch eine kleinere Fassung.
+//   • Smartphones im Hochformat bekommen einen eigenen 1080 × 1920-Cut.
+//     Dadurch muss keine kleine Querformatdatei mehr extrem vergrößert werden.
+//   • Retina-Desktop bekommt weiterhin QHD. Nur ein ausdrücklich aktivierter
+//     Datensparmodus erhält automatisch eine kleinere Fassung.
 //   • Konstante 30 Bilder pro Sekunde und kurze Szenenwechsel verhindern das
 //     Ruckeln des früheren Clips mit variabler Bildrate.
 //   • `prefers-reduced-motion` unterdrückt das Video per CSS. Wer Bewegung
@@ -35,11 +37,18 @@ export function HeroVideo() {
           connection?: { effectiveType?: string; saveData?: boolean };
         }
       ).connection;
-      const slowConnection =
-        connection?.saveData ||
-        connection?.effectiveType === "slow-2g" ||
-        connection?.effectiveType === "2g" ||
-        connection?.effectiveType === "3g";
+      const saveData = connection?.saveData === true;
+      const portraitPhone =
+        window.innerWidth < 768 && window.matchMedia("(orientation: portrait)").matches;
+
+      // Das eigens zugeschnittene Hochkantvideo liefert auf Retina-Handys
+      // deutlich mehr sichtbare Details als die bisherige 540p-Querfassung.
+      // effectiveType wird hier bewusst nicht zur Qualitätswahl verwendet:
+      // Browser melden selbst in schnellen WLANs gelegentlich fälschlich 3G.
+      if (portraitPhone && !saveData) {
+        setSrc("/video/hero-mobile-1080.mp4");
+        return;
+      }
 
       // Auf großen Retina-Flächen hat die sichtbare Bildqualität Vorrang.
       // Weil der Film erst nach dem Seitenaufbau lädt, bremst QHD den ersten
@@ -50,7 +59,7 @@ export function HeroVideo() {
         return;
       }
 
-      if (slowConnection) {
+      if (saveData) {
         setSrc(window.innerWidth >= 768 ? "/video/hero-720.mp4" : "/video/hero-540.mp4");
         return;
       }
