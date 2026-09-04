@@ -115,7 +115,13 @@ export function HeroVideo() {
       tabIndex={-1}
       onCanPlay={() => {
         const video = videoRef.current;
-        if (video) void video.play().catch(() => undefined);
+        if (video) {
+          // iOS kann das native `play`-Ereignis auslösen, bevor React den
+          // Listener nach dem Quellenwechsel registriert hat. Sobald ein
+          // abspielbares Bild vorliegt, darf der Film daher sicher einblenden.
+          setIsPlaying(true);
+          void video.play().catch(() => undefined);
+        }
       }}
       onPlay={() => setIsPlaying(true)}
       onError={() => {
