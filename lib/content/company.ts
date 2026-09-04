@@ -41,7 +41,7 @@ export const teamProfiles: TeamProfile[] = [
     name: "Vito Donnarumma",
     initials: "VD",
     image: {
-      src: "/images/team/vito-donnarumma.jpg",
+      src: "/images/team/vito-donnarumma-hq.png",
       alt: "Vito Donnarumma von DOHOme",
     },
     qualifications: [

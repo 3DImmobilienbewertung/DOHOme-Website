@@ -112,6 +112,7 @@ export default function UeberUnsPage() {
                       alt={person.image.alt}
                       fill
                       sizes="(min-width: 768px) 33vw, 100vw"
+                      quality={84}
                       className="object-cover"
                       style={{ objectPosition: person.image.objectPosition ?? "center" }}
                     />
